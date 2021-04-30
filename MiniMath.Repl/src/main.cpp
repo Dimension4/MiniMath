@@ -18,14 +18,14 @@ int main()
         {
             try
             {
-                auto token = lexer.nextToken();
+                auto [type, lexeme] = lexer.nextToken();
 
-                if (token.type == TokenType::Eof)
+                std::cout << lexeme << " (" << tokenName(type) << ") @ " << lexeme.data() - line.data() << '\n';
+
+                if (type == TokenType::Eof)
                 {
                     break;
                 }
-
-                std::cout << token.source << " @ " << token.source.data() - line.data() << '\n';
             }
             catch (std::exception& ex)
             {

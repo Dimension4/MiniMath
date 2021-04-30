@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MiniMath", "MiniMath\MiniMath.vcxproj", "{946F9420-9185-4B87-9C6D-8058103C016A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MiniMath.Tests", "MiniMath.Tests\MiniMath.Tests.vcxproj", "{F09A2768-A23C-4732-9A52-4A32B0C51624}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MiniMath.Repl", "MiniMath.Repl\MiniMath.Repl.vcxproj", "{3D62AA53-9CB0-446F-87D3-1A4E8922E2AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -15,6 +19,14 @@ Global
 		{946F9420-9185-4B87-9C6D-8058103C016A}.Debug|x64.Build.0 = Debug|x64
 		{946F9420-9185-4B87-9C6D-8058103C016A}.Release|x64.ActiveCfg = Release|x64
 		{946F9420-9185-4B87-9C6D-8058103C016A}.Release|x64.Build.0 = Release|x64
+		{F09A2768-A23C-4732-9A52-4A32B0C51624}.Debug|x64.ActiveCfg = Debug|x64
+		{F09A2768-A23C-4732-9A52-4A32B0C51624}.Debug|x64.Build.0 = Debug|x64
+		{F09A2768-A23C-4732-9A52-4A32B0C51624}.Release|x64.ActiveCfg = Release|x64
+		{F09A2768-A23C-4732-9A52-4A32B0C51624}.Release|x64.Build.0 = Release|x64
+		{3D62AA53-9CB0-446F-87D3-1A4E8922E2AD}.Debug|x64.ActiveCfg = Debug|x64
+		{3D62AA53-9CB0-446F-87D3-1A4E8922E2AD}.Debug|x64.Build.0 = Debug|x64
+		{3D62AA53-9CB0-446F-87D3-1A4E8922E2AD}.Release|x64.ActiveCfg = Release|x64
+		{3D62AA53-9CB0-446F-87D3-1A4E8922E2AD}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

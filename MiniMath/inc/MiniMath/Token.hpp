@@ -22,7 +22,7 @@ namespace mm
     struct Token
     {
         TokenType type = TokenType::Invalid;
-        std::string_view source;
+        std::string_view lexeme;
     };
 
     constexpr std::string_view tokenName(TokenType type) noexcept
@@ -31,7 +31,7 @@ namespace mm
 
         switch (type)
         {
-        case TokenType::Invalid: return "<INV>";
+        TOKEN_CASE(Invalid);
         TOKEN_CASE(Identifier);
         TOKEN_CASE(Number);
         TOKEN_CASE(LParen);
