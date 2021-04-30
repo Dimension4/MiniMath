@@ -50,7 +50,7 @@ namespace mm
             throw std::logic_error("Invalid character '" + std::string(1, c) + "' at position " + std::to_string(pos_ - 1) + ".");
         }
 
-        return {.type = TokenType::Eof, .source = ""};
+        return {.type = TokenType::Eof, .lexeme = source_.substr(source_.length())};
     }
 
     Token Lexer::readNumber()
