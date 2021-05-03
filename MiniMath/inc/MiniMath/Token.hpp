@@ -25,26 +25,27 @@ namespace mm
         std::string_view lexeme;
     };
 
-    constexpr std::string_view tokenName(TokenType type) noexcept
+    constexpr std::string_view enumName(TokenType type) noexcept
     {
-#define TOKEN_CASE(x) case TokenType::x: return #x
-
         switch (type)
         {
-        TOKEN_CASE(Invalid);
-        TOKEN_CASE(Identifier);
-        TOKEN_CASE(Number);
-        TOKEN_CASE(LParen);
-        TOKEN_CASE(RParen);
-        TOKEN_CASE(Comma);
-        TOKEN_CASE(Plus);
-        TOKEN_CASE(Minus);
-        TOKEN_CASE(Asterisk);
-        TOKEN_CASE(Slash);
-        TOKEN_CASE(Eof);
-        default: return "<BAD>";
+#define ENUM_CASE(x) case TokenType::x: return #x
+
+        ENUM_CASE(Invalid);
+        ENUM_CASE(Identifier);
+        ENUM_CASE(Number);
+        ENUM_CASE(LParen);
+        ENUM_CASE(RParen);
+        ENUM_CASE(Comma);
+        ENUM_CASE(Plus);
+        ENUM_CASE(Minus);
+        ENUM_CASE(Asterisk);
+        ENUM_CASE(Slash);
+        ENUM_CASE(Eof);
+
+#undef ENUM_CASE
         }
 
-#undef TOKEN_CASE
+        return "<BAD>";
     }
 }

@@ -1,4 +1,4 @@
-﻿#include <MiniMath/Lexer.hpp>
+﻿#include "MiniMath/Lexer.hpp"
 
 #include <cctype>
 #include <cstdlib>

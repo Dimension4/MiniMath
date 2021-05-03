@@ -38,9 +38,11 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\ExternalLibs.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\ExternalLibs.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -82,10 +84,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Lexer.cpp" />
+    <ClCompile Include="src\MiniMathParser.cpp" />
+    <ClCompile Include="src\Parselets\BinaryOperation.cpp" />
+    <ClCompile Include="src\PrattParser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\MiniMath\Expressions\BinaryExpression.hpp" />
+    <ClInclude Include="inc\MiniMath\Expressions\ConstantExpression.hpp" />
+    <ClInclude Include="inc\MiniMath\Expressions\Expression.hpp" />
+    <ClInclude Include="inc\MiniMath\Expressions\NameExpression.hpp" />
     <ClInclude Include="inc\MiniMath\Lexer.hpp" />
+    <ClInclude Include="inc\MiniMath\MiniMathParser.hpp" />
+    <ClInclude Include="inc\MiniMath\OperatorPrecedences.hpp" />
+    <ClInclude Include="inc\MiniMath\Parselets\BinaryOpParselet.hpp" />
+    <ClInclude Include="inc\MiniMath\Parselets\InfixParselet.hpp" />
+    <ClInclude Include="inc\MiniMath\Parselets\PrefixParselet.hpp" />
+    <ClInclude Include="inc\MiniMath\PrattParser.hpp" />
     <ClInclude Include="inc\MiniMath\Token.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="inc\MiniMath\Parselets\ConstantParselet.hpp" />
+    <None Include="inc\MiniMath\Parselets\NameParselet.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

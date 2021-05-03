@@ -1,4 +1,6 @@
 ﻿#include "MiniMath/Lexer.hpp"
+#include "MiniMath/MiniMathParser.hpp"
+#include "MiniMath/PrattParser.hpp"
 
 #include <iostream>
 #include <string>
@@ -12,25 +14,18 @@ int main()
 
     while (std::getline(std::cin, line) && !line.empty())
     {
-        Lexer lexer(line);
-
-        while (true)
+        try
         {
-            try
-            {
-                auto [type, lexeme] = lexer.nextToken();
+            Lexer lexer(line);
+            MiniMathParser parser(lexer);
 
-                std::cout << lexeme << " (" << tokenName(type) << ") @ " << lexeme.data() - line.data() << '\n';
+            auto root = parser.parseExpression();
 
-                if (type == TokenType::Eof)
-                {
-                    break;
-                }
-            }
-            catch (std::exception& ex)
-            {
-                std::cerr << ex.what() << "\n";
-            }
+            std::cout << root->toString() << "\n";
+        }
+        catch (std::exception& ex)
+        {
+            std::cerr << ex.what() << "\n";
         }
 
         std::cout << "\nsource: ";
