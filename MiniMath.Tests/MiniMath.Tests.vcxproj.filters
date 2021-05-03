@@ -22,21 +22,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="inc\catch2\catch.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\catch2\catch_reporter_automake.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\catch2\catch_reporter_sonarqube.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\catch2\catch_reporter_tap.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\catch2\catch_reporter_teamcity.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
 </Project>

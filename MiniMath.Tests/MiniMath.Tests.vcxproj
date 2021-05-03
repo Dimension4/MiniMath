@@ -38,9 +38,11 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\ExternalLibs.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\ExternalLibs.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -89,13 +91,6 @@
     <ProjectReference Include="..\MiniMath\MiniMath.vcxproj">
       <Project>{946f9420-9185-4b87-9c6d-8058103c016a}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="inc\catch2\catch.hpp" />
-    <ClInclude Include="inc\catch2\catch_reporter_automake.hpp" />
-    <ClInclude Include="inc\catch2\catch_reporter_sonarqube.hpp" />
-    <ClInclude Include="inc\catch2\catch_reporter_tap.hpp" />
-    <ClInclude Include="inc\catch2\catch_reporter_teamcity.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
