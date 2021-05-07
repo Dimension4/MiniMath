@@ -16,6 +16,7 @@ namespace mm
         case '/': return TokenType::Slash;
         case '(': return TokenType::LParen;
         case ')': return TokenType::RParen;
+        case ',': return TokenType::Comma;
         default: return TokenType::Invalid;
         }
     }

@@ -48,4 +48,20 @@ namespace mm
 
         return "<BAD>";
     }
+
+    constexpr std::string_view enumDisplay(TokenType type) noexcept
+    {
+        switch (type)
+        {
+        case TokenType::LParen: return "(";
+        case TokenType::RParen: return ")";
+        case TokenType::Comma: return ",";
+        case TokenType::Plus: return "+";
+        case TokenType::Minus: return "-";
+        case TokenType::Asterisk: return "*";
+        case TokenType::Slash: return "/";
+        }
+
+        return enumName(type);
+    }
 }

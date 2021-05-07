@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\MiniMath\Expressions\BinaryExpression.hpp" />
+    <ClInclude Include="inc\MiniMath\Expressions\CallExpression.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\ConstantExpression.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\Expression.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\NameExpression.hpp" />
@@ -97,6 +98,8 @@
     <ClInclude Include="inc\MiniMath\MiniMathParser.hpp" />
     <ClInclude Include="inc\MiniMath\OperatorPrecedences.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\BinaryOpParselet.hpp" />
+    <ClInclude Include="inc\MiniMath\Parselets\CallParselet.hpp" />
+    <ClInclude Include="inc\MiniMath\Parselets\GroupParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\InfixParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\PrefixParselet.hpp" />
     <ClInclude Include="inc\MiniMath\PrattParser.hpp" />

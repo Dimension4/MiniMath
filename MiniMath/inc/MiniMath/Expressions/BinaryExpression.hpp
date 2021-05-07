@@ -64,7 +64,7 @@ namespace mm::expressions
         ExpressionPtr left{};
         ExpressionPtr right{};
 
-        std::string toString() override
+        [[nodiscard]] std::string toString() const override
         {
             return fmt::format("({} {} {})", left->toString(), enumDisplay(operation), right->toString());
         }

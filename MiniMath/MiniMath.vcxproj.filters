@@ -65,6 +65,15 @@
     <ClInclude Include="inc\MiniMath\Parselets\PrefixParselet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="inc\MiniMath\Parselets\GroupParselet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MiniMath\Parselets\CallParselet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MiniMath\Expressions\CallExpression.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="inc\MiniMath\Parselets\NameParselet.hpp" />

@@ -13,7 +13,7 @@ namespace mm::expressions
 
         explicit ConstantExpression(double value) : value(value) {}
 
-        std::string toString() override
+        [[nodiscard]] std::string toString() const override
         {
             return std::to_string(value);
         }

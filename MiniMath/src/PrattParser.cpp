@@ -34,7 +34,7 @@ ExpressionPtr PrattParser::parseExpression(int precedence)
     auto prefix = tryGet(prefixParselets_, token.type);
 
     if (!prefix)
-        throw ParseError(fmt::format("Unknown token \"{}\"", enumName(token.type)));
+        throw ParseError(fmt::format("Unexpected token '{}'", enumDisplay(token.type)));
 
     auto left = prefix->parse(*this, token);
 

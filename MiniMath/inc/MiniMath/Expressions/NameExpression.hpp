@@ -13,7 +13,7 @@ namespace mm::expressions
 
         explicit NameExpression(std::string_view name) : name(name) {}
 
-        std::string toString() override
+        [[nodiscard]] std::string toString() const override
         {
             return name;
         }
