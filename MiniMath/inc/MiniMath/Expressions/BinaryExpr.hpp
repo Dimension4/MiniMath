@@ -1,8 +1,7 @@
 ﻿#pragma once
 
-#include "Expression.hpp"
-
-#include <fmt/format.h>
+#include "Expr.hpp"
+#include "Recursive.hpp"
 
 #include <string_view>
 
@@ -52,21 +51,10 @@ namespace mm::expressions
         return "<BAD>";
     }
 
-    class BinaryExpression : public Expression
+    struct BinaryExpr
     {
-    public:
-        BinaryExpression(BinaryOperation operation, ExpressionPtr left, ExpressionPtr right) :
-            operation(operation),
-            left(move(left)),
-            right(move(right)) {}
-
         BinaryOperation operation{};
-        ExpressionPtr left{};
-        ExpressionPtr right{};
-
-        [[nodiscard]] std::string toString() const override
-        {
-            return fmt::format("({} {} {})", left->toString(), enumDisplay(operation), right->toString());
-        }
+        Expr left;
+        Expr right;
     };
 }

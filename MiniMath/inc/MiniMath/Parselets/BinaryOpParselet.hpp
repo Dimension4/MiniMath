@@ -1,7 +1,6 @@
 ﻿#pragma once
 
-#include "../PrattParser.hpp"
-#include "../Expressions/Expression.hpp"
+#include "InfixParselet.hpp"
 
 namespace mm::parselets
 {
@@ -15,7 +14,7 @@ namespace mm::parselets
     {
     public:
         [[nodiscard]] explicit BinaryOpParselet(int precedence, Associativity associativity);
-        [[nodiscard]] expressions::ExpressionPtr parse(PrattParser& parser, expressions::ExpressionPtr left, const Token& token) const override;
+        [[nodiscard]] Expr parse(PrattParser& parser, Expr left, const Token& token) const override;
         [[nodiscard]] int getPrecedence() const override;
 
     private:

@@ -85,15 +85,21 @@
   <ItemGroup>
     <ClCompile Include="src\Lexer.cpp" />
     <ClCompile Include="src\MiniMathParser.cpp" />
-    <ClCompile Include="src\Parselets\BinaryOperation.cpp" />
+    <ClCompile Include="src\Parselets\BinaryOpParselet.cpp" />
+    <ClCompile Include="src\Parselets\CallParselet.cpp" />
+    <ClCompile Include="src\Parselets\ConstantParselet.cpp" />
+    <ClCompile Include="src\Parselets\GroupParselet.cpp" />
+    <ClCompile Include="src\Parselets\NameParselet.cpp" />
     <ClCompile Include="src\PrattParser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\MiniMath\Expressions\BinaryExpression.hpp" />
-    <ClInclude Include="inc\MiniMath\Expressions\CallExpression.hpp" />
-    <ClInclude Include="inc\MiniMath\Expressions\ConstantExpression.hpp" />
-    <ClInclude Include="inc\MiniMath\Expressions\Expression.hpp" />
-    <ClInclude Include="inc\MiniMath\Expressions\NameExpression.hpp" />
+    <ClInclude Include="inc\MiniMath\Expressions.hpp" />
+    <ClInclude Include="inc\MiniMath\Expressions\BinaryExpr.hpp" />
+    <ClInclude Include="inc\MiniMath\Expressions\Expr.hpp" />
+    <ClInclude Include="inc\MiniMath\Expressions\LeafExpressions.hpp" />
+    <ClInclude Include="inc\MiniMath\Expressions\Recursive.hpp" />
+    <ClInclude Include="inc\MiniMath\Expressions\RecursiveExpressions.hpp" />
+    <ClInclude Include="inc\MiniMath\Expressions\RecursivePostlude.hpp" />
     <ClInclude Include="inc\MiniMath\Lexer.hpp" />
     <ClInclude Include="inc\MiniMath\MiniMathParser.hpp" />
     <ClInclude Include="inc\MiniMath\OperatorPrecedences.hpp" />
@@ -103,7 +109,10 @@
     <ClInclude Include="inc\MiniMath\Parselets\InfixParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\PrefixParselet.hpp" />
     <ClInclude Include="inc\MiniMath\PrattParser.hpp" />
+    <ClInclude Include="inc\MiniMath\RecursiveVisitor.hpp" />
+    <ClInclude Include="inc\MiniMath\StringEmitter.hpp" />
     <ClInclude Include="inc\MiniMath\Token.hpp" />
+    <ClInclude Include="inc\MiniMath\Traits.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="inc\MiniMath\Parselets\ConstantParselet.hpp" />

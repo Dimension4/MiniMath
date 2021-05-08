@@ -1,6 +1,9 @@
 ﻿#include "MiniMath/Parselets/BinaryOpParselet.hpp"
 
-#include "MiniMath/Expressions/BinaryExpression.hpp"
+#include "MiniMath/Expressions.hpp"
+#include "MiniMath/PrattParser.hpp"
+
+#include <fmt/format.h>
 
 using namespace mm;
 using namespace parselets;
@@ -23,12 +26,12 @@ static BinaryOperation tokenToOp(TokenType type)
 BinaryOpParselet::BinaryOpParselet(int precedence, Associativity associativity) :
     precedence_(precedence), associativity_(associativity) { }
 
-ExpressionPtr BinaryOpParselet::parse(PrattParser& parser, ExpressionPtr left, const Token& token) const
+Expr BinaryOpParselet::parse(PrattParser& parser, Expr left, const Token& token) const
 {
     auto precedence = associativity_ == Associativity::Left ? precedence_ : precedence_ - 1;
     auto right = parser.parseExpression(precedence);
 
-    return std::make_unique<BinaryExpression>(tokenToOp(token.type), move(left), move(right));
+    return makeExpr<BinaryExpr>(tokenToOp(token.type), move(left), move(right));
 }
 
 int BinaryOpParselet::getPrecedence() const

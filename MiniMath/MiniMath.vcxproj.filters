@@ -21,10 +21,22 @@
     <ClCompile Include="src\PrattParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Parselets\BinaryOperation.cpp">
+    <ClCompile Include="src\Parselets\BinaryOpParselet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MiniMathParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Parselets\CallParselet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Parselets\ConstantParselet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Parselets\GroupParselet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Parselets\NameParselet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +50,7 @@
     <ClInclude Include="inc\MiniMath\PrattParser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\MiniMath\Expressions\Expression.hpp">
+    <ClInclude Include="inc\MiniMath\Expressions\Expr.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\MiniMath\Parselets\BinaryOpParselet.hpp">
@@ -50,13 +62,7 @@
     <ClInclude Include="inc\MiniMath\MiniMathParser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\MiniMath\Expressions\BinaryExpression.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\MiniMath\Expressions\NameExpression.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\MiniMath\Expressions\ConstantExpression.hpp">
+    <ClInclude Include="inc\MiniMath\Expressions\BinaryExpr.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\MiniMath\Parselets\InfixParselet.hpp">
@@ -71,7 +77,28 @@
     <ClInclude Include="inc\MiniMath\Parselets\CallParselet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\MiniMath\Expressions\CallExpression.hpp">
+    <ClInclude Include="inc\MiniMath\StringEmitter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MiniMath\Expressions\LeafExpressions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MiniMath\Expressions\Recursive.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MiniMath\Traits.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MiniMath\Expressions\RecursiveExpressions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MiniMath\RecursiveVisitor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MiniMath\Expressions\RecursivePostlude.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MiniMath\Expressions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

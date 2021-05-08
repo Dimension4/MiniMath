@@ -1,14 +1,12 @@
 ﻿#include "MiniMath/PrattParser.hpp"
 
-#include "MiniMath/Parselets/BinaryOpParselet.hpp"
+#include "MiniMath/Expressions.hpp"
 
 #include <fmt/format.h>
-
 
 using namespace mm;
 using namespace parselets;
 using namespace expressions;
-
 
 static auto tryGet(const auto& map, const auto& key)
 {
@@ -28,7 +26,7 @@ void PrattParser::registerParselet(TokenType type, std::unique_ptr<InfixParselet
     infixParselets_[type] = move(parselet);
 }
 
-ExpressionPtr PrattParser::parseExpression(int precedence)
+Expr PrattParser::parseExpression(int precedence)
 {
     auto token = consume();
     auto prefix = tryGet(prefixParselets_, token.type);
@@ -42,7 +40,7 @@ ExpressionPtr PrattParser::parseExpression(int precedence)
     {
         token = consume();
         auto infix = tryGet(infixParselets_, token.type);
-        left = infix->parse(*this, move(left), token);
+        left = infix->parse(*this, std::move(left), token);
     }
 
     return left;

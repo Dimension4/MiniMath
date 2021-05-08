@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "Lexer.hpp"
-#include "Expressions/Expression.hpp"
 #include "Parselets/PrefixParselet.hpp"
 #include "Parselets/InfixParselet.hpp"
 
@@ -29,7 +28,7 @@ namespace mm
         void registerParselet(TokenType type, std::unique_ptr<parselets::PrefixParselet> parselet);
         void registerParselet(TokenType type, std::unique_ptr<parselets::InfixParselet> parselet);
         [[nodiscard]]
-        expressions::ExpressionPtr parseExpression(int precedence = 0);
+        Expr parseExpression(int precedence = 0);
         bool match(TokenType expected);
         Token consume(TokenType expected);
         Token consume();

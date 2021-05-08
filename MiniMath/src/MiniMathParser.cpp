@@ -1,13 +1,11 @@
 ﻿#include "MiniMath/MiniMathParser.hpp"
 
-#include "MiniMath/Expressions/NameExpression.hpp"
 #include "MiniMath/Parselets/CallParselet.hpp"
 #include "MiniMath/Parselets/ConstantParselet.hpp"
 #include "MiniMath/Parselets/GroupParselet.hpp"
 #include "MiniMath/Parselets/NameParselet.hpp"
 
 using namespace mm;
-using namespace expressions;
 using namespace parselets;
 
 MiniMathParser::MiniMathParser(Lexer& lexer) : PrattParser(lexer)

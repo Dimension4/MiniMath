@@ -1,20 +1,20 @@
 ﻿#pragma once
 
-#include "../Expressions/Expression.hpp"
 #include "../Token.hpp"
 
 namespace mm
 {
     class PrattParser;
+    class Expr;
+}
 
-    namespace parselets
+namespace mm::parselets
+{
+    class InfixParselet
     {
-        class InfixParselet
-        {
-        public:
-            virtual ~InfixParselet() = default;
-            [[nodiscard]] virtual expressions::ExpressionPtr parse(PrattParser& parser, expressions::ExpressionPtr left, const Token& token) const = 0;
-            [[nodiscard]] virtual int getPrecedence() const = 0;
-        };
-    }
+    public:
+        virtual ~InfixParselet() = default;
+        [[nodiscard]] virtual Expr parse(PrattParser& parser, Expr left, const Token& token) const = 0;
+        [[nodiscard]] virtual int getPrecedence() const = 0;
+    };
 }

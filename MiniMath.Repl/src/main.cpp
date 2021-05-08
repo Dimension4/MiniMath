@@ -1,6 +1,7 @@
 ﻿#include "MiniMath/Lexer.hpp"
 #include "MiniMath/MiniMathParser.hpp"
 #include "MiniMath/PrattParser.hpp"
+#include "MiniMath/Expressions.hpp"
 
 #include <iostream>
 #include <string>
@@ -21,7 +22,7 @@ int main()
 
             auto root = parser.parseExpression();
 
-            std::cout << root->toString() << "\n";
+            //std::cout << root->toString() << "\n";
         }
         catch (std::exception& ex)
         {
