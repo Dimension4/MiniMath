@@ -1,6 +1,7 @@
 ﻿#include "MiniMath/MiniMathParser.hpp"
 #include "MiniMath/Expressions.hpp"
-#include "MiniMath/StringEmitter.hpp"
+#include "MiniMath/Ast/Printer.hpp"
+#include "MiniMath/Ast/Evaluator.hpp"
 
 #include <fmt/format.h>
 
@@ -24,8 +25,11 @@ int main()
             auto root = parser.parseExpression();
 
             fmt::print("{}\n", root);
+
+            auto res = ast::evaluate(root);
+            fmt::print("{}\n", res);
         }
-        catch (std::exception& ex)
+        catch (std::exception const& ex)
         {
             std::cerr << ex.what() << "\n";
         }

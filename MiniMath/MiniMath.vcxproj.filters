@@ -39,6 +39,9 @@
     <ClCompile Include="src\Parselets\NameParselet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ast\Evaluator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\MiniMath\Lexer.hpp">
@@ -77,7 +80,7 @@
     <ClInclude Include="inc\MiniMath\Parselets\CallParselet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\MiniMath\StringEmitter.hpp">
+    <ClInclude Include="inc\MiniMath\Ast\Printer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\MiniMath\Expressions\LeafExpressions.hpp">
@@ -92,13 +95,19 @@
     <ClInclude Include="inc\MiniMath\Expressions\RecursiveExpressions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\MiniMath\RecursiveVisitor.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="inc\MiniMath\Expressions\RecursivePostlude.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\MiniMath\Expressions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MiniMath\Ast\Evaluator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MiniMath\Utility.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MiniMath\Ast\Environment.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

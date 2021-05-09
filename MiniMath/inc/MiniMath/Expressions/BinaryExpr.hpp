@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "Expr.hpp"
-#include "Recursive.hpp"
 
 #include <string_view>
 
@@ -13,7 +12,6 @@ namespace mm::expressions
         Subtract,
         Multiply,
         Divide,
-        Modulo,
         Power
     };
 
@@ -28,7 +26,6 @@ namespace mm::expressions
             ENUM_CASE(Subtract);
             ENUM_CASE(Multiply);
             ENUM_CASE(Divide);
-            ENUM_CASE(Modulo);
             ENUM_CASE(Power);
 
 #undef ENUM_CASE
@@ -46,7 +43,6 @@ namespace mm::expressions
         case BinaryOperation::Subtract: return "-";
         case BinaryOperation::Multiply: return "*";
         case BinaryOperation::Divide: return "/";
-        case BinaryOperation::Modulo: return "mod";
         case BinaryOperation::Power: return "^";
         }
 

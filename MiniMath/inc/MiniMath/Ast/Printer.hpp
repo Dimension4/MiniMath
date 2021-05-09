@@ -1,12 +1,12 @@
 ﻿#pragma once
 
-#include "Expressions.hpp"
+#include "../Expressions.hpp"
 
 #include <fmt/format.h>
 
-namespace mm
+namespace mm::ast
 {
-    struct StringEmitter
+    struct Printer
     {
         auto operator()(auto outIt, expressions::BinaryExpr const& expr) const
         {
@@ -27,6 +27,11 @@ namespace mm
         {
             return fmt::format_to(outIt, "{}", expr.value);
         }
+
+        auto operator()(auto outIt, expressions::Closure const& expr) const
+        {
+            return fmt::format_to(outIt, "{}", expr.body);
+        }
     };
 }
 
@@ -43,7 +48,7 @@ struct fmt::formatter<mm::Expr>
     {
         return std::visit([&]<typename T>(T&& x)
         {
-            return mm::StringEmitter{}(ctx.out(), mm::expressions::unrec(std::forward<T>(x)));
+            return mm::ast::Printer{}(ctx.out(), mm::unrec(std::forward<T>(x)));
         }, static_cast<mm::expressions::ExprBase const&>(expr));
     }
 };

@@ -84,6 +84,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ast\Evaluator.cpp" />
     <ClCompile Include="src\Lexer.cpp" />
     <ClCompile Include="src\MiniMathParser.cpp" />
     <ClCompile Include="src\Parselets\BinaryOpParselet.cpp" />
@@ -94,6 +95,8 @@
     <ClCompile Include="src\PrattParser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\MiniMath\Ast\Environment.hpp" />
+    <ClInclude Include="inc\MiniMath\Ast\Evaluator.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\BinaryExpr.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\Expr.hpp" />
@@ -101,6 +104,7 @@
     <ClInclude Include="inc\MiniMath\Expressions\Recursive.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\RecursiveExpressions.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\RecursivePostlude.hpp" />
+    <ClInclude Include="inc\MiniMath\Utility.hpp" />
     <ClInclude Include="inc\MiniMath\Lexer.hpp" />
     <ClInclude Include="inc\MiniMath\MiniMathParser.hpp" />
     <ClInclude Include="inc\MiniMath\OperatorPrecedences.hpp" />
@@ -110,8 +114,7 @@
     <ClInclude Include="inc\MiniMath\Parselets\InfixParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\PrefixParselet.hpp" />
     <ClInclude Include="inc\MiniMath\PrattParser.hpp" />
-    <ClInclude Include="inc\MiniMath\RecursiveVisitor.hpp" />
-    <ClInclude Include="inc\MiniMath\StringEmitter.hpp" />
+    <ClInclude Include="inc\MiniMath\Ast\Printer.hpp" />
     <ClInclude Include="inc\MiniMath\Token.hpp" />
     <ClInclude Include="inc\MiniMath\Traits.hpp" />
   </ItemGroup>

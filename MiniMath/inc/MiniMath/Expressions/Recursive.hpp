@@ -10,6 +10,8 @@ namespace mm::expressions
     class Recursive
     {
     public:
+        using ValueType = T;
+
         template <typename ...Args>
         [[nodiscard]] explicit constexpr Recursive(Args&& ...args);
         [[nodiscard]] explicit constexpr Recursive(T val);
@@ -45,16 +47,4 @@ namespace mm::expressions
     private:
         T* ptr_;
     };
-
-    template <InstanceOf<Recursive> T>
-    [[nodiscard]] constexpr decltype(auto) unrec(T&& x) noexcept
-    {
-        return *std::forward<T>(x);
-    }
-
-    template <typename T>
-    [[nodiscard]] constexpr decltype(auto) unrec(T&& x) noexcept
-    {
-        return std::forward<T>(x);
-    }
 }

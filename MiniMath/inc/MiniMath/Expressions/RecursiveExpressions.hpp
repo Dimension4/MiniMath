@@ -4,6 +4,7 @@
 
 #include "Expr.hpp"
 #include "BinaryExpr.hpp"
+#include "MiniMath/Ast/Environment.hpp"
 
 #include <vector>
 
@@ -13,5 +14,12 @@ namespace mm::expressions
     {
         Expr target;
         std::vector<Expr> args;
+    };
+
+    struct Closure
+    {
+        ast::Environment environment;
+        std::vector<std::string> paramNames;
+        Expr body;
     };
 }
