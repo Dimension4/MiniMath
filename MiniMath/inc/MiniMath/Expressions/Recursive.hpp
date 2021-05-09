@@ -11,11 +11,11 @@ namespace mm::expressions
     {
     public:
         template <typename ...Args>
-        explicit constexpr Recursive(Args&& ...args);
-        explicit constexpr Recursive(T val);
+        [[nodiscard]] explicit constexpr Recursive(Args&& ...args);
+        [[nodiscard]] explicit constexpr Recursive(T val);
         ~Recursive() noexcept;
 
-        constexpr Recursive(Recursive const& other);
+        [[nodiscard]] constexpr Recursive(Recursive const& other);
 
         constexpr Recursive& operator=(Recursive const& other)
         {
@@ -25,7 +25,7 @@ namespace mm::expressions
             return *this;
         }
 
-        constexpr Recursive(Recursive&& other) noexcept :
+        [[nodiscard]] constexpr Recursive(Recursive&& other) noexcept :
             ptr_(std::exchange(other.ptr_, nullptr)) {}
 
         constexpr Recursive& operator=(Recursive&& other) noexcept
@@ -36,11 +36,11 @@ namespace mm::expressions
             return *this;
         }
 
-        constexpr T const& operator*() const noexcept { return *ptr_; }
-        constexpr T& operator*() noexcept { return *ptr_; }
+        [[nodiscard]] constexpr T const& operator*() const noexcept { return *ptr_; }
+        [[nodiscard]] constexpr T& operator*() noexcept { return *ptr_; }
 
-        constexpr T const* operator->() const noexcept { return ptr_; }
-        constexpr T* operator->() noexcept { return ptr_; }
+        [[nodiscard]] constexpr T const* operator->() const noexcept { return ptr_; }
+        [[nodiscard]] constexpr T* operator->() noexcept { return ptr_; }
 
     private:
         T* ptr_;

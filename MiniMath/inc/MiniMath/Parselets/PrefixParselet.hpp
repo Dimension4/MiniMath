@@ -14,6 +14,8 @@ namespace mm::parselets
     {
     public:
         virtual ~PrefixParselet() = default;
-        [[nodiscard]] virtual Expr parse(PrattParser& parser, const Token& token) const = 0;
+
+        [[nodiscard]]
+        virtual Expr parse(PrattParser& parser, const Token& token) const = 0;
     };
 }

@@ -8,9 +8,11 @@ namespace mm::parselets
     class CallParselet : public InfixParselet
     {
     public:
-        [[nodiscard]] Expr parse(PrattParser& parser, Expr left, const Token& token) const override;
+        [[nodiscard]]
+        Expr parse(PrattParser& parser, Expr left, const Token& token) const override;
 
-        [[nodiscard]] int getPrecedence() const override
+        [[nodiscard]]
+        int getPrecedence() const override
         {
             return int(OperatorPrecedence::Call);
         }

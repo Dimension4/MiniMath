@@ -3,6 +3,7 @@
 #include <cctype>
 #include <cstdlib>
 #include <stdexcept>
+#include <string>
 
 namespace mm
 {

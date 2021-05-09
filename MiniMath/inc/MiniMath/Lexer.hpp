@@ -2,7 +2,6 @@
 
 #include "Token.hpp"
 
-#include <string>
 #include <string_view>
 
 namespace mm
@@ -10,7 +9,9 @@ namespace mm
     class Lexer
     {
     public:
+        [[nodiscard]]
         explicit Lexer(std::string_view source);
+
         Token nextToken();
 
     private:

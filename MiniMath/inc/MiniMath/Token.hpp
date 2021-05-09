@@ -25,6 +25,7 @@ namespace mm
         std::string_view lexeme;
     };
 
+    [[nodiscard]]
     constexpr std::string_view enumName(TokenType type) noexcept
     {
         switch (type)
@@ -49,6 +50,7 @@ namespace mm
         return "<BAD>";
     }
 
+    [[nodiscard]]
     constexpr std::string_view enumDisplay(TokenType type) noexcept
     {
         switch (type)

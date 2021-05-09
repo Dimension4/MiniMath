@@ -13,9 +13,11 @@ namespace mm
 {
     struct ParseError : std::logic_error
     {
+        [[nodiscard]]
         explicit ParseError(const std::string& msg)
             : logic_error(msg) {}
 
+        [[nodiscard]]
         explicit ParseError(const char* msg)
             : logic_error(msg) {}
     };
@@ -23,12 +25,14 @@ namespace mm
     class PrattParser
     {
     public:
+        [[nodiscard]]
         explicit PrattParser(Lexer& lexer);
 
         void registerParselet(TokenType type, std::unique_ptr<parselets::PrefixParselet> parselet);
         void registerParselet(TokenType type, std::unique_ptr<parselets::InfixParselet> parselet);
         [[nodiscard]]
         Expr parseExpression(int precedence = 0);
+        [[nodiscard]]
         bool match(TokenType expected);
         Token consume(TokenType expected);
         Token consume();

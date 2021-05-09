@@ -17,6 +17,7 @@ namespace mm::expressions
         Power
     };
 
+    [[nodiscard]]
     constexpr std::string_view enumName(BinaryOperation op) noexcept
     {
         switch (op)
@@ -36,6 +37,7 @@ namespace mm::expressions
         return "<BAD>";
     }
 
+    [[nodiscard]]
     constexpr std::string_view enumDisplay(BinaryOperation op) noexcept
     {
         switch (op)

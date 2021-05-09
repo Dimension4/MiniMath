@@ -9,6 +9,7 @@ namespace mm
     class MiniMathParser : public PrattParser
     {
     public:
+        [[nodiscard]]
         explicit MiniMathParser(Lexer& lexer);
 
     private:

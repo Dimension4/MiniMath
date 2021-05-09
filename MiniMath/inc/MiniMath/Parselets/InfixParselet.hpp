@@ -14,7 +14,11 @@ namespace mm::parselets
     {
     public:
         virtual ~InfixParselet() = default;
-        [[nodiscard]] virtual Expr parse(PrattParser& parser, Expr left, const Token& token) const = 0;
-        [[nodiscard]] virtual int getPrecedence() const = 0;
+
+        [[nodiscard]]
+        virtual Expr parse(PrattParser& parser, Expr left, const Token& token) const = 0;
+
+        [[nodiscard]]
+        virtual int getPrecedence() const = 0;
     };
 }

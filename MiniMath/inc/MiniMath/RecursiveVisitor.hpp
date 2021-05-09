@@ -11,6 +11,7 @@ namespace mm
     class RecursiveVisitor
     {
     public:
+        [[nodiscard]]
         explicit constexpr RecursiveVisitor(Visitor visitor = {}) :
             visitor_(std::move(visitor)) { }
 
