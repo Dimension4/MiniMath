@@ -14,5 +14,5 @@ namespace mm
     }
 
     template <typename T, template <typename, typename...> typename Template>
-    concept InstanceOf = details::IsInstance<T, Template>::value;
+    concept InstanceOf = details::IsInstance<std::remove_cvref_t<T>, Template>::value;
 }
