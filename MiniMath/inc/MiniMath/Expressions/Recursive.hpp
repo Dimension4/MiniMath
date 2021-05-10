@@ -4,7 +4,7 @@
 
 #include <utility>
 
-namespace mm::expressions
+namespace mm::expr
 {
     template <typename T>
     class Recursive

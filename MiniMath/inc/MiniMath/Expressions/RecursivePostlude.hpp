@@ -2,7 +2,7 @@
 
 #include "Recursive.hpp"
 
-namespace mm::expressions
+namespace mm::expr
 {
     template <typename T>
     template <typename ...Args>

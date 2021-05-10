@@ -9,7 +9,7 @@
 #include <vector>
 #include <string>
 
-namespace mm::expressions
+namespace mm::expr
 {
     struct CallExpr
     {

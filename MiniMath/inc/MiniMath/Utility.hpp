@@ -11,7 +11,7 @@
 namespace mm
 {
     template <typename T>
-    concept RecursiveExpr = requires(expressions::Recursive<std::remove_cvref_t<T>> rec) { Expr{ rec }; };
+    concept RecursiveExpr = requires(expr::Recursive<std::remove_cvref_t<T>> rec) { Expr{ rec }; };
 
     template <typename T>
     concept LeafExpr = !RecursiveExpr<T> && requires(T t) { Expr{ t }; };
@@ -24,7 +24,7 @@ namespace mm
     [[nodiscard]] constexpr Expr makeExpr(T&& x) noexcept
     {
         if constexpr (RecursiveExpr<T>)
-            return Expr(expressions::Recursive(std::forward<T>(x)));
+            return Expr(expr::Recursive(std::forward<T>(x)));
         else
             return Expr(std::forward<T>(x));
     }
@@ -33,12 +33,12 @@ namespace mm
     [[nodiscard]] constexpr bool isExprType(Expr const& expr) noexcept
     {
         if constexpr (RecursiveExpr<T>)
-            return std::holds_alternative<expressions::Recursive<T>>(expr);
+            return std::holds_alternative<expr::Recursive<T>>(expr);
         else
             return std::holds_alternative<T>(expr);
     }
 
-    template <InstanceOf<expressions::Recursive> T>
+    template <InstanceOf<expr::Recursive> T>
     [[nodiscard]] constexpr decltype(auto) unrec(T&& x) noexcept
     {
         return *std::forward<T>(x);
@@ -56,7 +56,7 @@ namespace mm
         auto ret = [](auto* ptr) { return ptr ? &unrec(*ptr) : nullptr; };
 
         if constexpr (RecursiveExpr<T>)
-            return ret(std::get_if<expressions::Recursive<T>>(&expr));
+            return ret(std::get_if<expr::Recursive<T>>(&expr));
         else
             return ret(std::get_if<T>(&expr));
     }
@@ -67,7 +67,7 @@ namespace mm
         auto ret = [](auto* ptr) { return ptr ? std::optional(unrec(*ptr)) : std::nullopt; };
 
         if constexpr (RecursiveExpr<T>)
-            return ret(std::get_if<expressions::Recursive<T>>(&expr));
+            return ret(std::get_if<expr::Recursive<T>>(&expr));
         else
             return ret(std::get_if<T>(&expr));
     }
@@ -85,19 +85,19 @@ namespace mm
     }
 
     template <typename Visitor, typename ...Args>
-    constexpr decltype(auto) visit(Visitor&& visitor, expressions::ExprBase&& expr, Args&& ...args)
+    constexpr decltype(auto) visit(Visitor&& visitor, expr::ExprBase&& expr, Args&& ...args)
     {
         return details::visit(std::forward<Visitor>(visitor), std::move(expr), std::forward<Args>(args)...);
     }
 
     template <typename Visitor, typename ...Args>
-    constexpr decltype(auto) visit(Visitor&& visitor, expressions::ExprBase& expr, Args&& ...args)
+    constexpr decltype(auto) visit(Visitor&& visitor, expr::ExprBase& expr, Args&& ...args)
     {
         return details::visit(std::forward<Visitor>(visitor), expr, std::forward<Args>(args)...);
     }
 
     template <typename Visitor, typename ...Args>
-    constexpr decltype(auto) visit(Visitor&& visitor, expressions::ExprBase const& expr, Args&& ...args)
+    constexpr decltype(auto) visit(Visitor&& visitor, expr::ExprBase const& expr, Args&& ...args)
     {
         return details::visit(std::forward<Visitor>(visitor), expr, std::forward<Args>(args)...);
     }

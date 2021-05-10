@@ -7,7 +7,7 @@
 
 namespace mm
 {
-    namespace expressions
+    namespace expr
     {
         //
         // forward declare new RECURSIVE expression types here
@@ -32,11 +32,11 @@ namespace mm
         >;
     }
 
-    class Expr : public expressions::ExprBase
+    class Expr : public expr::ExprBase
     {
     public:
-        using expressions::ExprBase::ExprBase;
-        using expressions::ExprBase::operator=;
+        using expr::ExprBase::ExprBase;
+        using expr::ExprBase::operator=;
     };
 
 }

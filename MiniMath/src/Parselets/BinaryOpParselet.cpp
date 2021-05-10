@@ -7,7 +7,7 @@
 
 using namespace mm;
 using namespace parselets;
-using namespace expressions;
+using namespace expr;
 
 static BinaryOperation tokenToOp(TokenType type)
 {

@@ -4,7 +4,7 @@
 
 // Leaf expressions are expressions that have no sub expressions
 
-namespace mm::expressions
+namespace mm::expr
 {
     struct NameExpr
     {

@@ -8,7 +8,7 @@
 
 namespace mm::parselets
 {
-    using namespace expressions;
+    using namespace expr;
 
     Expr LetParselet::parse(PrattParser& parser, const Token& token) const
     {

@@ -6,7 +6,7 @@
 
 using namespace mm;
 using namespace parselets;
-using namespace expressions;
+using namespace expr;
 
 static auto tryGet(const auto& map, const auto& key)
 {

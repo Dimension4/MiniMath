@@ -7,7 +7,7 @@
 
 namespace mm::ast
 {
-    using namespace expressions;
+    using namespace expr;
 
     Expr Evaluator::operator()(BinaryExpr const& expr, Environment const& env) const
     {

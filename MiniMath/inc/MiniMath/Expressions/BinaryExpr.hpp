@@ -4,7 +4,7 @@
 
 #include <string_view>
 
-namespace mm::expressions
+namespace mm::expr
 {
     enum class BinaryOperation
     {

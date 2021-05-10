@@ -8,6 +8,6 @@ namespace mm::parselets
 {
     Expr ConstantParselet::parse(PrattParser& parser, const Token& token) const
     {
-        return makeExpr(expressions::ConstantExpr{ .value = std::strtod(token.lexeme.data(), nullptr) });
+        return makeExpr(expr::ConstantExpr{ .value = std::strtod(token.lexeme.data(), nullptr) });
     }
 }

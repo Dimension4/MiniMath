@@ -9,12 +9,12 @@ namespace mm::ast
 {
     struct Evaluator
     {
-        Expr operator()(expressions::BinaryExpr const& expr, Environment const& env) const;
-        Expr operator()(expressions::CallExpr const& expr, Environment const& env) const;
-        Expr operator()(expressions::NameExpr const& expr, Environment const& env) const;
-        Expr operator()(expressions::ConstantExpr const& expr, Environment const& env) const;
-        Expr operator()(expressions::Closure const& expr, Environment const& env) const;
-        Expr operator()(expressions::LetExpr const& expr, Environment const& env) const;
+        Expr operator()(expr::BinaryExpr const& expr, Environment const& env) const;
+        Expr operator()(expr::CallExpr const& expr, Environment const& env) const;
+        Expr operator()(expr::NameExpr const& expr, Environment const& env) const;
+        Expr operator()(expr::ConstantExpr const& expr, Environment const& env) const;
+        Expr operator()(expr::Closure const& expr, Environment const& env) const;
+        Expr operator()(expr::LetExpr const& expr, Environment const& env) const;
     };
 
     inline Expr evaluate(Expr const& expr, Environment const& env = {})
