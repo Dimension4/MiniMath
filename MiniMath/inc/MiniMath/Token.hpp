@@ -16,6 +16,9 @@ namespace mm
         Minus,
         Asterisk,
         Slash,
+        Equals,
+        Let,
+        In,
         Eof
     };
 
@@ -42,6 +45,9 @@ namespace mm
         ENUM_CASE(Minus);
         ENUM_CASE(Asterisk);
         ENUM_CASE(Slash);
+        ENUM_CASE(Equals);
+        ENUM_CASE(Let);
+        ENUM_CASE(In);
         ENUM_CASE(Eof);
 
 #undef ENUM_CASE
@@ -62,6 +68,9 @@ namespace mm
         case TokenType::Minus: return "-";
         case TokenType::Asterisk: return "*";
         case TokenType::Slash: return "/";
+        case TokenType::Equals: return "=";
+        case TokenType::Let: return "let";
+        case TokenType::In: return "in";
         }
 
         return enumName(type);

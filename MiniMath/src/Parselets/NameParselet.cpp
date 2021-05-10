@@ -9,6 +9,6 @@ namespace mm::parselets
 {
     Expr NameParselet::parse(PrattParser& parser, const Token& token) const
     {
-        return makeExpr<expressions::NameExpr>(std::string(token.lexeme));
+        return makeExpr(expressions::NameExpr{ .name = std::string(token.lexeme) });
     }
 }

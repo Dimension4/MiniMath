@@ -11,24 +11,25 @@
 namespace mm
 {
     template <typename T>
-    concept RecursiveExpr = requires(expressions::Recursive<T> rec) { Expr{rec}; };
+    concept RecursiveExpr = requires(expressions::Recursive<std::remove_cvref_t<T>> rec) { Expr{ rec }; };
 
     template <typename T>
-    concept LeafExpr = !RecursiveExpr<T> && requires(T t) { Expr{t}; };
+    concept LeafExpr = !RecursiveExpr<T> && requires(T t) { Expr{ t }; };
 
-    template <RecursiveExpr T, typename ...Args> requires(std::constructible_from<T, Args...>)
-    [[nodiscard]] Expr makeExpr(Args&&... args)
+    template <typename T>
+    concept ExprType = LeafExpr<T> || RecursiveExpr<T>;
+
+
+    template <ExprType T>
+    [[nodiscard]] constexpr Expr makeExpr(T&& x) noexcept
     {
-        return Expr(expressions::Recursive<T>(std::forward<Args>(args)...));
+        if constexpr (RecursiveExpr<T>)
+            return Expr(expressions::Recursive(std::forward<T>(x)));
+        else
+            return Expr(std::forward<T>(x));
     }
 
-    template <LeafExpr T, typename ...Args> requires(std::constructible_from<T, Args...>)
-    [[nodiscard]] Expr makeExpr(Args&&... args)
-    {
-        return Expr(T(std::forward<Args>(args)...));
-    }
-
-    template <typename T> requires(RecursiveExpr<T> || LeafExpr<T>)
+    template <ExprType T>
     [[nodiscard]] constexpr bool isExprType(Expr const& expr) noexcept
     {
         if constexpr (RecursiveExpr<T>)
@@ -49,7 +50,7 @@ namespace mm
         return std::forward<T>(x);
     }
 
-    template <typename T> requires(RecursiveExpr<T> || LeafExpr<T>)
+    template <ExprType T>
     [[nodiscard]] constexpr T const* tryGetExpr(Expr const& expr) noexcept
     {
         auto ret = [](auto* ptr) { return ptr ? &unrec(*ptr) : nullptr; };
@@ -60,7 +61,7 @@ namespace mm
             return ret(std::get_if<T>(&expr));
     }
 
-    template <typename T> requires(RecursiveExpr<T> || LeafExpr<T>)
+    template <ExprType T>
     [[nodiscard]] constexpr std::optional<T> tryGetExpr(Expr&& expr) noexcept
     {
         auto ret = [](auto* ptr) { return ptr ? std::optional(unrec(*ptr)) : std::nullopt; };

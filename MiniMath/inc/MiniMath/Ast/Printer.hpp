@@ -32,6 +32,11 @@ namespace mm::ast
         {
             return fmt::format_to(outIt, "{}", expr.body);
         }
+
+        auto operator()(auto outIt, expressions::LetExpr const& expr) const
+        {
+            return fmt::format_to(outIt, "let {} = {} in {}", expr.name, expr.value, expr.body);
+        }
     };
 }
 

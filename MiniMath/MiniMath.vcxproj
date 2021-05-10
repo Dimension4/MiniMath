@@ -91,6 +91,7 @@
     <ClCompile Include="src\Parselets\CallParselet.cpp" />
     <ClCompile Include="src\Parselets\ConstantParselet.cpp" />
     <ClCompile Include="src\Parselets\GroupParselet.cpp" />
+    <ClCompile Include="src\Parselets\LetParselet.cpp" />
     <ClCompile Include="src\Parselets\NameParselet.cpp" />
     <ClCompile Include="src\PrattParser.cpp" />
   </ItemGroup>
@@ -104,6 +105,7 @@
     <ClInclude Include="inc\MiniMath\Expressions\Recursive.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\RecursiveExpressions.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\RecursivePostlude.hpp" />
+    <ClInclude Include="inc\MiniMath\Parselets\LetParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Utility.hpp" />
     <ClInclude Include="inc\MiniMath\Lexer.hpp" />
     <ClInclude Include="inc\MiniMath\MiniMathParser.hpp" />

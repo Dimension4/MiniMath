@@ -42,6 +42,9 @@
     <ClCompile Include="src\Ast\Evaluator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Parselets\LetParselet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\MiniMath\Lexer.hpp">
@@ -108,6 +111,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\MiniMath\Ast\Environment.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MiniMath\Parselets\LetParselet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

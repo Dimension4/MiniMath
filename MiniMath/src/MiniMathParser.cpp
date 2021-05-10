@@ -3,6 +3,7 @@
 #include "MiniMath/Parselets/CallParselet.hpp"
 #include "MiniMath/Parselets/ConstantParselet.hpp"
 #include "MiniMath/Parselets/GroupParselet.hpp"
+#include "MiniMath/Parselets/LetParselet.hpp"
 #include "MiniMath/Parselets/NameParselet.hpp"
 
 using namespace mm;
@@ -14,6 +15,7 @@ MiniMathParser::MiniMathParser(Lexer& lexer) : PrattParser(lexer)
     registerParselet(TokenType::Number, std::make_unique<ConstantParselet>());
     registerParselet(TokenType::LParen, std::make_unique<GroupParselet>());
     registerParselet(TokenType::LParen, std::make_unique<CallParselet>());
+    registerParselet(TokenType::Let, std::make_unique<LetParselet>());
 
     infix(TokenType::Plus, OperatorPrecedence::Addition);
     infix(TokenType::Minus, OperatorPrecedence::Subtraction);

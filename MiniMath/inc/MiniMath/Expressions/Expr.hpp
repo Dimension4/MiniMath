@@ -16,6 +16,7 @@ namespace mm
         struct BinaryExpr;
         struct CallExpr;
         struct Closure;
+        struct LetExpr;
 
         //
         // register new expression types here
@@ -25,6 +26,7 @@ namespace mm
             Recursive<BinaryExpr>,
             Recursive<CallExpr>,
             Recursive<Closure>,
+            Recursive<LetExpr>,
             ConstantExpr,
             NameExpr
         >;

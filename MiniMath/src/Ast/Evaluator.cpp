@@ -50,7 +50,7 @@ namespace mm::ast
         {
             auto&& argName = closure->paramNames[i];
             auto argVal = visit(*this, expr.args[i], env);
-            callEnv[argName] = argVal;
+            callEnv.add(argName, argVal);
         }
 
         return visit(*this, closure->body, callEnv);
@@ -58,8 +58,8 @@ namespace mm::ast
 
     Expr Evaluator::operator()(NameExpr const& expr, Environment const& env) const
     {
-        if (auto it = env.find(expr.name); it != env.end())
-            return it->second;
+        if (auto val = env.tryGet(expr.name))
+            return *val;
 
         throw LookupError(fmt::format("Unknown identifier '{}'", expr.name));
     }
@@ -71,6 +71,12 @@ namespace mm::ast
 
     Expr Evaluator::operator()(Closure const& expr, Environment const& env) const
     {
-        return makeExpr<Closure>(expr);
+        return makeExpr(expr);
+    }
+
+    Expr Evaluator::operator()(LetExpr const& expr, Environment const& env) const
+    {
+        auto letEnv = env.with(expr.name, visit(*this, expr.value, env));
+        return visit(*this, expr.body, letEnv);
     }
 }

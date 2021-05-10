@@ -20,6 +20,6 @@ namespace mm::parselets
             parser.consume(TokenType::RParen);
         }
 
-        return makeExpr<expressions::CallExpr>(std::move(left), std::move(args));
+        return makeExpr(expressions::CallExpr{ .target = std::move(left), .args = std::move(args) });
     }
 }

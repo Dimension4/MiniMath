@@ -7,6 +7,7 @@
 #include "MiniMath/Ast/Environment.hpp"
 
 #include <vector>
+#include <string>
 
 namespace mm::expressions
 {
@@ -20,6 +21,13 @@ namespace mm::expressions
     {
         ast::Environment environment;
         std::vector<std::string> paramNames;
+        Expr body;
+    };
+
+    struct LetExpr
+    {
+        std::string name;
+        Expr value;
         Expr body;
     };
 }

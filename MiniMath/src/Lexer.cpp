@@ -18,6 +18,7 @@ namespace mm
         case '(': return TokenType::LParen;
         case ')': return TokenType::RParen;
         case ',': return TokenType::Comma;
+        case '=': return TokenType::Equals;
         default: return TokenType::Invalid;
         }
     }
@@ -40,7 +41,7 @@ namespace mm
                 return readNumber();
 
             if (std::isalpha(c))
-                return readIdentifier();
+                return asKeyword(readIdentifier());
 
             pos_++;
 
@@ -73,5 +74,16 @@ namespace mm
             pos_++;
 
         return {TokenType::Identifier, source_.substr(start, pos_ - start)};
+    }
+
+    Token Lexer::asKeyword(Token const& token)
+    {
+        if (token.lexeme == "let")
+            return {TokenType::Let, token.lexeme};
+
+        if (token.lexeme == "in")
+            return {TokenType::In, token.lexeme};
+
+        return token;
     }
 }

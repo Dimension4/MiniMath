@@ -20,5 +20,6 @@ namespace mm
 
         Token readNumber();
         Token readIdentifier();
+        static Token asKeyword(Token const& token);
     };
 }
