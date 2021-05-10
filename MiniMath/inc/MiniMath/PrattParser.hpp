@@ -13,13 +13,7 @@ namespace mm
 {
     struct ParseError : std::logic_error
     {
-        [[nodiscard]]
-        explicit ParseError(const std::string& msg)
-            : logic_error(msg) {}
-
-        [[nodiscard]]
-        explicit ParseError(const char* msg)
-            : logic_error(msg) {}
+        using std::logic_error::logic_error;
     };
 
     class PrattParser
