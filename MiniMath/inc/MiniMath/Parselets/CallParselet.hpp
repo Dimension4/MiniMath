@@ -9,7 +9,7 @@ namespace mm::parselets
     {
     public:
         [[nodiscard]]
-        Expr parse(PrattParser& parser, Expr left, const Token& token) const override;
+        Expr parse(PrattParser& parser, const Expr& left, const Token& token) const override;
 
         [[nodiscard]]
         int getPrecedence() const override

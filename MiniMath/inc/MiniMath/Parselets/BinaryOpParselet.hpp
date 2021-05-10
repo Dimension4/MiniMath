@@ -14,7 +14,7 @@ namespace mm::parselets
     {
     public:
         [[nodiscard]] explicit BinaryOpParselet(int precedence, Associativity associativity);
-        [[nodiscard]] Expr parse(PrattParser& parser, Expr left, const Token& token) const override;
+        [[nodiscard]] Expr parse(PrattParser& parser, const Expr& left, const Token& token) const override;
         [[nodiscard]] int getPrecedence() const override;
 
     private:

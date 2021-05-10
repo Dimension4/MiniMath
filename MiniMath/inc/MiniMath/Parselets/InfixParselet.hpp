@@ -16,7 +16,7 @@ namespace mm::parselets
         virtual ~InfixParselet() = default;
 
         [[nodiscard]]
-        virtual Expr parse(PrattParser& parser, Expr left, const Token& token) const = 0;
+        virtual Expr parse(PrattParser& parser, const Expr& left, const Token& token) const = 0;
 
         [[nodiscard]]
         virtual int getPrecedence() const = 0;

@@ -7,7 +7,7 @@
 
 namespace mm::parselets
 {
-    Expr CallParselet::parse(PrattParser& parser, Expr left, const Token& token) const
+    Expr CallParselet::parse(PrattParser& parser, const Expr& left, const Token& token) const
     {
         std::vector<Expr> args;
 
@@ -20,6 +20,6 @@ namespace mm::parselets
             parser.consume(TokenType::RParen);
         }
 
-        return makeExpr(expr::CallExpr{ .target = std::move(left), .args = std::move(args) });
+        return makeExpr(expr::CallExpr{ .target = left, .args = std::move(args) });
     }
 }

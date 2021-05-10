@@ -26,12 +26,12 @@ static BinaryOperation tokenToOp(TokenType type)
 BinaryOpParselet::BinaryOpParselet(int precedence, Associativity associativity) :
     precedence_(precedence), associativity_(associativity) { }
 
-Expr BinaryOpParselet::parse(PrattParser& parser, Expr left, const Token& token) const
+Expr BinaryOpParselet::parse(PrattParser& parser, const Expr& left, const Token& token) const
 {
     auto precedence = associativity_ == Associativity::Left ? precedence_ : precedence_ - 1;
     auto right = parser.parseExpression(precedence);
 
-    return makeExpr(BinaryExpr{ .operation = tokenToOp(token.type), .left = move(left), .right = move(right) });
+    return makeExpr(BinaryExpr{ .operation = tokenToOp(token.type), .left = left, .right = move(right) });
 }
 
 int BinaryOpParselet::getPrecedence() const
