@@ -28,8 +28,8 @@ namespace mm::tests
         auto hello = lexer.nextToken();
         auto world = lexer.nextToken();
 
-        Token expectedHello{TokenType::Identifier, source.substr(0, 5)};
-        Token expectedWorld{TokenType::Identifier, source.substr(6)};
+        Token expectedHello{TokenType::Identifier, std::string(source.substr(0, 5))};
+        Token expectedWorld{TokenType::Identifier, std::string(source.substr(6))};
 
         REQUIRE(lexer.nextToken().type == TokenType::Eof);
         REQUIRE(hello == expectedHello);
@@ -42,7 +42,7 @@ namespace mm::tests
 
         Lexer lexer(source);
         auto number = lexer.nextToken();
-        Token expected{TokenType::Number, source.substr(0)};
+        Token expected{TokenType::Number, std::string(source.substr(0))};
 
         REQUIRE(lexer.nextToken().type == TokenType::Eof);
         REQUIRE(number == expected);

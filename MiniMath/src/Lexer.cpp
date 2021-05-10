@@ -47,13 +47,13 @@ namespace mm
 
             if (auto type = readPunctuator(c); type != TokenType::Invalid)
             {
-                return {type, source_.substr(pos_ - 1, 1)};
+                return { type, std::string(source_.substr(pos_ - 1, 1)) };
             }
 
             throw std::logic_error("Invalid character '" + std::string(1, c) + "' at position " + std::to_string(pos_ - 1) + ".");
         }
 
-        return {.type = TokenType::Eof, .lexeme = source_.substr(source_.length())};
+        return { .type = TokenType::Eof, .lexeme = std::string(source_.substr(source_.length())) };
     }
 
     Token Lexer::readNumber()
@@ -64,7 +64,7 @@ namespace mm
         std::ignore = std::strtod(begin, &end);
         auto size = end - begin;
         pos_ += size;
-        return {TokenType::Number, std::string_view(begin, size)};
+        return { TokenType::Number, std::string(begin, size) };
     }
 
     Token Lexer::readIdentifier()
@@ -73,16 +73,16 @@ namespace mm
         while (pos_ < source_.length() && std::isalnum(source_[pos_]))
             pos_++;
 
-        return {TokenType::Identifier, source_.substr(start, pos_ - start)};
+        return { TokenType::Identifier, std::string(source_.substr(start, pos_ - start)) };
     }
 
     Token Lexer::asKeyword(Token const& token)
     {
         if (token.lexeme == "let")
-            return {TokenType::Let, token.lexeme};
+            return { TokenType::Let, token.lexeme };
 
         if (token.lexeme == "in")
-            return {TokenType::In, token.lexeme};
+            return { TokenType::In, token.lexeme };
 
         return token;
     }

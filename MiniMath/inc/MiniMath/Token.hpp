@@ -25,7 +25,7 @@ namespace mm
     struct Token
     {
         TokenType type = TokenType::Invalid;
-        std::string_view lexeme;
+        std::string lexeme;
     };
 
     [[nodiscard]]

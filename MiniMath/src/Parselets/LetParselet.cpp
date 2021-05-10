@@ -18,6 +18,6 @@ namespace mm::parselets
         parser.consume(TokenType::In);
         auto body = parser.parseExpression();
 
-        return makeExpr(LetExpr{.name = std::string(name.lexeme), .value = std::move(value), .body = std::move(body)});
+        return makeExpr(LetExpr{.name = move(name.lexeme), .value = std::move(value), .body = std::move(body)});
     }
 }

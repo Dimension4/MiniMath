@@ -9,11 +9,14 @@
 #include <string>
 
 using namespace mm;
+using namespace ast;
+using namespace expr;
 
 int main()
 {
     std::string line;
     std::cout << "source: ";
+    Environment env;
 
     while (std::getline(std::cin, line) && !line.empty())
     {
@@ -26,8 +29,10 @@ int main()
 
             fmt::print("{}\n", root);
 
-            auto res = ast::evaluate(root);
+            auto res = evaluate(root, env);
             fmt::print("{}\n", res);
+
+            env.add("ans", std::move(res));
         }
         catch (std::exception const& ex)
         {
