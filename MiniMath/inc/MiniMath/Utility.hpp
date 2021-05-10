@@ -1,9 +1,9 @@
 ﻿#pragma once
 
 #include "Expressions/Expr.hpp"
+#include "TypeTraits.hpp"
 
 #include <optional>
-#include <type_traits>
 #include <utility>
 #include <functional>
 #include <variant>
@@ -11,10 +11,10 @@
 namespace mm
 {
     template <typename T>
-    concept RecursiveExpr = requires(expr::Recursive<std::remove_cvref_t<T>> rec) { Expr{ rec }; };
+    concept RecursiveExpr = VariantMember<expr::Recursive<std::remove_cvref_t<T>>, Expr::Base>;
 
     template <typename T>
-    concept LeafExpr = !RecursiveExpr<T> && requires(T t) { Expr{ t }; };
+    concept LeafExpr = VariantMember<std::remove_cvref_t<T>, Expr::Base>;
 
     template <typename T>
     concept ExprType = LeafExpr<T> || RecursiveExpr<T>;

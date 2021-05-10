@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include "../Traits.hpp"
-
 #include <utility>
 
 namespace mm::expr

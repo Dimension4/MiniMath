@@ -35,6 +35,8 @@ namespace mm
     class Expr : public expr::ExprBase
     {
     public:
+        using Base = expr::ExprBase;
+
         using expr::ExprBase::ExprBase;
         using expr::ExprBase::operator=;
     };

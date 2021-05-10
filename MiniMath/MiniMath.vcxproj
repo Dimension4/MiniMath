@@ -118,7 +118,7 @@
     <ClInclude Include="inc\MiniMath\PrattParser.hpp" />
     <ClInclude Include="inc\MiniMath\Ast\Printer.hpp" />
     <ClInclude Include="inc\MiniMath\Token.hpp" />
-    <ClInclude Include="inc\MiniMath\Traits.hpp" />
+    <ClInclude Include="inc\MiniMath\TypeTraits.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="inc\MiniMath\Parselets\ConstantParselet.hpp" />
