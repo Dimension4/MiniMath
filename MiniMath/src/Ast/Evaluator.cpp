@@ -9,7 +9,7 @@ namespace mm::ast
 {
     using namespace expr;
 
-    Expr Evaluator::operator()(BinaryExpr const& expr, Environment const& env) const
+    Expr ExprEvaluator::operator()(BinaryExpr const& expr, Environment const& env) const
     {
         auto lhs = tryGetExpr<ConstantExpr>(visit(*this, expr.left, env));
 
@@ -33,7 +33,7 @@ namespace mm::ast
         throw std::logic_error("unreachable");
     }
 
-    Expr Evaluator::operator()(CallExpr const& expr, Environment const& env) const
+    Expr ExprEvaluator::operator()(CallExpr const& expr, Environment const& env) const
     {
         auto target = visit(*this, expr.target, env);
         auto closure = tryGetExpr<Closure>(target);
@@ -56,7 +56,7 @@ namespace mm::ast
         return visit(*this, closure->body, callEnv);
     }
 
-    Expr Evaluator::operator()(NameExpr const& expr, Environment const& env) const
+    Expr ExprEvaluator::operator()(NameExpr const& expr, Environment const& env) const
     {
         if (auto val = env.tryGet(expr.name))
             return *val;
@@ -64,19 +64,25 @@ namespace mm::ast
         throw LookupError(fmt::format("Unknown identifier '{}'", expr.name));
     }
 
-    Expr Evaluator::operator()(ConstantExpr const& expr, Environment const& env) const
+    Expr ExprEvaluator::operator()(ConstantExpr const& expr, Environment const& env) const
     {
         return expr;
     }
 
-    Expr Evaluator::operator()(Closure const& expr, Environment const& env) const
+    Expr ExprEvaluator::operator()(Closure const& expr, Environment const& env) const
     {
         return makeExpr(expr);
     }
 
-    Expr Evaluator::operator()(LetExpr const& expr, Environment const& env) const
+    Expr ExprEvaluator::operator()(LetExpr const& expr, Environment const& env) const
     {
         auto letEnv = env.with(expr.name, visit(*this, expr.value, env));
         return visit(*this, expr.body, letEnv);
+    }
+
+    Environment StmtEvaluator::operator()(stmt::LetStmt const& stmt, Environment const& env) const
+    {
+    	auto val = evaluate(stmt.value, env);
+        return Environment{}.with(std::move(stmt.name), std::move(val));
     }
 }

@@ -106,6 +106,8 @@
     <ClInclude Include="inc\MiniMath\Expressions\RecursiveExpressions.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\RecursivePostlude.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\LetParselet.hpp" />
+    <ClInclude Include="inc\MiniMath\Parselets\StmtParselet.hpp" />
+    <ClInclude Include="inc\MiniMath\Statements\Stmt.hpp" />
     <ClInclude Include="inc\MiniMath\Utility.hpp" />
     <ClInclude Include="inc\MiniMath\Lexer.hpp" />
     <ClInclude Include="inc\MiniMath\MiniMathParser.hpp" />

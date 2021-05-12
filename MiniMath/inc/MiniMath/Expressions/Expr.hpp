@@ -23,20 +23,18 @@ namespace mm
         //
 
         using ExprBase = std::variant<
+            ConstantExpr,
+            NameExpr,
             Recursive<BinaryExpr>,
             Recursive<CallExpr>,
             Recursive<Closure>,
-            Recursive<LetExpr>,
-            ConstantExpr,
-            NameExpr
+            Recursive<LetExpr>
         >;
     }
 
     class Expr : public expr::ExprBase
     {
     public:
-        using Base = expr::ExprBase;
-
         using expr::ExprBase::ExprBase;
         using expr::ExprBase::operator=;
     };

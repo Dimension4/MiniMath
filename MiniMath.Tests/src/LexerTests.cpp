@@ -2,34 +2,38 @@
 #include <catch2/catch.hpp>
 
 
+auto makeLexer(std::string_view str)
+{
+    return mm::Lexer([=, pos = 0ull]() mutable
+    {
+        return pos < str.size() ? str[pos++] : 0;
+    });
+}
+
 constexpr bool operator==(const mm::Token& lhs, const mm::Token& rhs)
 {
-    return lhs.type == rhs.type
-        && lhs.lexeme.data() == rhs.lexeme.data()
-        && lhs.lexeme.length() == rhs.lexeme.length();
+    return lhs.type == rhs.type && lhs.lexeme == rhs.lexeme;
 }
 
 namespace mm::tests
 {
     TEST_CASE("empty string produces only EOF")
     {
-        Lexer lexer("");
+        auto lexer = makeLexer("");
         auto token = lexer.nextToken();
 
         REQUIRE(token.type == TokenType::Eof);
-        REQUIRE(token.lexeme == "");
+        REQUIRE(token.lexeme.empty());
     }
 
     TEST_CASE("identifiers only")
     {
-        std::string_view source = "hello world";
-
-        Lexer lexer(source);
+        auto lexer = makeLexer("hello world");
         auto hello = lexer.nextToken();
         auto world = lexer.nextToken();
 
-        Token expectedHello{TokenType::Identifier, std::string(source.substr(0, 5))};
-        Token expectedWorld{TokenType::Identifier, std::string(source.substr(6))};
+        Token expectedHello{ TokenType::Identifier, "hello" };
+        Token expectedWorld{ TokenType::Identifier, "world" };
 
         REQUIRE(lexer.nextToken().type == TokenType::Eof);
         REQUIRE(hello == expectedHello);
@@ -40,9 +44,9 @@ namespace mm::tests
     {
         std::string_view source = GENERATE("0", "123", "123.23", "1e2", "3e-2", "1.2e3", "1.2e-34");
 
-        Lexer lexer(source);
+        auto lexer = makeLexer(source);
         auto number = lexer.nextToken();
-        Token expected{TokenType::Number, std::string(source.substr(0))};
+        Token expected{ TokenType::Number, std::string(source) };
 
         REQUIRE(lexer.nextToken().type == TokenType::Eof);
         REQUIRE(number == expected);

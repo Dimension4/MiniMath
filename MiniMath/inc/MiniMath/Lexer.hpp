@@ -2,7 +2,9 @@
 
 #include "Token.hpp"
 
-#include <string_view>
+#include <functional>
+#include <optional>
+#include <stdexcept>
 
 namespace mm
 {
@@ -10,16 +12,25 @@ namespace mm
     {
     public:
         [[nodiscard]]
-        explicit Lexer(std::string_view source);
+        explicit Lexer(std::function<char()> charSource);
 
         Token nextToken();
+        bool atEof() const noexcept;
+        void reset() noexcept;
 
     private:
-        std::string_view source_;
-        std::size_t pos_ = 0;
+        std::function<char()> charSource_;
+        std::optional<char> overScan_;
+        bool eof_ = false;
 
-        Token readNumber();
-        Token readIdentifier();
+        char nextChar();
+        Token readNumber(char first);
+        Token readIdentifier(char first);
         static Token asKeyword(Token const& token);
+    };
+
+    struct LexError : std::logic_error
+    {
+        using std::logic_error::logic_error;
     };
 }

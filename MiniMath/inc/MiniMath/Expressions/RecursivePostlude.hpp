@@ -5,7 +5,7 @@
 namespace mm::expr
 {
     template <typename T>
-    template <typename ...Args>
+    template <typename ...Args> requires(sizeof...(Args) > 0)
     constexpr Recursive<T>::Recursive(Args&& ...args) :
         ptr_(new T(std::forward<Args>(args)...)) {}
 

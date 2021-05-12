@@ -10,7 +10,7 @@ namespace mm::expr
     public:
         using ValueType = T;
 
-        template <typename ...Args>
+        template <typename ...Args> requires(sizeof...(Args) > 0)
         [[nodiscard]] explicit constexpr Recursive(Args&& ...args);
         [[nodiscard]] explicit constexpr Recursive(T val);
         ~Recursive() noexcept;

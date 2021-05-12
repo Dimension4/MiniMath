@@ -11,14 +11,20 @@
 namespace mm
 {
     template <typename T>
-    concept RecursiveExpr = VariantMember<expr::Recursive<std::remove_cvref_t<T>>, Expr::Base>;
+    concept RecursiveExpr = VariantMember<expr::Recursive<std::remove_cvref_t<T>>, BaseVariant<Expr>>;
 
     template <typename T>
-    concept LeafExpr = VariantMember<std::remove_cvref_t<T>, Expr::Base>;
+    concept LeafExpr = VariantMember<std::remove_cvref_t<T>, BaseVariant<Expr>>;
 
     template <typename T>
     concept ExprType = LeafExpr<T> || RecursiveExpr<T>;
 
+
+    template <typename T, typename U>
+    decltype(auto) forwardAs(U&& u)
+    {
+        return static_cast<CopyQualifiers<T, U>>(u);
+    }
 
     template <ExprType T>
     [[nodiscard]] constexpr Expr makeExpr(T&& x) noexcept
@@ -72,33 +78,12 @@ namespace mm
             return ret(std::get_if<T>(&expr));
     }
 
-    namespace details
+    template <typename Visitor, typename Variant, typename ...Args>
+    constexpr decltype(auto) visit(Visitor&& visitor, Variant&& variant, Args&& ...args)
     {
-        template <typename Visitor, typename Variant, typename ...Args>
-        constexpr decltype(auto) visit(Visitor&& visitor, Variant&& variant, Args&& ...args)
+        return std::visit([&]<typename T>(T&& var)
         {
-            return std::visit([&]<typename T>(T&& var) mutable
-            {
-                return std::forward<Visitor>(visitor)(unrec(std::forward<T>(var)), std::forward<Args>(args)...);
-            }, std::forward<Variant>(variant));
-        }
-    }
-
-    template <typename Visitor, typename ...Args>
-    constexpr decltype(auto) visit(Visitor&& visitor, expr::ExprBase&& expr, Args&& ...args)
-    {
-        return details::visit(std::forward<Visitor>(visitor), std::move(expr), std::forward<Args>(args)...);
-    }
-
-    template <typename Visitor, typename ...Args>
-    constexpr decltype(auto) visit(Visitor&& visitor, expr::ExprBase& expr, Args&& ...args)
-    {
-        return details::visit(std::forward<Visitor>(visitor), expr, std::forward<Args>(args)...);
-    }
-
-    template <typename Visitor, typename ...Args>
-    constexpr decltype(auto) visit(Visitor&& visitor, expr::ExprBase const& expr, Args&& ...args)
-    {
-        return details::visit(std::forward<Visitor>(visitor), expr, std::forward<Args>(args)...);
+            return std::forward<Visitor>(visitor)(unrec(std::forward<T>(var)), std::forward<Args>(args)...);
+        }, forwardAs<BaseVariant<Variant>>(variant));
     }
 }

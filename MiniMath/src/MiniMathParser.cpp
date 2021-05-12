@@ -16,6 +16,7 @@ MiniMathParser::MiniMathParser(Lexer& lexer) : PrattParser(lexer)
     registerParselet(TokenType::LParen, std::make_unique<GroupParselet>());
     registerParselet(TokenType::LParen, std::make_unique<CallParselet>());
     registerParselet(TokenType::Let, std::make_unique<LetParselet>());
+    registerParselet(TokenType::Let, std::make_unique<LetStmtParselet>());
 
     infix(TokenType::Plus, OperatorPrecedence::Addition);
     infix(TokenType::Minus, OperatorPrecedence::Subtraction);

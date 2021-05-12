@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "PrefixParselet.hpp"
+#include "StmtParselet.hpp"
 
 namespace mm::parselets
 {
@@ -9,5 +10,13 @@ namespace mm::parselets
     public:
         [[nodiscard]]
         Expr parse(PrattParser& parser, const Token& token) const override;
+    };
+
+	
+    class LetStmtParselet : public StmtParselet
+    {
+    public:
+        [[nodiscard]]
+        Stmt parse(PrattParser& parser, const Token& token) const override;
     };
 }

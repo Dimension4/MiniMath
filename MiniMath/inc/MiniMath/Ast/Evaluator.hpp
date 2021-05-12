@@ -2,12 +2,14 @@
 
 #include "Environment.hpp"
 #include "../Expressions.hpp"
+#include "../Statements/Stmt.hpp"
 
 #include <stdexcept>
 
+
 namespace mm::ast
 {
-    struct Evaluator
+    struct ExprEvaluator
     {
         Expr operator()(expr::BinaryExpr const& expr, Environment const& env) const;
         Expr operator()(expr::CallExpr const& expr, Environment const& env) const;
@@ -17,9 +19,19 @@ namespace mm::ast
         Expr operator()(expr::LetExpr const& expr, Environment const& env) const;
     };
 
+	struct StmtEvaluator
+	{
+		Environment operator()(stmt::LetStmt const& stmt, Environment const& env) const;
+	};
+
     inline Expr evaluate(Expr const& expr, Environment const& env = {})
     {
-        return visit(Evaluator{}, expr, env);
+        return visit(ExprEvaluator{}, expr, env);
+    }
+	
+    inline Environment evaluate(Stmt const& expr, Environment const& env)
+    {
+        return visit(StmtEvaluator{}, expr, env);
     }
 
     struct TypeError : std::logic_error

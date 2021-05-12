@@ -36,13 +36,29 @@ namespace mm
             Environment with(std::string name, Expr value) const
             {
                 auto copy = *this;
-                copy.add(name, value);
+                copy.add(move(name), std::move(value));
                 return copy;
             }
 
             void add(std::string name, Expr value)
             {
                 symbols_.insert_or_assign(std::move(name), std::move(value));
+            }
+
+            void merge(Environment&& other)
+            {
+                for (auto& [name, val] : other.symbols_)
+                    symbols_.insert_or_assign(move(name), std::move(val));
+            }
+
+            auto begin() const noexcept
+            {
+                return symbols_.cbegin();
+            }
+
+            auto end() const noexcept
+            {
+                return symbols_.cend();
             }
 
         private:

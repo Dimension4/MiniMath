@@ -1,5 +1,7 @@
 ﻿#include "MiniMath/Lexer.hpp"
 
+#include <fmt/format.h>
+
 #include <cctype>
 #include <cstdlib>
 #include <stdexcept>
@@ -23,57 +25,103 @@ namespace mm
         }
     }
 
-    Lexer::Lexer(std::string_view source) : source_(source) { }
+    Lexer::Lexer(std::function<char()> charSource) : charSource_(move(charSource))
+    {
+    }
 
     Token Lexer::nextToken()
     {
-        while (pos_ < source_.length())
+        while (char c = nextChar())
         {
-            auto c = source_[pos_];
-
             if (std::isspace(c))
-            {
-                pos_++;
                 continue;
-            }
 
             if (std::isdigit(c))
-                return readNumber();
+                return readNumber(c);
 
             if (std::isalpha(c))
-                return asKeyword(readIdentifier());
-
-            pos_++;
+                return asKeyword(readIdentifier(c));
 
             if (auto type = readPunctuator(c); type != TokenType::Invalid)
-            {
-                return { type, std::string(source_.substr(pos_ - 1, 1)) };
-            }
+                return { .type = type, .lexeme = std::string(1, c) };
 
-            throw std::logic_error("Invalid character '" + std::string(1, c) + "' at position " + std::to_string(pos_ - 1) + ".");
+            throw LexError(fmt::format("Invalid character '{}'", c));
         }
 
-        return { .type = TokenType::Eof, .lexeme = std::string(source_.substr(source_.length())) };
+        eof_ = true;
+        return { .type = TokenType::Eof, .lexeme = "" };
     }
 
-    Token Lexer::readNumber()
+    bool Lexer::atEof() const noexcept
     {
-        auto begin = source_.data() + pos_;
-        char* end;
-
-        std::ignore = std::strtod(begin, &end);
-        auto size = end - begin;
-        pos_ += size;
-        return { TokenType::Number, std::string(begin, size) };
+        return eof_;
     }
 
-    Token Lexer::readIdentifier()
+    void Lexer::reset() noexcept
     {
-        std::size_t start = pos_;
-        while (pos_ < source_.length() && std::isalnum(source_[pos_]))
-            pos_++;
+        eof_ = false;
+        overScan_.reset();
+    }
 
-        return { TokenType::Identifier, std::string(source_.substr(start, pos_ - start)) };
+    char Lexer::nextChar()
+    {
+        if (eof_)
+            return 0;
+
+        if (overScan_)
+            return *std::exchange(overScan_, std::nullopt);
+
+        return charSource_();
+    }
+
+    Token Lexer::readNumber(char first)
+    {
+        std::string buffer(1, first);
+        char c = first;
+
+        auto readDigits = [&]
+        {
+            while (std::isdigit(c = nextChar()))
+                buffer += c;
+        };
+
+        readDigits();
+
+        if (c == '.')
+        {
+            buffer += c;
+            readDigits();
+        }
+
+        if (c == 'e' || c == 'E')
+        {
+            buffer += c;
+            c = nextChar();
+
+            if (c == '+' || c == '-')
+                buffer += c;
+            else
+                overScan_ = c;
+
+            readDigits();
+        }
+
+        overScan_ = c;
+
+        return { .type = TokenType::Number, .lexeme = move(buffer) };
+    }
+
+    Token Lexer::readIdentifier(char first)
+    {
+        std::string buffer(1, first);
+        char c = first;
+
+        while (std::isalnum(c = nextChar()))
+            buffer += c;
+
+        overScan_ = c;
+
+        return { .type = TokenType::Identifier, .lexeme = move(buffer) };
     }
 
     Token Lexer::asKeyword(Token const& token)
