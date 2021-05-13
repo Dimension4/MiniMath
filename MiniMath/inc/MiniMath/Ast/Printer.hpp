@@ -4,6 +4,8 @@
 
 #include <fmt/format.h>
 
+#include <ranges>
+
 namespace mm::ast
 {
     struct Printer
@@ -30,12 +32,19 @@ namespace mm::ast
 
         auto operator()(auto outIt, expr::Closure const& expr) const
         {
-            return fmt::format_to(outIt, "{}", expr.body);
+            auto env = expr.environment | std::views::transform([](auto&& p) { return p.first; });
+            return fmt::format_to(outIt, "[{}] {} -> {}", fmt::join(env, ", "), fmt::join(expr.paramNames, " "),
+                                  expr.body);
         }
 
         auto operator()(auto outIt, expr::LetExpr const& expr) const
         {
             return fmt::format_to(outIt, "let {} = {} in {}", expr.name, expr.value, expr.body);
+        }
+
+        auto operator()(auto outIt, expr::FunctionExpr const& expr) const
+        {
+            return fmt::format_to(outIt, "fn {} -> {}", fmt::join(expr.paramNames, " "), expr.body);
         }
     };
 }

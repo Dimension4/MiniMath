@@ -42,6 +42,9 @@ namespace mm
             if (std::isalpha(c))
                 return asKeyword(readIdentifier(c));
 
+            if (auto t = tryReadWideToken(c))
+                return std::move(*t);
+
             if (auto type = readPunctuator(c); type != TokenType::Invalid)
                 return { .type = type, .lexeme = std::string(1, c) };
 
@@ -124,6 +127,19 @@ namespace mm
         return { .type = TokenType::Identifier, .lexeme = move(buffer) };
     }
 
+    std::optional<Token> Lexer::tryReadWideToken(char c)
+    {
+        if (c == '-')
+        {
+            c = nextChar();
+            if (c == '>')
+                return Token{.type = TokenType::RArrow, .lexeme = "->"};
+           overScan_ = c;
+        }
+
+        return std::nullopt;
+    }
+
     Token Lexer::asKeyword(Token const& token)
     {
         if (token.lexeme == "let")
@@ -131,6 +147,9 @@ namespace mm
 
         if (token.lexeme == "in")
             return { TokenType::In, token.lexeme };
+
+        if (token.lexeme == "fn")
+            return { TokenType::Fn, token.lexeme };
 
         return token;
     }

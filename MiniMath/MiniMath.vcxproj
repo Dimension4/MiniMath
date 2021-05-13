@@ -84,12 +84,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ast\EnvironmentReducer.cpp" />
     <ClCompile Include="src\Ast\Evaluator.cpp" />
     <ClCompile Include="src\Lexer.cpp" />
     <ClCompile Include="src\MiniMathParser.cpp" />
     <ClCompile Include="src\Parselets\BinaryOpParselet.cpp" />
     <ClCompile Include="src\Parselets\CallParselet.cpp" />
     <ClCompile Include="src\Parselets\ConstantParselet.cpp" />
+    <ClCompile Include="src\Parselets\FunctionParselet.cpp" />
     <ClCompile Include="src\Parselets\GroupParselet.cpp" />
     <ClCompile Include="src\Parselets\LetParselet.cpp" />
     <ClCompile Include="src\Parselets\NameParselet.cpp" />
@@ -97,7 +99,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\MiniMath\Ast\Environment.hpp" />
+    <ClInclude Include="inc\MiniMath\Ast\EnvironmentReducer.hpp" />
+    <ClInclude Include="inc\MiniMath\Ast\Errors.hpp" />
     <ClInclude Include="inc\MiniMath\Ast\Evaluator.hpp" />
+    <ClInclude Include="inc\MiniMath\ContainerUtility.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\BinaryExpr.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\Expr.hpp" />
@@ -105,6 +110,7 @@
     <ClInclude Include="inc\MiniMath\Expressions\Recursive.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\RecursiveExpressions.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\RecursivePostlude.hpp" />
+    <ClInclude Include="inc\MiniMath\Parselets\FunctionParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\LetParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\StmtParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Statements\Stmt.hpp" />

@@ -24,6 +24,12 @@ namespace mm::expr
         Expr body;
     };
 
+    struct FunctionExpr
+    {
+        std::vector<std::string> paramNames;
+        Expr body;
+    };
+
     struct LetExpr
     {
         std::string name;

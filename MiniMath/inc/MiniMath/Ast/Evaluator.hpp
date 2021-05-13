@@ -4,8 +4,6 @@
 #include "../Expressions.hpp"
 #include "../Statements/Stmt.hpp"
 
-#include <stdexcept>
-
 
 namespace mm::ast
 {
@@ -17,6 +15,7 @@ namespace mm::ast
         Expr operator()(expr::ConstantExpr const& expr, Environment const& env) const;
         Expr operator()(expr::Closure const& expr, Environment const& env) const;
         Expr operator()(expr::LetExpr const& expr, Environment const& env) const;
+        Expr operator()(expr::FunctionExpr const& expr, Environment const& env) const;
     };
 
 	struct StmtEvaluator
@@ -33,19 +32,4 @@ namespace mm::ast
     {
         return visit(StmtEvaluator{}, expr, env);
     }
-
-    struct TypeError : std::logic_error
-    {
-        using std::logic_error::logic_error;
-    };
-
-    struct LookupError : std::logic_error
-    {
-        using std::logic_error::logic_error;
-    };
-
-    struct ArgumentError : std::logic_error
-    {
-        using std::logic_error::logic_error;
-    };
 }

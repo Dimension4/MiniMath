@@ -10,7 +10,7 @@
 #include <memory>
 #include <stdexcept>
 #include <vector>
-
+#include <optional>
 
 namespace mm
 {
@@ -30,7 +30,7 @@ namespace mm
         [[nodiscard]]
         Expr parseExpression(int precedence = 0);
         [[nodiscard]]
-        bool match(TokenType expected);
+        std::optional<Token> match(TokenType expected);        
         Token consume(TokenType expected);
         Token consume();
         void resetState();

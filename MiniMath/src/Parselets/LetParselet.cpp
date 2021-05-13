@@ -15,7 +15,7 @@ namespace mm::parselets
 		auto name = parser.consume(TokenType::Identifier);
 		parser.consume(TokenType::Equals);
 		auto value = parser.parseExpression();
-		parser.consume(TokenType::In);
+	    std::ignore = parser.match(TokenType::In);
 		auto body = parser.parseExpression();
 
 		return makeExpr(LetExpr{ .name = move(name.lexeme), .value = std::move(value), .body = std::move(body) });

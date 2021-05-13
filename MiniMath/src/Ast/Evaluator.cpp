@@ -1,5 +1,7 @@
 ﻿#include "MiniMath/Ast/Evaluator.hpp"
 #include "MiniMath/Ast/Printer.hpp"
+#include "MiniMath/Ast/Errors.hpp"
+#include "MiniMath/Ast/EnvironmentReducer.hpp"
 
 #include <fmt/format.h>
 
@@ -42,7 +44,8 @@ namespace mm::ast
             throw TypeError(fmt::format("'{}' is not a function", target));
 
         if (closure->paramNames.size() != expr.args.size())
-            throw ArgumentError(fmt::format("'{}' expects {} arguments, but {} were given", target, closure->paramNames.size(), expr.args.size()));
+            throw ArgumentError(fmt::format("'{}' expects {} arguments, but {} were given", target,
+                                            closure->paramNames.size(), expr.args.size()));
 
         auto callEnv = closure->environment;
 
@@ -80,9 +83,21 @@ namespace mm::ast
         return visit(*this, expr.body, letEnv);
     }
 
+    Expr ExprEvaluator::operator()(FunctionExpr const& expr, Environment const& env) const
+    {
+        Environment closureEnv;
+        EnvironmentReducer{}(expr, {}, env, closureEnv);
+
+        return makeExpr(Closure{
+            .environment = std::move(closureEnv),
+            .paramNames = expr.paramNames,
+            .body = expr.body
+        });
+    }
+
     Environment StmtEvaluator::operator()(stmt::LetStmt const& stmt, Environment const& env) const
     {
-    	auto val = evaluate(stmt.value, env);
+        auto val = evaluate(stmt.value, env);
         return Environment{}.with(std::move(stmt.name), std::move(val));
     }
 }

@@ -20,7 +20,7 @@ public:
     {
         return buffer_[pos_++];
     }
-    
+
     void restartBuffer()
     {
         pos_ = 0;
@@ -77,14 +77,14 @@ int main()
 
             env.merge(std::move(newSymbols));
         }
-        catch (std::exception const&)
+        catch (ParseError const& ex)
         {
             parser.resetState();
             lexer.reset();
             charSource.restartBuffer();
             try
             {
-                auto root = parser.parseExpression();                
+                auto root = parser.parseExpression();
                 auto res = evaluate(root, env);
                 fmt::print("= {}\n", res);
 
@@ -92,11 +92,17 @@ int main()
 
                 parser.consume(TokenType::Eof);
             }
-            catch (std::exception const& ex)
+            catch (std::exception const&)
             {
                 std::cerr << ex.what() << "\n";
                 parser.resetState();
             }
+        }
+        catch (std::exception const& ex)
+        {
+            std::cerr << ex.what() << "\n";
+            parser.resetState();
+            lexer.reset();
         }
 
         std::cout << '\n';

@@ -19,6 +19,8 @@ namespace mm
         Equals,
         Let,
         In,
+        Fn,
+        RArrow,
         Eof
     };
 
@@ -48,6 +50,8 @@ namespace mm
         ENUM_CASE(Equals);
         ENUM_CASE(Let);
         ENUM_CASE(In);
+        ENUM_CASE(Fn);
+        ENUM_CASE(RArrow);
         ENUM_CASE(Eof);
 
 #undef ENUM_CASE
@@ -71,6 +75,8 @@ namespace mm
         case TokenType::Equals: return "=";
         case TokenType::Let: return "let";
         case TokenType::In: return "in";
+        case TokenType::Fn: return "fn";
+        case TokenType::RArrow: return "->";
         }
 
         return enumName(type);

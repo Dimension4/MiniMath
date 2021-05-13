@@ -64,14 +64,12 @@ Expr PrattParser::parseExpression(int precedence)
 	return left;
 }
 
-bool PrattParser::match(TokenType expected)
+std::optional<Token> PrattParser::match(TokenType expected)
 {
-	auto next = lookAhead();
-	if (next.type != expected)
-		return false;
+    if (auto next = lookAhead(); next.type != expected)
+		return std::nullopt;
 
-	consume();
-	return true;
+	return consume();
 }
 
 Token PrattParser::consume(TokenType expected)
