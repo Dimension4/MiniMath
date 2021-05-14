@@ -2,6 +2,8 @@
 
 #include "MiniMath/Utility.hpp"
 
+#include <fmt/format.h>
+
 #include <map>
 #include <string>
 #include <functional>
@@ -66,3 +68,23 @@ namespace mm
         };
     }
 }
+
+
+template <>
+struct fmt::formatter<mm::ast::Environment>
+{
+    constexpr auto parse(format_parse_context& ctx)
+    {
+        return ctx.begin();
+    }
+
+    template <typename FormatContext>
+    auto format(mm::ast::Environment const& env, FormatContext& ctx)
+    {
+        fmt::format_to(ctx.out(), "{{\n");
+        for (auto const& [name, val] : env)
+            fmt::format_to(ctx.out(), "    {} = {}\n", name, val);
+        fmt::format_to(ctx.out(), "}}");
+        return ctx.out();
+    }
+};

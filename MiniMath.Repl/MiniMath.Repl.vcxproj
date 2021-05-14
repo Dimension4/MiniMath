@@ -85,11 +85,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Repl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MiniMath\MiniMath.vcxproj">
       <Project>{946f9420-9185-4b87-9c6d-8058103c016a}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\Repl\Repl.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

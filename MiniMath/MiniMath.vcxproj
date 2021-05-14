@@ -110,6 +110,7 @@
     <ClInclude Include="inc\MiniMath\Expressions\Recursive.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\RecursiveExpressions.hpp" />
     <ClInclude Include="inc\MiniMath\Expressions\RecursivePostlude.hpp" />
+    <ClInclude Include="inc\MiniMath\MiniMath.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\FunctionParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\LetParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\StmtParselet.hpp" />
