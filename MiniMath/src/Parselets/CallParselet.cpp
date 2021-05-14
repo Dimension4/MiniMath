@@ -11,14 +11,8 @@ namespace mm::parselets
     {
         std::vector<Expr> args;
 
-        if (!parser.match(TokenType::RParen))
-        {
-            do
-                args.push_back(parser.parseExpression());
-            while (parser.match(TokenType::Comma));
-
-            parser.consume(TokenType::RParen);
-        }
+        while (!parser.match(TokenType::RParen))
+            args.push_back(parser.parseExpression());
 
         return makeExpr(expr::CallExpr{ .target = left, .args = std::move(args) });
     }
