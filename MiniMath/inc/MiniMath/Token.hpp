@@ -6,8 +6,7 @@ namespace mm
 {
     enum class TokenType
     {
-        Invalid = -1,
-        Identifier = 0,
+        Identifier,
         Number,
         LParen,
         RParen,
@@ -28,7 +27,7 @@ namespace mm
 
     struct Token
     {
-        TokenType type = TokenType::Invalid;
+        TokenType type{};
         std::string lexeme;
     };
 
@@ -39,7 +38,6 @@ namespace mm
         {
 #define ENUM_CASE(x) case TokenType::x: return #x
 
-        ENUM_CASE(Invalid);
         ENUM_CASE(Identifier);
         ENUM_CASE(Number);
         ENUM_CASE(LParen);

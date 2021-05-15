@@ -9,7 +9,7 @@
 
 namespace mm
 {
-    static TokenType readPunctuator(char c)
+    static std::optional<TokenType> readPunctuator(char c)
     {
         switch (c)
         {
@@ -22,8 +22,9 @@ namespace mm
         case ',': return TokenType::Comma;
         case '=': return TokenType::Equals;
         case '.': return TokenType::Dot;
-        default: return TokenType::Invalid;
         }
+
+        return std::nullopt;
     }
 
     Lexer::Lexer(std::function<char()> charSource) : charSource_(move(charSource))
@@ -49,8 +50,8 @@ namespace mm
             if (auto t = tryReadWideToken(c))
                 return std::move(*t);
 
-            if (auto type = readPunctuator(c); type != TokenType::Invalid)
-                return { .type = type, .lexeme = std::string(1, c) };
+            if (auto type = readPunctuator(c))
+                return { .type = *type, .lexeme = std::string(1, c) };
 
             throw LexError(fmt::format("Invalid character '{}'", c));
         }
