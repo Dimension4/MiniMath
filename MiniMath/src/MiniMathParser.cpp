@@ -6,6 +6,7 @@
 #include "MiniMath/Parselets/GroupParselet.hpp"
 #include "MiniMath/Parselets/LetParselet.hpp"
 #include "MiniMath/Parselets/NameParselet.hpp"
+#include "MiniMath/Parselets/ImportParselet.hpp"
 
 
 using namespace mm;
@@ -14,6 +15,7 @@ using namespace parselets;
 MiniMathParser::MiniMathParser(Lexer& lexer) : PrattParser(lexer)
 {
     registerParselet(TokenType::Let, std::make_unique<LetStmtParselet>());
+    registerParselet(TokenType::Import, std::make_unique<ImportParselet>());
 
     registerParselet(TokenType::Identifier, std::make_unique<NameParselet>());
     registerParselet(TokenType::Number, std::make_unique<ConstantParselet>());

@@ -1,0 +1,1 @@
+﻿let sqrlen = fn x y -> x * x + y * y

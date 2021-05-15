@@ -21,6 +21,7 @@ namespace mm::ast
 	struct StmtEvaluator
 	{
 		Environment operator()(stmt::LetStmt const& stmt, Environment const& env) const;
+		Environment operator()(stmt::ImportStmt const& stmt, Environment const& env) const;
 	};
 
     inline Expr evaluate(Expr const& expr, Environment const& env = {})

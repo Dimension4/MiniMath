@@ -7,6 +7,7 @@
 #include <map>
 #include <string>
 #include <functional>
+#include <filesystem>
 
 namespace mm
 {
@@ -42,6 +43,17 @@ namespace mm
                 return copy;
             }
 
+            void setDir(std::filesystem::path path)
+            {
+                dir_ = std::move(path);
+            }
+
+            [[nodiscard]]
+            std::filesystem::path const& getDir() const noexcept
+            {
+                return dir_;
+            }
+
             void add(std::string name, Expr value)
             {
                 symbols_.insert_or_assign(std::move(name), std::move(value));
@@ -50,7 +62,7 @@ namespace mm
             void merge(Environment&& other)
             {
                 for (auto& [name, val] : other.symbols_)
-                    symbols_.insert_or_assign(move(name), std::move(val));
+                    symbols_.insert_or_assign(name, std::move(val));
             }
 
             auto begin() const noexcept
@@ -65,6 +77,7 @@ namespace mm
 
         private:
             std::map<std::string, Expr, std::less<>> symbols_;
+            std::filesystem::path dir_ = ".";
         };
     }
 }

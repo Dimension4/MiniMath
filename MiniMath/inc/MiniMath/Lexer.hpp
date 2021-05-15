@@ -15,7 +15,7 @@ namespace mm
         explicit Lexer(std::function<char()> charSource);
 
         Token nextToken();
-        bool atEof() const noexcept;
+        [[nodiscard]] bool atEof() const noexcept;
         void reset() noexcept;
 
     private:

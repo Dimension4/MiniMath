@@ -2,10 +2,15 @@
 #include "MiniMath/Ast/Printer.hpp"
 #include "MiniMath/Ast/Errors.hpp"
 #include "MiniMath/Ast/EnvironmentReducer.hpp"
+#include "MiniMath/IoUtility.hpp"
+#include "MiniMath/Lexer.hpp"
+#include "MiniMath/MiniMathParser.hpp"
 
 #include <fmt/format.h>
 
 #include <cmath>
+#include <fstream>
+
 
 namespace mm::ast
 {
@@ -98,6 +103,40 @@ namespace mm::ast
     Environment StmtEvaluator::operator()(stmt::LetStmt const& stmt, Environment const& env) const
     {
         auto val = evaluate(stmt.value, env);
-        return Environment{}.with(std::move(stmt.name), std::move(val));
+        return Environment{}.with(stmt.name, std::move(val));
+    }
+
+    Environment StmtEvaluator::operator()(stmt::ImportStmt const& stmt, Environment const& env) const
+    {
+        auto target = stmt.target;
+        std::ranges::replace(target, '.', '/');
+
+        auto path = env.getDir() / target;
+        path.replace_extension(".mm");
+
+        if (!exists(path))
+            throw LookupError(fmt::format("Module '{}' doesn't exist.", stmt.target));
+
+        std::ifstream file(path);
+        skipBom(file);
+
+        Lexer lexer([&]
+        {
+            auto c = file.get();
+            return file ? char(c) : 0;
+        });
+
+        MiniMathParser parser(lexer);
+
+        Environment importEnv;
+        importEnv.setDir(path.parent_path());
+
+        while (!lexer.atEof())
+        {
+            auto s = parser.parseStatement();
+            importEnv.merge(evaluate(s, importEnv));
+        }
+
+        return importEnv;
     }
 }

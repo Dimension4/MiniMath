@@ -95,6 +95,10 @@
   <ItemGroup>
     <ClInclude Include="inc\Repl\Repl.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="env\linalg\norm.mm" />
+    <None Include="env\math.mm" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

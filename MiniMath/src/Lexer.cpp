@@ -21,6 +21,7 @@ namespace mm
         case ')': return TokenType::RParen;
         case ',': return TokenType::Comma;
         case '=': return TokenType::Equals;
+        case '.': return TokenType::Dot;
         default: return TokenType::Invalid;
         }
     }
@@ -133,8 +134,8 @@ namespace mm
         {
             c = nextChar();
             if (c == '>')
-                return Token{.type = TokenType::RArrow, .lexeme = "->"};
-           overScan_ = c;
+                return Token{ .type = TokenType::RArrow, .lexeme = "->" };
+            overScan_ = c;
         }
 
         return std::nullopt;
@@ -150,6 +151,9 @@ namespace mm
 
         if (token.lexeme == "fn")
             return { TokenType::Fn, token.lexeme };
+
+        if (token.lexeme == "import")
+            return { TokenType::Import, token.lexeme };
 
         return token;
     }

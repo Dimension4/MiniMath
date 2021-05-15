@@ -21,6 +21,8 @@ namespace mm
         In,
         Fn,
         RArrow,
+        Import,
+        Dot,
         Eof
     };
 
@@ -52,6 +54,8 @@ namespace mm
         ENUM_CASE(In);
         ENUM_CASE(Fn);
         ENUM_CASE(RArrow);
+        ENUM_CASE(Import);
+        ENUM_CASE(Dot);
         ENUM_CASE(Eof);
 
 #undef ENUM_CASE
@@ -77,6 +81,8 @@ namespace mm
         case TokenType::In: return "in";
         case TokenType::Fn: return "fn";
         case TokenType::RArrow: return "->";
+        case TokenType::Import: return "import";
+        case TokenType::Dot: return ".";
         }
 
         return enumName(type);

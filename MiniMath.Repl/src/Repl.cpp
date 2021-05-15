@@ -3,6 +3,8 @@
 #include <fmt/format.h>
 
 #include <iostream>
+#include <algorithm>
+#include <cctype>
 
 void printHelp();
 void printExample();
@@ -81,7 +83,7 @@ namespace mm::repl
             }
 
             inputBuffer_.erase(
-                std::find_if_not(inputBuffer_.rbegin() + 3, inputBuffer_.rend(), std::isspace).base(),
+                std::find_if_not(inputBuffer_.rbegin() + 3, inputBuffer_.rend(), &isspace).base(),
                 inputBuffer_.end());
         }
 
@@ -182,5 +184,14 @@ Functions are values:
 
     let plus3 = f1(3)   // plus3: (num -> num)
     plus3(4)            // returns 7
+
+Importing modules:
+
+    import math.linalg  // imports ./math/linalg.mm
+
+The 'import' directive imports all top level bindings from a module. 
+A module is a code file with an *.mm extension.
+Directories are separated by a '.' (dot) and are relative to the file that does the import.
+If 'import' is used in the REPL, the current working directory is used as base path.
 )");
 }

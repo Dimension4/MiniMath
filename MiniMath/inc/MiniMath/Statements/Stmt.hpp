@@ -19,7 +19,12 @@ namespace mm
             Expr value;
         };
 
-        using StmtBase = std::variant<LetStmt>;
+        struct ImportStmt
+        {
+            std::string target;
+        };
+
+        using StmtBase = std::variant<LetStmt, ImportStmt>;
     }
 
     class Stmt : public stmt::StmtBase
