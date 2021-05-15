@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <functional>
 #include <cctype>
 
 void printHelp();
@@ -12,8 +13,8 @@ void printExample();
 namespace mm::repl
 {
     Repl::Repl() :
-        lexer_([this] { return getNextChar(); }),
-        parser_(lexer_)
+        lexer_(std::bind_front(&Repl::getNextChar, this)),
+        parser_(std::bind_front(&Lexer::nextToken, lexer_))
     {
     }
 

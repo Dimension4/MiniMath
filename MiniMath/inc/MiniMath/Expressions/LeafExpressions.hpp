@@ -9,10 +9,14 @@ namespace mm::expr
     struct NameExpr
     {
         std::string name;
+
+        friend bool operator==(NameExpr const&, NameExpr const&) = default;
     };
 
     struct ConstantExpr
     {
         double value;
+
+        friend constexpr bool operator==(ConstantExpr const&, ConstantExpr const&) = default;
     };
 }

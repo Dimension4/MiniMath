@@ -23,7 +23,7 @@ namespace mm
     {
     public:
         [[nodiscard]]
-        explicit PrattParser(Lexer& lexer);
+        explicit PrattParser(std::function<Token()> tokenSource);
 
         [[nodiscard]]
         Stmt parseStatement();
@@ -41,7 +41,7 @@ namespace mm
         void registerParselet(TokenType type, std::unique_ptr<parselets::StmtParselet> parselet);
 
     private:
-        Lexer& lexer_;
+        std::function<Token()> tokenSource_;
         std::vector<Token> tokens_;
         std::map<TokenType, std::unique_ptr<parselets::StmtParselet>> stmtParselets_;
         std::map<TokenType, std::unique_ptr<parselets::PrefixParselet>> prefixParselets_;

@@ -29,6 +29,8 @@ namespace mm
     {
         TokenType type{};
         std::string lexeme;
+
+        friend bool operator==(Token const&, Token const&) = default;
     };
 
     [[nodiscard]]

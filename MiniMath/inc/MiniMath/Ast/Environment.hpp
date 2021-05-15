@@ -75,6 +75,8 @@ namespace mm
                 return symbols_.cend();
             }
 
+            friend bool operator==(Environment const&, Environment const&) = default;
+
         private:
             std::map<std::string, Expr, std::less<>> symbols_;
             std::filesystem::path dir_ = ".";

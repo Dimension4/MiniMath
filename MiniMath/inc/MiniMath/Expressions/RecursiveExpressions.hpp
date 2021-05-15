@@ -15,6 +15,8 @@ namespace mm::expr
     {
         Expr target;
         std::vector<Expr> args;
+
+        friend bool operator==(CallExpr const&, CallExpr const&) = default;
     };
 
     struct Closure
@@ -22,12 +24,16 @@ namespace mm::expr
         ast::Environment environment;
         std::vector<std::string> paramNames;
         Expr body;
+
+        friend bool operator==(Closure const&, Closure const&) = default;
     };
 
     struct FunctionExpr
     {
         std::vector<std::string> paramNames;
         Expr body;
+
+        friend bool operator==(FunctionExpr const&, FunctionExpr const&) = default;
     };
 
     struct LetExpr
@@ -35,5 +41,7 @@ namespace mm::expr
         std::string name;
         Expr value;
         Expr body;
+
+        friend bool operator==(LetExpr const&, LetExpr const&) = default;
     };
 }

@@ -54,5 +54,7 @@ namespace mm::expr
         BinaryOperation operation{};
         Expr left;
         Expr right;
+
+        friend bool operator==(BinaryExpr const&, BinaryExpr const&) = default;
     };
 }

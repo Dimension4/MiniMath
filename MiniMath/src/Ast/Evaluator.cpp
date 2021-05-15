@@ -10,7 +10,7 @@
 
 #include <cmath>
 #include <fstream>
-
+#include <functional>
 
 namespace mm::ast
 {
@@ -126,7 +126,7 @@ namespace mm::ast
             return file ? char(c) : 0;
         });
 
-        MiniMathParser parser(lexer);
+        MiniMathParser parser(std::bind_front(&Lexer::nextToken, lexer));
 
         Environment importEnv;
         importEnv.setDir(path.parent_path());

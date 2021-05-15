@@ -12,7 +12,8 @@
 using namespace mm;
 using namespace parselets;
 
-MiniMathParser::MiniMathParser(Lexer& lexer) : PrattParser(lexer)
+MiniMathParser::MiniMathParser(std::function<Token()> tokenSource) :
+    PrattParser(move(tokenSource))
 {
     registerParselet(TokenType::Let, std::make_unique<LetStmtParselet>());
     registerParselet(TokenType::Import, std::make_unique<ImportParselet>());
@@ -23,7 +24,7 @@ MiniMathParser::MiniMathParser(Lexer& lexer) : PrattParser(lexer)
     registerParselet(TokenType::LParen, std::make_unique<CallParselet>());
     registerParselet(TokenType::Let, std::make_unique<LetParselet>());
     registerParselet(TokenType::Fn, std::make_unique<FunctionParselet>());
-    
+
     infix(TokenType::Plus, OperatorPrecedence::Addition);
     infix(TokenType::Minus, OperatorPrecedence::Subtraction);
     infix(TokenType::Asterisk, OperatorPrecedence::Multiplication);
@@ -34,6 +35,7 @@ void MiniMathParser::prefix(TokenType token, OperatorPrecedence precedence)
 {
     // registerParselet(token, )
 }
+
 void MiniMathParser::postfix(TokenType token, OperatorPrecedence precedence)
 {
     // registerParselet(token, )

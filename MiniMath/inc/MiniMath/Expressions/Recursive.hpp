@@ -5,6 +5,12 @@
 namespace mm::expr
 {
     template <typename T>
+    class Recursive;
+
+    template <typename T>
+    bool operator==(Recursive<T> const&, Recursive<T> const&);
+
+    template <typename T>
     class Recursive
     {
     public:
@@ -26,7 +32,9 @@ namespace mm::expr
         }
 
         [[nodiscard]] constexpr Recursive(Recursive&& other) noexcept :
-            ptr_(std::exchange(other.ptr_, nullptr)) {}
+            ptr_(std::exchange(other.ptr_, nullptr))
+        {
+        }
 
         constexpr Recursive& operator=(Recursive&& other) noexcept
         {
@@ -41,6 +49,8 @@ namespace mm::expr
 
         [[nodiscard]] constexpr T const* operator->() const noexcept { return ptr_; }
         [[nodiscard]] constexpr T* operator->() noexcept { return ptr_; }
+
+        friend bool operator==<>(Recursive const&, Recursive const&);
 
     private:
         T* ptr_;

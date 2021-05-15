@@ -10,7 +10,7 @@ namespace mm
     {
     public:
         [[nodiscard]]
-        explicit MiniMathParser(Lexer& lexer);
+        explicit MiniMathParser(std::function<Token()> tokenSource);
 
     private:
         void prefix(TokenType token, OperatorPrecedence precedence);

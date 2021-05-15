@@ -86,11 +86,16 @@
   <ItemGroup>
     <ClCompile Include="src\LexerTests.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MiniMathParserTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MiniMath\MiniMath.vcxproj">
       <Project>{946f9420-9185-4b87-9c6d-8058103c016a}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\Tests\Expressions.hpp" />
+    <ClInclude Include="inc\Tests\Tokens.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
