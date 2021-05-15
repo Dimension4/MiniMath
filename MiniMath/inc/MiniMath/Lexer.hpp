@@ -27,6 +27,7 @@ namespace mm
         Token readNumber(char first);
         Token readIdentifier(char first);
         std::optional<Token> tryReadWideToken(char c);
+        bool skipComment(char c);
         static Token asKeyword(Token const& token);
     };
 

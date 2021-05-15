@@ -34,6 +34,9 @@ namespace mm
     {
         while (char c = nextChar())
         {
+            if (skipComment(c))
+                continue;
+
             if (std::isspace(c))
                 continue;
 
@@ -139,6 +142,25 @@ namespace mm
         }
 
         return std::nullopt;
+    }
+
+    bool Lexer::skipComment(char c)
+    {
+        if (c != '/')
+            return false;
+
+        c = nextChar();
+        if (c != '/')
+        {
+            overScan_ = c;
+            return false;
+        }
+
+        while (c && c != '\n' && c != '\r')
+            c = nextChar();
+
+        overScan_ = c;
+        return true;
     }
 
     Token Lexer::asKeyword(Token const& token)
