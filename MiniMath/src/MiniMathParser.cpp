@@ -31,16 +31,6 @@ MiniMathParser::MiniMathParser(std::function<Token()> tokenSource) :
     infix(TokenType::Slash, OperatorPrecedence::Division);
 }
 
-void MiniMathParser::prefix(TokenType token, OperatorPrecedence precedence)
-{
-    // registerParselet(token, )
-}
-
-void MiniMathParser::postfix(TokenType token, OperatorPrecedence precedence)
-{
-    // registerParselet(token, )
-}
-
 void MiniMathParser::infix(TokenType token, OperatorPrecedence precedence, Associativity associativity)
 {
     registerParselet(token, std::make_unique<BinaryOpParselet>(int(precedence), associativity));

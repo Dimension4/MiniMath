@@ -11,8 +11,7 @@ namespace mm::expr
         Add,
         Subtract,
         Multiply,
-        Divide,
-        Power
+        Divide
     };
 
     [[nodiscard]]
@@ -26,7 +25,6 @@ namespace mm::expr
             ENUM_CASE(Subtract);
             ENUM_CASE(Multiply);
             ENUM_CASE(Divide);
-            ENUM_CASE(Power);
 
 #undef ENUM_CASE
         }
@@ -43,7 +41,6 @@ namespace mm::expr
         case BinaryOperation::Subtract: return "-";
         case BinaryOperation::Multiply: return "*";
         case BinaryOperation::Divide: return "/";
-        case BinaryOperation::Power: return "^";
         }
 
         return "<BAD>";

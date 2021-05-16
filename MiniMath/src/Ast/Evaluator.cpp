@@ -8,7 +8,6 @@
 
 #include <fmt/format.h>
 
-#include <cmath>
 #include <fstream>
 #include <functional>
 
@@ -34,7 +33,6 @@ namespace mm::ast
         case BinaryOperation::Subtract: return ConstantExpr(lhs->value - rhs->value);
         case BinaryOperation::Multiply: return ConstantExpr(lhs->value * rhs->value);
         case BinaryOperation::Divide: return ConstantExpr(lhs->value / rhs->value);
-        case BinaryOperation::Power: return ConstantExpr(std::pow(lhs->value, rhs->value));
         }
 
         throw std::logic_error("unreachable");
