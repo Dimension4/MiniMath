@@ -15,6 +15,8 @@ namespace tokconsts
     inline mm::Token equals{ mm::TokenType::Equals, "=" };
     inline mm::Token fn{ mm::TokenType::Fn, "fn" };
     inline mm::Token rarrow{ mm::TokenType::RArrow, "->" };
+    inline mm::Token import_{ mm::TokenType::Import, "import" };
+    inline mm::Token dot{ mm::TokenType::Dot, "." };
 
     inline mm::Token operator""_num(char const* val, std::size_t)
     {

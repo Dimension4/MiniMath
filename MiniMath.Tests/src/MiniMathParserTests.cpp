@@ -1,12 +1,11 @@
 ﻿#include "Tests/Tokens.hpp"
 #include "Tests/Expressions.hpp"
 
-#include <MiniMath/MiniMath.hpp>
+#include "MiniMath/MiniMath.hpp"
 
 #include <catch2/catch.hpp>
 
 #include <utility>
-#include <ostream>
 
 using namespace tokconsts;
 using namespace expr;
@@ -20,15 +19,6 @@ static auto tokens(std::vector<mm::Token> const& tokens)
                    : mm::Token{ mm::TokenType::Eof };
     };
 }
-
-namespace mm
-{
-    static std::ostream& operator<<(std::ostream& os, Expr const& expr)
-    {
-        return os << fmt::format("{}", expr);
-    }
-}
-
 
 namespace mm::tests::parser
 {
@@ -146,11 +136,7 @@ namespace mm::tests::parser
         MiniMathParser parser(source);
 
         auto actual = parser.parseExpression();
-        auto expected = makeExpr(BinaryExpr{
-            .operation = op,
-            .left = ConstantExpr{ 1 },
-            .right = ConstantExpr{ 2 }
-        });
+        auto expected = binexpr(op, 1_const, 2_const);
 
         REQUIRE(actual == expected);
     }
@@ -179,14 +165,7 @@ namespace mm::tests::parser
             MiniMathParser parser(source);
 
             auto actual = parser.parseExpression();
-            auto expected =
-                binexpr(BinaryOperation::Add,
-                        "x"_name,
-                        binexpr(
-                            BinaryOperation::Multiply,
-                            "x"_name,
-                            2_const
-                        ));
+            auto expected = "x"_name + ("x"_name * 2_const);
 
             REQUIRE(actual == expected);
         }
@@ -198,16 +177,119 @@ namespace mm::tests::parser
             MiniMathParser parser(source);
 
             auto actual = parser.parseExpression();
-            auto expected =
-                binexpr(BinaryOperation::Subtract,
-                        binexpr(
-                            BinaryOperation::Add,
-                            1_const,
-                            2_const
-                        ),
-                        3_const);
-            
+            auto expected = (1_const + 2_const) - 3_const;
+
             REQUIRE(actual == expected);
         }
+
+        TEST_CASE("1 + 2 * 3 / 4 - x >=> ((1 + ((2 * 3) / 4)) - x)")
+        {
+            auto source = tokens({
+                "1"_num, plus, "2"_num, asterisk, "3"_num, slash, "4"_num, minus, "x"_id
+            });
+
+            MiniMathParser parser(source);
+
+            auto actual = parser.parseExpression();
+            auto expected = (1_const + ((2_const * 3_const) / 4_const)) - "x"_name;
+
+            REQUIRE(actual == expected);
+        }
+
+        TEST_CASE("(1 + 2) * 3 >=> ((1 + 2) * 3)")
+        {
+            auto source = tokens({ lparen, "1"_num, plus, "2"_num, rparen, asterisk, "3"_num });
+
+            MiniMathParser parser(source);
+
+            auto actual = parser.parseExpression();
+            auto expected = (1_const + 2_const) * 3_const;
+
+            REQUIRE(actual == expected);
+        }
+
+        TEST_CASE("(1 + (2) * 3) >=> (1 + (2 * 3))")
+        {
+            auto source = tokens({
+                lparen, "1"_num, plus, lparen, "2"_num, rparen, asterisk, "3"_num, rparen
+            });
+
+            MiniMathParser parser(source);
+
+            auto actual = parser.parseExpression();
+            auto expected = 1_const + (2_const * 3_const);
+
+            REQUIRE(actual == expected);
+        }
+    }
+
+    TEST_CASE("parse foo(1 + 1 2 + 2)")
+    {
+        auto source = tokens({
+            "foo"_id, lparen, "1"_num, plus, "1"_num, "2"_num, plus, "2"_num, rparen
+        });
+
+        MiniMathParser parser(source);
+
+        auto actual = parser.parseExpression();
+        auto expected = makeExpr(CallExpr{
+            .target = "foo"_name,
+            .args = {
+                1_const + 1_const,
+                2_const + 2_const
+            }
+        });
+
+        REQUIRE(actual == expected);
+    }
+
+    TEST_CASE("parse foo()(1)")
+    {
+        auto source = tokens({ "foo"_id, lparen, rparen, lparen, "1"_num, rparen });
+
+        MiniMathParser parser(source);
+
+        auto actual = parser.parseExpression();
+        auto expected = makeExpr(CallExpr{
+            .target = makeExpr(CallExpr{
+                .target = "foo"_name,
+                .args = {}
+            }),
+            .args = { 1_const }
+        });
+
+        REQUIRE(actual == expected);
+    }
+
+    TEST_CASE("parse simple import statement")
+    {
+        auto source = tokens({ import_, "mod"_id });
+
+        MiniMathParser parser(source);
+
+        auto actual = parser.parseStatement();
+        auto expected = Stmt{
+            ImportStmt{
+                .target = "mod"
+            }
+        };
+
+        REQUIRE(actual == expected);
+    }
+
+    TEST_CASE("parse long import statement")
+    {
+        auto source = tokens({ import_, "a"_id, dot, "b"_id, dot, "c"_id });
+
+        MiniMathParser parser(source);
+
+        auto actual = parser.parseStatement();
+        auto expected = Stmt{
+            ImportStmt{
+                .target = "a.b.c"
+            }
+        };
+
+        REQUIRE(actual == expected);
     }
 }

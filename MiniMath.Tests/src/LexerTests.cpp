@@ -61,7 +61,7 @@ namespace mm::tests::lexer
         std::string_view source = "12// dajod2ß..\"let in import";
 
         auto lexer = makeLexer(source);
-        REQUIRE(lexer.nextToken() == Token { TokenType::Number, "12"});
+        REQUIRE(lexer.nextToken() == Token{ TokenType::Number, "12" });
         REQUIRE(lexer.nextToken() == eof);
     }
 
@@ -71,8 +71,8 @@ namespace mm::tests::lexer
         hi)";
 
         auto lexer = makeLexer(source);
-        REQUIRE(lexer.nextToken() == Token { TokenType::Number, "12"});
-        REQUIRE(lexer.nextToken() == Token { TokenType::Identifier, "hi"});
+        REQUIRE(lexer.nextToken() == Token{ TokenType::Number, "12" });
+        REQUIRE(lexer.nextToken() == Token{ TokenType::Identifier, "hi" });
         REQUIRE(lexer.nextToken() == eof);
     }
 
@@ -83,7 +83,7 @@ namespace mm::tests::lexer
             Token{ TokenType::In, "in" },
             Token{ TokenType::Fn, "fn" },
             Token{ TokenType::Import, "import" });
-        
+
         auto lexer = makeLexer(token.lexeme);
         REQUIRE(lexer.nextToken() == token);
         REQUIRE(lexer.nextToken() == eof);
@@ -101,8 +101,8 @@ namespace mm::tests::lexer
             Token{ TokenType::Slash, "/" },
             Token{ TokenType::Equals, "=" },
             Token{ TokenType::RArrow, "->" },
-            Token{ TokenType::Dot, "."});
-                
+            Token{ TokenType::Dot, "." });
+
         auto lexer = makeLexer(token.lexeme);
         REQUIRE(lexer.nextToken() == token);
         REQUIRE(lexer.nextToken() == eof);

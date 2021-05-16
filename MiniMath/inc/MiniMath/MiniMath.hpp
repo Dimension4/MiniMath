@@ -6,3 +6,4 @@
 #include "Ast/Printer.hpp"
 #include "Ast/Environment.hpp"
 #include "Ast/Evaluator.hpp"
+#include "Ast/Errors.hpp"
