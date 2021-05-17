@@ -13,10 +13,10 @@ static BinaryOperation tokenToOp(TokenType type)
 {
     switch (type)
     {
-    case TokenType::Plus: return BinaryOperation::Add;
-    case TokenType::Minus: return BinaryOperation::Subtract;
-    case TokenType::Asterisk: return BinaryOperation::Multiply;
-    case TokenType::Slash: return BinaryOperation::Divide;
+    case TokenType::Plus: return ops::Add{};
+    case TokenType::Minus: return ops::Subtract{};
+    case TokenType::Asterisk: return ops::Multiply{};
+    case TokenType::Slash: return ops::Divide{};
     }
 
     throw ParseError(fmt::format("Invalid token type '{}' for binary expression", enumName(type)));

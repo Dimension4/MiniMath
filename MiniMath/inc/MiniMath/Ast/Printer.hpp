@@ -10,59 +10,89 @@ namespace mm::ast
 {
     struct Printer
     {
-        auto operator()(auto outIt, expr::BinaryExpr const& expr) const
+        auto operator()(expr::BinaryExpr const& expr, auto outIt) const
         {
-            return fmt::format_to(outIt, "({} {} {})", expr.left, enumDisplay(expr.operation), expr.right);
+            return fmt::format_to(outIt, "({} {} {})", expr.left, expr.operation, expr.right);
         }
 
-        auto operator()(auto outIt, expr::CallExpr const& expr) const
+        auto operator()(expr::CallExpr const& expr, auto outIt) const
         {
             return fmt::format_to(outIt, "{}({})", expr.target, fmt::join(expr.args, ", "));
         }
 
-        auto operator()(auto outIt, expr::NameExpr const& expr) const
+        auto operator()(expr::NameExpr const& expr, auto outIt) const
         {
             return fmt::format_to(outIt, "{}", expr.name);
         }
 
-        auto operator()(auto outIt, expr::ConstantExpr const& expr) const
+        auto operator()(expr::ConstantExpr const& expr, auto outIt) const
         {
             return fmt::format_to(outIt, "{}", expr.value);
         }
 
-        auto operator()(auto outIt, expr::Closure const& expr) const
+        auto operator()(expr::Closure const& expr, auto outIt) const
         {
             auto env = expr.environment | std::views::transform([](auto&& p) { return p.first; });
-            return fmt::format_to(outIt, "[{}] {} -> {}", fmt::join(env, ", "), fmt::join(expr.paramNames, " "),
-                                  expr.body);
+            return fmt::format_to(outIt, "[{}] {} -> {}",
+                fmt::join(env, ", "), fmt::join(expr.paramNames, " "), expr.body);
         }
 
-        auto operator()(auto outIt, expr::LetExpr const& expr) const
+        auto operator()(expr::LetExpr const& expr, auto outIt) const
         {
             return fmt::format_to(outIt, "let {} = {} in {}", expr.name, expr.value, expr.body);
         }
 
-        auto operator()(auto outIt, expr::FunctionExpr const& expr) const
+        auto operator()(expr::FunctionExpr const& expr, auto outIt) const
         {
             return fmt::format_to(outIt, "fn {} -> {}", fmt::join(expr.paramNames, " "), expr.body);
+        }
+
+        auto operator()(expr::ops::Add, auto outIt) const
+        {
+            return fmt::format_to(outIt, "+");
+        }
+
+        auto operator()(expr::ops::Subtract, auto outIt) const
+        {
+            return fmt::format_to(outIt, "-");
+        }
+
+        auto operator()(expr::ops::Multiply, auto outIt) const
+        {
+            return fmt::format_to(outIt, "*");
+        }
+
+        auto operator()(expr::ops::Divide, auto outIt) const
+        {
+            return fmt::format_to(outIt, "/");
         }
     };
 }
 
-template <>
-struct fmt::formatter<mm::Expr>
+template <typename T> requires(std::same_as<T, mm::Expr> || std::same_as<T, mm::expr::BinaryOperation>)
+struct fmt::formatter<T>
 {
-    constexpr auto parse(format_parse_context& ctx)
+    constexpr auto parse(format_parse_context& ctx) const
     {
         return ctx.begin();
     }
 
-    template <typename FormatContext>
-    auto format(mm::Expr const& expr, FormatContext& ctx)
+    auto format(auto const& expr, auto& ctx) const
     {
-        return std::visit([&]<typename T>(T&& x)
-        {
-            return mm::ast::Printer{}(ctx.out(), mm::unrec(std::forward<T>(x)));
-        }, static_cast<mm::expr::ExprBase const&>(expr));
+        return mm::visit(mm::ast::Printer{}, expr, ctx.out());
+    }
+};
+
+template <typename T> requires(mm::ExprType<T> || mm::VariantMember<T, mm::expr::BinaryOperation>)
+struct fmt::formatter<T>
+{
+    constexpr auto parse(format_parse_context& ctx) const
+    {
+        return ctx.begin();
+    }
+
+    auto format(auto const& expr, auto& ctx) const
+    {
+        return mm::ast::Printer{}(expr, ctx.out());
     }
 };

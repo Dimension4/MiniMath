@@ -25,9 +25,6 @@ namespace mm
     template <typename T, template <typename...> typename Template>
     concept InstanceOf = details::IsInstance<std::remove_cvref_t<T>, Template>::value;
 
-    template <typename T, typename Variant>
-    concept VariantMember = details::CountVariantMembers<T, Variant>::Count > 0;
-
     template <typename Target, typename Source> requires(std::same_as<std::remove_cvref_t<Target>, Target>)
     using CopyQualifiers = std::conditional_t<
         std::is_lvalue_reference_v<Source>,
@@ -45,4 +42,10 @@ namespace mm
 
     template <typename T>
     using BaseVariant = decltype(details::variantBase(std::declval<T>()));
+
+    template <typename T, typename Variant>
+    concept VariantMember = details::CountVariantMembers<T, BaseVariant<Variant>>::Count > 0;
+
+    template <typename T>
+    concept Visitable = InstanceOf<BaseVariant<T>, std::variant>;
 }

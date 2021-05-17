@@ -52,22 +52,22 @@ namespace expr
 
     inline mm::Expr operator+(mm::Expr const& lhs, mm::Expr const& rhs)
     {
-        return binexpr(mm::expr::BinaryOperation::Add, lhs, rhs);
+        return binexpr(mm::expr::ops::Add{}, lhs, rhs);
     }
 
     inline mm::Expr operator-(mm::Expr const& lhs, mm::Expr const& rhs)
     {
-        return binexpr(mm::expr::BinaryOperation::Subtract, lhs, rhs);
+        return binexpr(mm::expr::ops::Subtract{}, lhs, rhs);
     }
 
     inline mm::Expr operator*(mm::Expr const& lhs, mm::Expr const& rhs)
     {
-        return binexpr(mm::expr::BinaryOperation::Multiply, lhs, rhs);
+        return binexpr(mm::expr::ops::Multiply{}, lhs, rhs);
     }
 
     inline mm::Expr operator/(mm::Expr const& lhs, mm::Expr const& rhs)
     {
-        return binexpr(mm::expr::BinaryOperation::Divide, lhs, rhs);
+        return binexpr(mm::expr::ops::Divide{}, lhs, rhs);
     }
 
     struct LetValBuilder

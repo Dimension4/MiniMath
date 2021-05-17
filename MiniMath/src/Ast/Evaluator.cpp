@@ -14,28 +14,44 @@
 namespace mm::ast
 {
     using namespace expr;
+    using namespace ops;
+
+    struct BinaryExprEvaluator
+    {
+        Expr operator()(Add, ConstantExpr const& lhs, ConstantExpr const& rhs) const
+        {
+            return ConstantExpr{ lhs.value + rhs.value };
+        }
+
+        Expr operator()(Subtract, ConstantExpr const& lhs, ConstantExpr const& rhs) const
+        {
+            return ConstantExpr{ lhs.value - rhs.value };
+        }
+
+        Expr operator()(Multiply, ConstantExpr const& lhs, ConstantExpr const& rhs) const
+        {
+            return ConstantExpr{ lhs.value * rhs.value };
+        }
+
+        Expr operator()(Divide, ConstantExpr const& lhs, ConstantExpr const& rhs) const
+        {
+            return ConstantExpr{ lhs.value / rhs.value };
+        }
+
+        // using auto directly causes an ICE
+        template <typename A, typename B, typename C>
+        Expr operator()(A const& op, B const& lhs, C const& rhs) const
+        {
+            throw TypeError(fmt::format("Invalid operation: {} {} {}.", lhs, op, rhs));
+        }
+    };
 
     Expr ExprEvaluator::operator()(BinaryExpr const& expr, Environment const& env) const
     {
-        auto lhs = tryGetExpr<ConstantExpr>(visit(*this, expr.left, env));
+        auto lhs = visit(*this, expr.left, env);
+        auto rhs = visit(*this, expr.right, env);
 
-        if (!lhs)
-            throw TypeError("Left side of binary expression is not a number");
-
-        auto rhs = tryGetExpr<ConstantExpr>(visit(*this, expr.right, env));
-
-        if (!rhs)
-            throw TypeError("Right side of binary expression is not a number");
-
-        switch (expr.operation)
-        {
-        case BinaryOperation::Add: return ConstantExpr(lhs->value + rhs->value);
-        case BinaryOperation::Subtract: return ConstantExpr(lhs->value - rhs->value);
-        case BinaryOperation::Multiply: return ConstantExpr(lhs->value * rhs->value);
-        case BinaryOperation::Divide: return ConstantExpr(lhs->value / rhs->value);
-        }
-
-        throw std::logic_error("unreachable");
+        return visitMany(BinaryExprEvaluator{}, expr.operation, lhs, rhs);
     }
 
     Expr ExprEvaluator::operator()(CallExpr const& expr, Environment const& env) const
@@ -48,7 +64,7 @@ namespace mm::ast
 
         if (closure->paramNames.size() != expr.args.size())
             throw ArgumentError(fmt::format("'{}' expects {} arguments, but {} were given", target,
-                                            closure->paramNames.size(), expr.args.size()));
+                closure->paramNames.size(), expr.args.size()));
 
         auto callEnv = closure->environment;
 

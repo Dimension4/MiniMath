@@ -119,12 +119,14 @@ namespace mm::tests::parser
 
     TEST_CASE("parse binary expression")
     {
+        using namespace ops;
+
         using p = std::pair<Token, BinaryOperation>;
         auto [token, op] = GENERATE(
-            p(plus, BinaryOperation::Add),
-            p(minus, BinaryOperation::Subtract),
-            p(asterisk, BinaryOperation::Multiply),
-            p(slash, BinaryOperation::Divide)
+            p(plus, Add{}),
+            p(minus, Subtract{}),
+            p(asterisk, Multiply{}),
+            p(slash, Divide{})
         );
 
         auto source = tokens({

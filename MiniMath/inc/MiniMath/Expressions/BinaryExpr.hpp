@@ -2,49 +2,31 @@
 
 #include "Expr.hpp"
 
-#include <string_view>
-
 namespace mm::expr
 {
-    enum class BinaryOperation
+    namespace ops
     {
-        Add,
-        Subtract,
-        Multiply,
-        Divide
+        struct Add {};
+
+        struct Subtract {};
+
+        struct Multiply {};
+
+        struct Divide {};
+
+        using BinaryOperationBase = std::variant<Add, Subtract, Multiply, Divide>;
+    }
+
+    struct BinaryOperation : ops::BinaryOperationBase
+    {
+        using ops::BinaryOperationBase::BinaryOperationBase;
+        using ops::BinaryOperationBase::operator=;
+
+        friend bool operator==(const BinaryOperation& lhs, const BinaryOperation& rhs)
+        {
+            return lhs.index() == rhs.index();
+        }
     };
-
-    [[nodiscard]]
-    constexpr std::string_view enumName(BinaryOperation op) noexcept
-    {
-        switch (op)
-        {
-#define ENUM_CASE(x) case BinaryOperation::x: return #x
-
-            ENUM_CASE(Add);
-            ENUM_CASE(Subtract);
-            ENUM_CASE(Multiply);
-            ENUM_CASE(Divide);
-
-#undef ENUM_CASE
-        }
-
-        return "<BAD>";
-    }
-
-    [[nodiscard]]
-    constexpr std::string_view enumDisplay(BinaryOperation op) noexcept
-    {
-        switch (op)
-        {
-        case BinaryOperation::Add: return "+";
-        case BinaryOperation::Subtract: return "-";
-        case BinaryOperation::Multiply: return "*";
-        case BinaryOperation::Divide: return "/";
-        }
-
-        return "<BAD>";
-    }
 
     struct BinaryExpr
     {

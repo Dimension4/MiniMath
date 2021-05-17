@@ -78,12 +78,21 @@ namespace mm
             return ret(std::get_if<T>(&expr));
     }
 
-    template <typename Visitor, typename Variant, typename ...Args>
-    constexpr decltype(auto) visit(Visitor&& visitor, Variant&& variant, Args&& ...args)
+    template <typename Visitor, Visitable Var, typename ...Args>
+    constexpr decltype(auto) visit(Visitor&& visitor, Var&& variant, Args&& ...args)
     {
         return std::visit([&]<typename T>(T&& var)
         {
             return std::forward<Visitor>(visitor)(unrec(std::forward<T>(var)), std::forward<Args>(args)...);
-        }, forwardAs<BaseVariant<Variant>>(variant));
+        }, forwardAs<BaseVariant<Var>>(variant));
+    }
+
+    template <typename Visitor, Visitable ...Vars>
+    constexpr decltype(auto) visitMany(Visitor&& visitor, Vars&& ...variants)
+    {
+        return std::visit([&]<typename ...T>(T&& ...vars)
+        {
+            return std::forward<Visitor>(visitor)(unrec(std::forward<T>(vars))...);
+        }, forwardAs<BaseVariant<Vars>>(variants)...);
     }
 }
