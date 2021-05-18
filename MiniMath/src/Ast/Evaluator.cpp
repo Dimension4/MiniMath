@@ -140,7 +140,7 @@ namespace mm::ast
             return file ? char(c) : 0;
         });
 
-        MiniMathParser parser(std::bind_front(&Lexer::nextToken, lexer));
+        MiniMathParser parser(std::bind_front(&Lexer::nextToken, std::ref(lexer)));
 
         Environment importEnv;
         importEnv.setDir(path.parent_path());

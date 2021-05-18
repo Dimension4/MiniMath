@@ -14,7 +14,7 @@ namespace mm::repl
 {
     Repl::Repl() :
         lexer_(std::bind_front(&Repl::getNextChar, this)),
-        parser_(std::bind_front(&Lexer::nextToken, lexer_))
+        parser_(std::bind_front(&Lexer::nextToken, std::ref(lexer_)))
     {
     }
 
@@ -164,15 +164,15 @@ The only exception are top level let-bindings (variable declarations).
 void printExample()
 {
     fmt::print(R"(
-Variable declaration:   let x = 10      
+Variable declaration:   let x = 10
 Function declaration:   let sum = fn a b -> a + b
 Function calls:         foo(arg1 arg2 arg3 ...)
 
 Complex variable declarations:
 
-    let x = 
+    let x =
         let a = 10
-        let b = foo(12) 
+        let b = foo(12)
         a + b
 
 Functions are values:
@@ -190,7 +190,7 @@ Importing modules:
 
     import math.linalg  // imports ./math/linalg.mm
 
-The 'import' directive imports all top level bindings from a module. 
+The 'import' directive imports all top level bindings from a module.
 A module is a code file with an *.mm extension.
 Directories are separated by a '.' (dot) and are relative to the file that does the import.
 If 'import' is used in the REPL, the current working directory is used as base path.
