@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <type_traits>
+#include <variant>
 
 namespace mm
 {
@@ -36,8 +37,8 @@ namespace mm
 
     namespace details
     {
-        template <template <typename...> typename T, typename... Args>
-        auto variantBase(T<Args...>) -> T<Args...>;
+        template <typename... Args>
+        auto variantBase(std::variant<Args...>) -> std::variant<Args...>;
     }
 
     template <typename T>

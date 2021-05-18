@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Expr.hpp"
+#include "../TypeTraits.hpp"
 
 namespace mm::expr
 {
@@ -15,17 +16,18 @@ namespace mm::expr
         struct Divide {};
 
         using BinaryOperationBase = std::variant<Add, Subtract, Multiply, Divide>;
+
+        template <VariantMember<BinaryOperationBase> T>
+        constexpr bool operator==(T, T)
+        {
+            return true;
+        }
     }
 
     struct BinaryOperation : ops::BinaryOperationBase
     {
         using ops::BinaryOperationBase::BinaryOperationBase;
         using ops::BinaryOperationBase::operator=;
-
-        friend bool operator==(const BinaryOperation& lhs, const BinaryOperation& rhs)
-        {
-            return lhs.index() == rhs.index();
-        }
     };
 
     struct BinaryExpr
