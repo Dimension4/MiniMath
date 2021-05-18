@@ -7,18 +7,16 @@
 
 using namespace tokconsts;
 
-static auto makeLexer(std::string_view str)
-{
-    return mm::Lexer([=, pos = 0ull]() mutable
-    {
-        return pos < str.size() ? str[pos++] : 0;
-    });
-}
-
-static auto eof = mm::Token{ mm::TokenType::Eof };
-
 namespace mm::tests::lexer
 {
+    static auto makeLexer(std::string_view str)
+    {
+        return Lexer([=, pos = 0ull]() mutable
+        {
+            return pos < str.size() ? str[pos++] : 0;
+        });
+    }
+
     TEST_CASE("lexing illegal character throws LexError")
     {
         auto lexer = makeLexer("?");
@@ -82,14 +80,7 @@ namespace mm::tests::lexer
 
     TEST_CASE("keywords lex to keywords")
     {
-        auto token = GENERATE(
-            Token{ TokenType::Let, "let" },
-            Token{ TokenType::In, "in" },
-            Token{ TokenType::Fn, "fn" },
-            Token{ TokenType::Import, "import" },
-            true_,
-            false_
-        );
+        auto token = GENERATE(let, in, fn, import_, true_, false_);
 
         auto lexer = makeLexer(token.lexeme);
         REQUIRE(lexer.nextToken() == token);
@@ -98,17 +89,7 @@ namespace mm::tests::lexer
 
     TEST_CASE("punctuators lex as punctuators")
     {
-        auto token = GENERATE(
-            Token{ TokenType::LParen, "(" },
-            Token{ TokenType::RParen, ")" },
-            Token{ TokenType::Comma, "," },
-            Token{ TokenType::Plus, "+" },
-            Token{ TokenType::Minus, "-" },
-            Token{ TokenType::Asterisk, "*" },
-            Token{ TokenType::Slash, "/" },
-            Token{ TokenType::Equals, "=" },
-            Token{ TokenType::RArrow, "->" },
-            Token{ TokenType::Dot, "." });
+        auto token = GENERATE(lparen, rparen, plus, minus, asterisk, slash, equals, rarrow, dot);
 
         auto lexer = makeLexer(token.lexeme);
         REQUIRE(lexer.nextToken() == token);
