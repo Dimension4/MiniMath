@@ -171,6 +171,12 @@ namespace mm
         if (token.lexeme == "import")
             return { TokenType::Import, token.lexeme };
 
+        if (token.lexeme == "true")
+            return { TokenType::True, token.lexeme };
+
+        if (token.lexeme == "false")
+            return { TokenType::False, token.lexeme };
+
         return token;
     }
 }

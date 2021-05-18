@@ -20,6 +20,8 @@ MiniMathParser::MiniMathParser(std::function<Token()> tokenSource) :
 
     registerParselet(TokenType::Identifier, std::make_unique<NameParselet>());
     registerParselet(TokenType::Number, std::make_unique<ConstantParselet>());
+    registerParselet(TokenType::True, std::make_unique<ConstantParselet>());
+    registerParselet(TokenType::False, std::make_unique<ConstantParselet>());
     registerParselet(TokenType::LParen, std::make_unique<GroupParselet>());
     registerParselet(TokenType::LParen, std::make_unique<CallParselet>());
     registerParselet(TokenType::Let, std::make_unique<LetParselet>());

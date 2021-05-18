@@ -91,6 +91,11 @@ namespace mm::ast
         return expr;
     }
 
+    Expr ExprEvaluator::operator()(BoolExpr expr, Environment const& env) const
+    {
+        return expr;
+    }
+
     Expr ExprEvaluator::operator()(Closure const& expr, Environment const& env) const
     {
         return makeExpr(expr);

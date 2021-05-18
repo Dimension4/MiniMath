@@ -67,8 +67,8 @@ namespace mm::tests::parser
         auto actual = parser.parseExpression();
         auto expected = makeExpr(LetExpr{
             .name = "x",
-            .value = 1,
-            .body = NameExpr{ "x" }
+            .value = 1_num,
+            .body = "x"_name
         });
 
         REQUIRE(actual == expected);
@@ -83,8 +83,8 @@ namespace mm::tests::parser
         auto actual = parser.parseExpression();
         auto expected = makeExpr(LetExpr{
             .name = "x",
-            .value = 1,
-            .body = NameExpr{ "x" }
+            .value = 1_num,
+            .body = "x"_name
         });
 
         REQUIRE(actual == expected);
@@ -97,7 +97,7 @@ namespace mm::tests::parser
         MiniMathParser parser(source);
 
         auto actual = parser.parseStatement();
-        auto expected = Stmt{ LetStmt{ .name = "x", .value = 1 } };
+        auto expected = Stmt{ LetStmt{ .name = "x", .value = 1_num } };
 
         REQUIRE(actual == expected);
     }
@@ -152,7 +152,7 @@ namespace mm::tests::parser
         auto actual = parser.parseExpression();
         auto expected = makeExpr(CallExpr{
             .target = NameExpr{ "foo" },
-            .args = { NameExpr{ "x" }, 2 }
+            .args = { "x"_name, 2_num }
         });
 
         REQUIRE(actual == expected);

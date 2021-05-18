@@ -8,6 +8,18 @@ namespace mm::parselets
 {
     Expr ConstantParselet::parse(PrattParser& parser, const Token& token) const
     {
-        return std::strtod(token.lexeme.data(), nullptr);
+        switch (token.type)
+        {
+        case TokenType::Number:
+            return std::strtod(token.lexeme.data(), nullptr);
+
+        case TokenType::True:
+            return true;
+
+        case TokenType::False:
+            return false;
+        }
+
+        throw std::logic_error("Unreachable");
     }
 }

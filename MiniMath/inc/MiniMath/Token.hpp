@@ -22,7 +22,9 @@ namespace mm
         RArrow,
         Import,
         Dot,
-        Eof
+        True,
+        False,
+        Eof,
     };
 
     struct Token
@@ -56,6 +58,8 @@ namespace mm
         ENUM_CASE(RArrow);
         ENUM_CASE(Import);
         ENUM_CASE(Dot);
+        ENUM_CASE(True);
+        ENUM_CASE(False);
         ENUM_CASE(Eof);
 
 #undef ENUM_CASE
@@ -83,6 +87,8 @@ namespace mm
         case TokenType::RArrow: return "->";
         case TokenType::Import: return "import";
         case TokenType::Dot: return ".";
+        case TokenType::True: return "true";
+        case TokenType::False: return "false";
         }
 
         return enumName(type);

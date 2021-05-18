@@ -30,6 +30,11 @@ namespace mm::ast
             return fmt::format_to(outIt, "{}", expr);
         }
 
+        auto operator()(expr::BoolExpr expr, auto outIt) const
+        {
+            return fmt::format_to(outIt, "{}", expr);
+        }
+
         auto operator()(expr::Closure const& expr, auto outIt) const
         {
             auto env = expr.environment | std::views::transform([](auto&& p) { return p.first; });

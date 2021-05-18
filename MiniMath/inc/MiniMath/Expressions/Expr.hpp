@@ -25,6 +25,7 @@ namespace mm
 
         using ExprBase = std::variant<
             NumberExpr,
+            BoolExpr,
             NameExpr,
             Recursive<BinaryExpr>,
             Recursive<FunctionExpr>,

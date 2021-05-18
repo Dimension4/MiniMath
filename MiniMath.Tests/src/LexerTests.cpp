@@ -1,7 +1,11 @@
-﻿#include <MiniMath/Lexer.hpp>
+﻿#include "Tests/Tokens.hpp"
+
+#include <MiniMath/Lexer.hpp>
 
 #include <catch2/catch.hpp>
 
+
+using namespace tokconsts;
 
 static auto makeLexer(std::string_view str)
 {
@@ -82,7 +86,10 @@ namespace mm::tests::lexer
             Token{ TokenType::Let, "let" },
             Token{ TokenType::In, "in" },
             Token{ TokenType::Fn, "fn" },
-            Token{ TokenType::Import, "import" });
+            Token{ TokenType::Import, "import" },
+            true_,
+            false_
+        );
 
         auto lexer = makeLexer(token.lexeme);
         REQUIRE(lexer.nextToken() == token);

@@ -17,6 +17,8 @@ namespace tokconsts
     inline mm::Token rarrow{ mm::TokenType::RArrow, "->" };
     inline mm::Token import_{ mm::TokenType::Import, "import" };
     inline mm::Token dot{ mm::TokenType::Dot, "." };
+    inline mm::Token true_{ mm::TokenType::True, "true" };
+    inline mm::Token false_{ mm::TokenType::False, "false" };
 
     inline mm::Token operator""_num(char const* val, std::size_t)
     {

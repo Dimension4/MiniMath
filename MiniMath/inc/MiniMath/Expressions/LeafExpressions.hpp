@@ -14,4 +14,5 @@ namespace mm::expr
     };
 
     using NumberExpr = double;
+    using BoolExpr = bool;
 }
