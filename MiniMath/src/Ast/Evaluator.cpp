@@ -18,24 +18,24 @@ namespace mm::ast
 
     struct BinaryExprEvaluator
     {
-        Expr operator()(Add, ConstantExpr const& lhs, ConstantExpr const& rhs) const
+        Expr operator()(Add, NumberExpr const& lhs, NumberExpr const& rhs) const
         {
-            return ConstantExpr{ lhs.value + rhs.value };
+            return NumberExpr{ lhs.value + rhs.value };
         }
 
-        Expr operator()(Subtract, ConstantExpr const& lhs, ConstantExpr const& rhs) const
+        Expr operator()(Subtract, NumberExpr const& lhs, NumberExpr const& rhs) const
         {
-            return ConstantExpr{ lhs.value - rhs.value };
+            return NumberExpr{ lhs.value - rhs.value };
         }
 
-        Expr operator()(Multiply, ConstantExpr const& lhs, ConstantExpr const& rhs) const
+        Expr operator()(Multiply, NumberExpr const& lhs, NumberExpr const& rhs) const
         {
-            return ConstantExpr{ lhs.value * rhs.value };
+            return NumberExpr{ lhs.value * rhs.value };
         }
 
-        Expr operator()(Divide, ConstantExpr const& lhs, ConstantExpr const& rhs) const
+        Expr operator()(Divide, NumberExpr const& lhs, NumberExpr const& rhs) const
         {
-            return ConstantExpr{ lhs.value / rhs.value };
+            return NumberExpr{ lhs.value / rhs.value };
         }
 
         // using auto directly causes an ICE
@@ -86,7 +86,7 @@ namespace mm::ast
         throw LookupError(fmt::format("Unknown identifier '{}'", expr.name));
     }
 
-    Expr ExprEvaluator::operator()(ConstantExpr const& expr, Environment const& env) const
+    Expr ExprEvaluator::operator()(NumberExpr const& expr, Environment const& env) const
     {
         return expr;
     }

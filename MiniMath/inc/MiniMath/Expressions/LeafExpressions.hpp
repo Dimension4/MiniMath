@@ -13,10 +13,10 @@ namespace mm::expr
         friend bool operator==(NameExpr const&, NameExpr const&) = default;
     };
 
-    struct ConstantExpr
+    struct NumberExpr
     {
         double value;
 
-        friend constexpr bool operator==(ConstantExpr const&, ConstantExpr const&) = default;
+        friend constexpr bool operator==(NumberExpr const&, NumberExpr const&) = default;
     };
 }

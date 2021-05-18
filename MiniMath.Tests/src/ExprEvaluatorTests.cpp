@@ -13,8 +13,8 @@ namespace mm::tests::evaluator
     TEST_CASE("1 = 1")
     {
         Environment env;
-        auto actual = evaluate(1_const, env);
-        auto expected = 1_const;
+        auto actual = evaluate(1_num, env);
+        auto expected = 1_num;
 
         REQUIRE(actual == expected);
     }
@@ -29,10 +29,10 @@ namespace mm::tests::evaluator
     TEST_CASE("evaluate (x) performs lookup")
     {
         Environment env;
-        env.add("x", 1_const);
+        env.add("x", 1_num);
 
         auto actual = evaluate("x"_name, env);
-        auto expected = 1_const;
+        auto expected = 1_num;
 
         REQUIRE(actual == expected);
     }
@@ -40,8 +40,8 @@ namespace mm::tests::evaluator
     TEST_CASE("1 + 1 = 2")
     {
         Environment env;
-        auto actual = evaluate(1_const + 1_const, env);
-        auto expected = 2_const;
+        auto actual = evaluate(1_num + 1_num, env);
+        auto expected = 2_num;
 
         REQUIRE(actual == expected);
     }
@@ -49,10 +49,10 @@ namespace mm::tests::evaluator
     TEST_CASE("[x = 2] x * x = 4")
     {
         Environment env;
-        env.add("x", 2_const);
+        env.add("x", 2_num);
 
         auto actual = evaluate("x"_name * "x"_name, env);
-        auto expected = 4_const;
+        auto expected = 4_num;
 
         REQUIRE(actual == expected);
     }
@@ -61,8 +61,8 @@ namespace mm::tests::evaluator
     {
         Environment env;
 
-        auto actual = evaluate(("x"_let = 3_const) >> ("x"_name * "x"_name), env);
-        auto expected = 9_const;
+        auto actual = evaluate(("x"_let = 3_num) >> ("x"_name * "x"_name), env);
+        auto expected = 9_num;
 
         REQUIRE(actual == expected);
     }
@@ -70,10 +70,10 @@ namespace mm::tests::evaluator
     TEST_CASE("variable shadowing")
     {
         Environment env;
-        env.add("x", 2_const);
+        env.add("x", 2_num);
 
-        auto actual = evaluate(("x"_let = 3_const) >> ("x"_name * "x"_name), env);
-        auto expected = 9_const;
+        auto actual = evaluate(("x"_let = 3_num) >> ("x"_name * "x"_name), env);
+        auto expected = 9_num;
 
         REQUIRE(actual == expected);
     }
@@ -83,8 +83,8 @@ namespace mm::tests::evaluator
         Environment env;
         env.add("f", closure({ "x", "y" }, "x"_name + "y"_name));
 
-        auto actual = evaluate(callexpr("f"_name, { 1_const, 2_const }), env);
-        auto expected = 3_const;
+        auto actual = evaluate(callexpr("f"_name, { 1_num, 2_num }), env);
+        auto expected = 3_num;
 
         REQUIRE(actual == expected);
     }
@@ -94,7 +94,7 @@ namespace mm::tests::evaluator
         Environment env;
         env.add("f", closure({ "x", "y" }, "x"_name + "y"_name));
 
-        REQUIRE_THROWS_AS(evaluate(callexpr("f"_name, { 1_const }), env), ArgumentError);
+        REQUIRE_THROWS_AS(evaluate(callexpr("f"_name, { 1_num }), env), ArgumentError);
     }
 
     TEST_CASE("function call with too many arguments raises ArgumentError")
@@ -102,13 +102,13 @@ namespace mm::tests::evaluator
         Environment env;
         env.add("f", closure({ "x", "y" }, "x"_name + "y"_name));
 
-        REQUIRE_THROWS_AS(evaluate(callexpr("f"_name, { 1_const, 2_const, 3_const }), env), ArgumentError);
+        REQUIRE_THROWS_AS(evaluate(callexpr("f"_name, { 1_num, 2_num, 3_num }), env), ArgumentError);
     }
 
     TEST_CASE("function call on non-function raises TypeError")
     {
         Environment env;
-        env.add("f", 3_const);
+        env.add("f", 3_num);
 
         REQUIRE_THROWS_AS(evaluate(callexpr("f"_name, {}), env), TypeError);
     }
@@ -119,9 +119,9 @@ namespace mm::tests::evaluator
 
         auto actual = evaluate(
             ("f"_let = fnexpr({ "x" }, fnexpr({ "y" }, "x"_name - "y"_name)))
-            >> callexpr(callexpr("f"_name, { 3_const }), { 2_const }),
+            >> callexpr(callexpr("f"_name, { 3_num }), { 2_num }),
             env);
-        auto expected = 1_const;
+        auto expected = 1_num;
 
         REQUIRE(actual == expected);
     }
@@ -130,8 +130,8 @@ namespace mm::tests::evaluator
     {
         Environment env;
 
-        auto actual = evaluate(fnexpr({ "x", "y" }, 1_const), env);
-        auto expected = closure({ "x", "y" }, 1_const);
+        auto actual = evaluate(fnexpr({ "x", "y" }, 1_num), env);
+        auto expected = closure({ "x", "y" }, 1_num);
 
         REQUIRE(actual == expected);
     }
@@ -139,7 +139,7 @@ namespace mm::tests::evaluator
     TEST_CASE("closures capture lexical scope")
     {
         Environment env;
-        env.add("a", 1_const);
+        env.add("a", 1_num);
 
         auto actual = evaluate(fnexpr({ "x", "y" }, "a"_name), env);
         auto expected = closure({ "x", "y" }, "a"_name, env);
@@ -150,7 +150,7 @@ namespace mm::tests::evaluator
     TEST_CASE("closures capture only used bindings (nothing)")
     {
         Environment env;
-        env.add("a", 1_const);
+        env.add("a", 1_num);
 
         auto actual = evaluate(fnexpr({ "x", "y" }, "x"_name), env);
         auto expected = closure({ "x", "y" }, "x"_name);
@@ -161,9 +161,9 @@ namespace mm::tests::evaluator
     TEST_CASE("closures capture only used bindings (1 binding)")
     {
         Environment closureEnv;
-        closureEnv.add("a", 1_const);
+        closureEnv.add("a", 1_num);
 
-        auto env = closureEnv.with("b", 2_const);
+        auto env = closureEnv.with("b", 2_num);
 
         auto actual = evaluate(fnexpr({ "x", "y" }, "a"_name), env);
         auto expected = closure({ "x", "y" }, "a"_name, closureEnv);
@@ -174,8 +174,8 @@ namespace mm::tests::evaluator
     TEST_CASE("closures don't capture when params shadow")
     {
         Environment env;
-        env.add("x", 1_const);
-        env.add("a", 2_const);
+        env.add("x", 1_num);
+        env.add("a", 2_num);
 
         auto actual = evaluate(fnexpr({ "x", "y" }, "x"_name), env);
         auto expected = closure({ "x", "y" }, "x"_name);
@@ -186,8 +186,8 @@ namespace mm::tests::evaluator
     TEST_CASE("closures don't capture when params shadow in nested functions")
     {
         Environment env;
-        env.add("x", 1_const);
-        env.add("a", 2_const);
+        env.add("x", 1_num);
+        env.add("a", 2_num);
 
         auto inner = fnexpr({ "a" }, "x"_name * "a"_name);
 

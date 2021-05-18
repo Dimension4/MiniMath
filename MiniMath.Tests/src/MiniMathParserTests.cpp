@@ -45,7 +45,7 @@ namespace mm::tests::parser
         MiniMathParser parser(tokens({ Token{ .type = TokenType::Number, .lexeme = num } }));
         auto e = parser.parseExpression();
 
-        REQUIRE(e == makeExpr(ConstantExpr{ expected }));
+        REQUIRE(e == makeExpr(NumberExpr{ expected }));
     }
 
     TEST_CASE("parse names")
@@ -67,7 +67,7 @@ namespace mm::tests::parser
         auto actual = parser.parseExpression();
         auto expected = makeExpr(LetExpr{
             .name = "x",
-            .value = ConstantExpr{ 1 },
+            .value = NumberExpr{ 1 },
             .body = NameExpr{ "x" }
         });
 
@@ -83,7 +83,7 @@ namespace mm::tests::parser
         auto actual = parser.parseExpression();
         auto expected = makeExpr(LetExpr{
             .name = "x",
-            .value = ConstantExpr{ 1 },
+            .value = NumberExpr{ 1 },
             .body = NameExpr{ "x" }
         });
 
@@ -97,7 +97,7 @@ namespace mm::tests::parser
         MiniMathParser parser(source);
 
         auto actual = parser.parseStatement();
-        auto expected = Stmt{ LetStmt{ .name = "x", .value = ConstantExpr{ 1 } } };
+        auto expected = Stmt{ LetStmt{ .name = "x", .value = NumberExpr{ 1 } } };
 
         REQUIRE(actual == expected);
     }
@@ -138,7 +138,7 @@ namespace mm::tests::parser
         MiniMathParser parser(source);
 
         auto actual = parser.parseExpression();
-        auto expected = binexpr(op, 1_const, 2_const);
+        auto expected = binexpr(op, 1_num, 2_num);
 
         REQUIRE(actual == expected);
     }
@@ -152,7 +152,7 @@ namespace mm::tests::parser
         auto actual = parser.parseExpression();
         auto expected = makeExpr(CallExpr{
             .target = NameExpr{ "foo" },
-            .args = { NameExpr{ "x" }, ConstantExpr{ 2 } }
+            .args = { NameExpr{ "x" }, NumberExpr{ 2 } }
         });
 
         REQUIRE(actual == expected);
@@ -167,7 +167,7 @@ namespace mm::tests::parser
             MiniMathParser parser(source);
 
             auto actual = parser.parseExpression();
-            auto expected = "x"_name + ("x"_name * 2_const);
+            auto expected = "x"_name + ("x"_name * 2_num);
 
             REQUIRE(actual == expected);
         }
@@ -179,7 +179,7 @@ namespace mm::tests::parser
             MiniMathParser parser(source);
 
             auto actual = parser.parseExpression();
-            auto expected = (1_const + 2_const) - 3_const;
+            auto expected = (1_num + 2_num) - 3_num;
 
             REQUIRE(actual == expected);
         }
@@ -193,7 +193,7 @@ namespace mm::tests::parser
             MiniMathParser parser(source);
 
             auto actual = parser.parseExpression();
-            auto expected = (1_const + ((2_const * 3_const) / 4_const)) - "x"_name;
+            auto expected = (1_num + ((2_num * 3_num) / 4_num)) - "x"_name;
 
             REQUIRE(actual == expected);
         }
@@ -205,7 +205,7 @@ namespace mm::tests::parser
             MiniMathParser parser(source);
 
             auto actual = parser.parseExpression();
-            auto expected = (1_const + 2_const) * 3_const;
+            auto expected = (1_num + 2_num) * 3_num;
 
             REQUIRE(actual == expected);
         }
@@ -219,7 +219,7 @@ namespace mm::tests::parser
             MiniMathParser parser(source);
 
             auto actual = parser.parseExpression();
-            auto expected = 1_const + (2_const * 3_const);
+            auto expected = 1_num + (2_num * 3_num);
 
             REQUIRE(actual == expected);
         }
@@ -237,8 +237,8 @@ namespace mm::tests::parser
         auto expected = makeExpr(CallExpr{
             .target = "foo"_name,
             .args = {
-                1_const + 1_const,
-                2_const + 2_const
+                1_num + 1_num,
+                2_num + 2_num
             }
         });
 
@@ -257,7 +257,7 @@ namespace mm::tests::parser
                 .target = "foo"_name,
                 .args = {}
             }),
-            .args = { 1_const }
+            .args = { 1_num }
         });
 
         REQUIRE(actual == expected);

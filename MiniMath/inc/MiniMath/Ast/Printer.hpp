@@ -25,7 +25,7 @@ namespace mm::ast
             return fmt::format_to(outIt, "{}", expr.name);
         }
 
-        auto operator()(expr::ConstantExpr const& expr, auto outIt) const
+        auto operator()(expr::NumberExpr const& expr, auto outIt) const
         {
             return fmt::format_to(outIt, "{}", expr.value);
         }
