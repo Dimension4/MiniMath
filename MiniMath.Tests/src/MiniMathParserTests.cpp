@@ -45,7 +45,7 @@ namespace mm::tests::parser
         MiniMathParser parser(tokens({ Token{ .type = TokenType::Number, .lexeme = num } }));
         auto e = parser.parseExpression();
 
-        REQUIRE(e == makeExpr(NumberExpr{ expected }));
+        REQUIRE(e == makeExpr( expected ));
     }
 
     TEST_CASE("parse names")
@@ -67,7 +67,7 @@ namespace mm::tests::parser
         auto actual = parser.parseExpression();
         auto expected = makeExpr(LetExpr{
             .name = "x",
-            .value = NumberExpr{ 1 },
+            .value = 1,
             .body = NameExpr{ "x" }
         });
 
@@ -83,7 +83,7 @@ namespace mm::tests::parser
         auto actual = parser.parseExpression();
         auto expected = makeExpr(LetExpr{
             .name = "x",
-            .value = NumberExpr{ 1 },
+            .value = 1,
             .body = NameExpr{ "x" }
         });
 
@@ -97,7 +97,7 @@ namespace mm::tests::parser
         MiniMathParser parser(source);
 
         auto actual = parser.parseStatement();
-        auto expected = Stmt{ LetStmt{ .name = "x", .value = NumberExpr{ 1 } } };
+        auto expected = Stmt{ LetStmt{ .name = "x", .value = 1 } };
 
         REQUIRE(actual == expected);
     }
@@ -152,7 +152,7 @@ namespace mm::tests::parser
         auto actual = parser.parseExpression();
         auto expected = makeExpr(CallExpr{
             .target = NameExpr{ "foo" },
-            .args = { NameExpr{ "x" }, NumberExpr{ 2 } }
+            .args = { NameExpr{ "x" }, 2 }
         });
 
         REQUIRE(actual == expected);

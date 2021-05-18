@@ -12,7 +12,7 @@ namespace mm::ast
         Expr operator()(expr::BinaryExpr const& expr, Environment const& env) const;
         Expr operator()(expr::CallExpr const& expr, Environment const& env) const;
         Expr operator()(expr::NameExpr const& expr, Environment const& env) const;
-        Expr operator()(expr::NumberExpr const& expr, Environment const& env) const;
+        Expr operator()(expr::NumberExpr expr, Environment const& env) const;
         Expr operator()(expr::Closure const& expr, Environment const& env) const;
         Expr operator()(expr::LetExpr const& expr, Environment const& env) const;
         Expr operator()(expr::FunctionExpr const& expr, Environment const& env) const;
@@ -28,7 +28,7 @@ namespace mm::ast
     {
         return visit(ExprEvaluator{}, expr, env);
     }
-	
+
     inline Environment evaluate(Stmt const& expr, Environment const& env)
     {
         return visit(StmtEvaluator{}, expr, env);

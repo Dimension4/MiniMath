@@ -25,9 +25,9 @@ namespace mm::ast
             return fmt::format_to(outIt, "{}", expr.name);
         }
 
-        auto operator()(expr::NumberExpr const& expr, auto outIt) const
+        auto operator()(expr::NumberExpr expr, auto outIt) const
         {
-            return fmt::format_to(outIt, "{}", expr.value);
+            return fmt::format_to(outIt, "{}", expr);
         }
 
         auto operator()(expr::Closure const& expr, auto outIt) const
@@ -83,7 +83,7 @@ struct fmt::formatter<T>
     }
 };
 
-template <typename T> requires(mm::ExprType<T> || mm::VariantMember<T, mm::expr::BinaryOperation>)
+template <typename T> requires((mm::ExprType<T> || mm::VariantMember<T, mm::expr::BinaryOperation>) && !std::is_fundamental_v<T>)
 struct fmt::formatter<T>
 {
     constexpr auto parse(format_parse_context& ctx) const

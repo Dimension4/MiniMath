@@ -14,12 +14,12 @@ namespace expr
 
     inline mm::Expr operator""_num(long double val)
     {
-        return mm::expr::NumberExpr{ double(val) };
+        return double(val);
     }
 
     inline mm::Expr operator""_num(unsigned long long val)
     {
-        return mm::expr::NumberExpr{ double(val) };
+        return double(val);
     }
 
     inline mm::Expr binexpr(mm::expr::BinaryOperation op, mm::Expr left, mm::Expr right)

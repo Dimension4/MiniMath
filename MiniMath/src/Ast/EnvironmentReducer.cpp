@@ -35,7 +35,7 @@ namespace mm::ast
             throw LookupError(fmt::format("Unknown identifier '{}'", expr.name));
     }
 
-    void EnvironmentReducer::operator()(NumberExpr const& expr, std::vector<std::string> const& params,
+    void EnvironmentReducer::operator()(NumberExpr expr, std::vector<std::string> const& params,
                                         Environment const& inEnv, Environment& outEnv) const
     {
     }

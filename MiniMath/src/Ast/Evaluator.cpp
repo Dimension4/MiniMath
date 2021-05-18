@@ -18,24 +18,24 @@ namespace mm::ast
 
     struct BinaryExprEvaluator
     {
-        Expr operator()(Add, NumberExpr const& lhs, NumberExpr const& rhs) const
+        Expr operator()(Add, NumberExpr lhs, NumberExpr rhs) const
         {
-            return NumberExpr{ lhs.value + rhs.value };
+            return lhs + rhs;
         }
 
-        Expr operator()(Subtract, NumberExpr const& lhs, NumberExpr const& rhs) const
+        Expr operator()(Subtract, NumberExpr lhs, NumberExpr rhs) const
         {
-            return NumberExpr{ lhs.value - rhs.value };
+            return lhs - rhs;
         }
 
-        Expr operator()(Multiply, NumberExpr const& lhs, NumberExpr const& rhs) const
+        Expr operator()(Multiply, NumberExpr lhs, NumberExpr rhs) const
         {
-            return NumberExpr{ lhs.value * rhs.value };
+            return lhs * rhs;
         }
 
-        Expr operator()(Divide, NumberExpr const& lhs, NumberExpr const& rhs) const
+        Expr operator()(Divide, NumberExpr lhs, NumberExpr rhs) const
         {
-            return NumberExpr{ lhs.value / rhs.value };
+            return lhs / rhs;
         }
 
         // using auto directly causes an ICE
@@ -86,7 +86,7 @@ namespace mm::ast
         throw LookupError(fmt::format("Unknown identifier '{}'", expr.name));
     }
 
-    Expr ExprEvaluator::operator()(NumberExpr const& expr, Environment const& env) const
+    Expr ExprEvaluator::operator()(NumberExpr expr, Environment const& env) const
     {
         return expr;
     }
