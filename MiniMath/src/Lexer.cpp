@@ -147,15 +147,8 @@ namespace mm
 
     bool Lexer::skipComment(char c)
     {
-        if (c != '/')
+        if (c != '#')
             return false;
-
-        c = nextChar();
-        if (c != '/')
-        {
-            overScan_ = c;
-            return false;
-        }
 
         while (c && c != '\n' && c != '\r')
             c = nextChar();

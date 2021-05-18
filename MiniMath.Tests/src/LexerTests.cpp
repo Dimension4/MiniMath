@@ -58,7 +58,7 @@ namespace mm::tests::lexer
 
     TEST_CASE("comments are ignored")
     {
-        std::string_view source = "12// dajod2ß..\"let in import";
+        std::string_view source = "12# dajod2ß..\"let in import";
 
         auto lexer = makeLexer(source);
         REQUIRE(lexer.nextToken() == Token{ TokenType::Number, "12" });
@@ -67,7 +67,7 @@ namespace mm::tests::lexer
 
     TEST_CASE("comments are ignored until EOL")
     {
-        std::string_view source = R"(12// dajod2ß..let in import
+        std::string_view source = R"(12# dajod2ß..let in import
         hi)";
 
         auto lexer = makeLexer(source);

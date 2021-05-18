@@ -177,18 +177,18 @@ Complex variable declarations:
 
 Functions are values:
 
-    let fancyAdd = fn x ->  // defines a function that returns a function
+    let fancyAdd = fn x ->  # defines a function that returns a function
         fn y ->
             x + y
 
-    fancyAdd(1)(2)      // returns 3
+    fancyAdd(1)(2)      # returns 3
 
-    let plus3 = f1(3)   // plus3: (num -> num)
-    plus3(4)            // returns 7
+    let plus3 = f1(3)   # plus3: (num -> num)
+    plus3(4)            # returns 7
 
 Importing modules:
 
-    import math.linalg  // imports ./math/linalg.mm
+    import math.linalg  # imports ./math/linalg.mm
 
 The 'import' directive imports all top level bindings from a module.
 A module is a code file with an *.mm extension.
