@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ExprEvaluatorTests.cpp" />
+    <ClCompile Include="src\IntegrationTests.cpp" />
     <ClCompile Include="src\LexerTests.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MiniMathParserTests.cpp" />

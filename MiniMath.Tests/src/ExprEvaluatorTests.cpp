@@ -67,7 +67,7 @@ namespace mm::tests::evaluator
         REQUIRE(actual == expected);
     }
 
-    TEST_CASE("variable shadowing")
+    TEST_CASE("evaluate variable shadowing")
     {
         Environment env;
         env.add("x", 2_num);
