@@ -34,4 +34,9 @@ namespace mm::ast
     {
         return visit(StmtEvaluator{}, expr, env);
     }
+
+    [[nodiscard]]
+    Environment evaluate(std::filesystem::path const& codeFile);
+
+    void evaluate(Environment& env, std::function<char()> charSource);
 }

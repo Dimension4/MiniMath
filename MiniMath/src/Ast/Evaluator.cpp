@@ -136,26 +136,35 @@ namespace mm::ast
         if (!exists(path))
             throw LookupError(fmt::format("Module '{}' doesn't exist.", stmt.target));
 
-        std::ifstream file(path);
+        return evaluate(path);
+    }
+
+    Environment evaluate(std::filesystem::path const& codeFile)
+    {
+        std::ifstream file(codeFile);
         skipBom(file);
 
-        Lexer lexer([&]
+        Environment env;
+        env.setDir(codeFile.parent_path());
+        evaluate(env, [&]
         {
             auto c = file.get();
             return file ? char(c) : 0;
         });
 
-        MiniMathParser parser(std::bind_front(&Lexer::nextToken, std::ref(lexer)));
+        return env;
+    }
 
-        Environment importEnv;
-        importEnv.setDir(path.parent_path());
+    void evaluate(Environment& env, std::function<char()> charSource)
+    {
+        Lexer lexer(move(charSource));
+
+        MiniMathParser parser([&] { return lexer.nextToken(); });
 
         while (!lexer.atEof())
         {
             auto s = parser.parseStatement();
-            importEnv.merge(evaluate(s, importEnv));
+            env.merge(evaluate(s, env));
         }
-
-        return importEnv;
     }
 }
