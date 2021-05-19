@@ -84,6 +84,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ast\Environment.cpp" />
     <ClCompile Include="src\Ast\EnvironmentReducer.cpp" />
     <ClCompile Include="src\Ast\Evaluator.cpp" />
     <ClCompile Include="src\Lexer.cpp" />

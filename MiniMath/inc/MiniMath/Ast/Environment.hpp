@@ -18,14 +18,16 @@ namespace mm
         class Environment
         {
         public:
-            [[nodiscard]]
-            Expr const* tryGet(std::string_view name) const noexcept
-            {
-                if (auto it = symbols_.find(name); it != symbols_.end())
-                    return &it->second;
+            using ConstIterator = std::map<std::string, Expr, std::less<>>::const_iterator;
 
-                return nullptr;
-            }
+            [[nodiscard]]
+            Environment() = default;
+
+            [[nodiscard]]
+            Environment(std::initializer_list<std::pair<const std::string, Expr>> bindings);
+
+            [[nodiscard]]
+            Expr const* tryGet(std::string_view name) const noexcept;
 
             template <ExprType T>
             [[nodiscard]]
@@ -36,49 +38,24 @@ namespace mm
             }
 
             [[nodiscard]]
-            Environment with(std::string name, Expr value) const
-            {
-                auto copy = *this;
-                copy.add(move(name), std::move(value));
-                return copy;
-            }
-
-            void setDir(std::filesystem::path path)
-            {
-                dir_ = std::move(path);
-            }
+            Environment with(std::string name, Expr value) const;
 
             [[nodiscard]]
-            std::filesystem::path const& getDir() const noexcept
-            {
-                return dir_;
-            }
+            std::filesystem::path const& getDir() const noexcept;
+            void setDir(std::filesystem::path path);
 
-            void add(std::string name, Expr value)
-            {
-                symbols_.insert_or_assign(std::move(name), std::move(value));
-            }
+            void add(std::string name, Expr value);
+            void merge(Environment&& other);
 
-            void merge(Environment&& other)
-            {
-                for (auto& [name, val] : other.symbols_)
-                    symbols_.insert_or_assign(name, std::move(val));
-            }
-
-            auto begin() const noexcept
-            {
-                return symbols_.cbegin();
-            }
-
-            auto end() const noexcept
-            {
-                return symbols_.cend();
-            }
+            [[nodiscard]]
+            ConstIterator begin() const noexcept;
+            [[nodiscard]]
+            ConstIterator end() const noexcept;
 
             friend bool operator==(Environment const&, Environment const&) = default;
 
         private:
-            std::map<std::string, Expr, std::less<>> symbols_;
+            std::map<std::string, Expr, std::less<>> bindings_;
             std::filesystem::path dir_ = ".";
         };
     }
