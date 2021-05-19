@@ -9,7 +9,7 @@
 
 namespace mm
 {
-    static TokenType asKeyword(std::string_view identifier)
+    static TokenType classifyIdentifier(std::string_view identifier)
     {
         if (identifier == "let") return TokenType::Let;
         if (identifier == "in") return TokenType::In;
@@ -56,9 +56,9 @@ namespace mm
 
             if (std::isalpha(c))
             {
-                auto t = readIdentifier(c);
-                t.type = asKeyword(t.lexeme);
-                return t;
+                auto lexeme = readIdentifier(c);
+                auto type = classifyIdentifier(lexeme);
+                return { type, move(lexeme) };
             }
 
             if (auto t = tryReadWidePunctuator(c))
@@ -133,17 +133,17 @@ namespace mm
         return { .type = TokenType::Number, .lexeme = move(buffer) };
     }
 
-    Token Lexer::readIdentifier(char first)
+    std::string Lexer::readIdentifier(char first)
     {
-        std::string buffer(1, first);
+        std::string lexeme(1, first);
         char c = first;
 
         while (std::isalnum(c = nextChar()))
-            buffer += c;
+            lexeme += c;
 
         overScan_ = c;
 
-        return { .type = TokenType::Identifier, .lexeme = move(buffer) };
+        return lexeme;
     }
 
     std::optional<Token> Lexer::tryReadWidePunctuator(char first)

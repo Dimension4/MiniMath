@@ -25,7 +25,7 @@ namespace mm
 
         char nextChar();
         Token readNumber(char first);
-        Token readIdentifier(char first);
+        std::string readIdentifier(char first);
         std::optional<Token> tryReadWidePunctuator(char first);
         std::optional<Token> match(char c, char const(&lexeme)[3], TokenType type);
         bool skipComment(char c);
