@@ -9,6 +9,18 @@
 
 namespace mm
 {
+    static TokenType asKeyword(std::string_view identifier)
+    {
+        if (identifier == "let") return TokenType::Let;
+        if (identifier == "in") return TokenType::In;
+        if (identifier == "fn") return TokenType::Fn;
+        if (identifier == "import") return TokenType::Import;
+        if (identifier == "true") return TokenType::True;
+        if (identifier == "false") return TokenType::False;
+
+        return TokenType::Identifier;
+    }
+
     static std::optional<TokenType> readPunctuator(char c)
     {
         switch (c)
@@ -27,9 +39,7 @@ namespace mm
         return std::nullopt;
     }
 
-    Lexer::Lexer(std::function<char()> charSource) : charSource_(move(charSource))
-    {
-    }
+    Lexer::Lexer(std::function<char()> charSource) : charSource_(move(charSource)) { }
 
     Token Lexer::nextToken()
     {
@@ -45,9 +55,13 @@ namespace mm
                 return readNumber(c);
 
             if (std::isalpha(c))
-                return asKeyword(readIdentifier(c));
+            {
+                auto t = readIdentifier(c);
+                t.type = asKeyword(t.lexeme);
+                return t;
+            }
 
-            if (auto t = tryReadWideToken(c))
+            if (auto t = tryReadWidePunctuator(c))
                 return std::move(*t);
 
             if (auto type = readPunctuator(c))
@@ -132,13 +146,26 @@ namespace mm
         return { .type = TokenType::Identifier, .lexeme = move(buffer) };
     }
 
-    std::optional<Token> Lexer::tryReadWideToken(char c)
+    std::optional<Token> Lexer::tryReadWidePunctuator(char first)
     {
-        if (c == '-')
+        constexpr std::pair<char const(&)[3], TokenType> arr[] = {
+            { "->", TokenType::RArrow }
+        };
+
+        for (auto&& [lexeme, type] : arr)
+            if (auto t = match(first, lexeme, type))
+                return t;
+
+        return std::nullopt;
+    }
+
+    std::optional<Token> Lexer::match(char c, char const (& lexeme)[3], TokenType type)
+    {
+        if (c == lexeme[0])
         {
             c = nextChar();
-            if (c == '>')
-                return Token{ .type = TokenType::RArrow, .lexeme = "->" };
+            if (c == lexeme[1])
+                return Token{ .type = type, .lexeme = lexeme };
             overScan_ = c;
         }
 
@@ -155,28 +182,5 @@ namespace mm
 
         overScan_ = c;
         return true;
-    }
-
-    Token Lexer::asKeyword(Token const& token)
-    {
-        if (token.lexeme == "let")
-            return { TokenType::Let, token.lexeme };
-
-        if (token.lexeme == "in")
-            return { TokenType::In, token.lexeme };
-
-        if (token.lexeme == "fn")
-            return { TokenType::Fn, token.lexeme };
-
-        if (token.lexeme == "import")
-            return { TokenType::Import, token.lexeme };
-
-        if (token.lexeme == "true")
-            return { TokenType::True, token.lexeme };
-
-        if (token.lexeme == "false")
-            return { TokenType::False, token.lexeme };
-
-        return token;
     }
 }

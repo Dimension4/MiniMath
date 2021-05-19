@@ -26,9 +26,9 @@ namespace mm
         char nextChar();
         Token readNumber(char first);
         Token readIdentifier(char first);
-        std::optional<Token> tryReadWideToken(char c);
+        std::optional<Token> tryReadWidePunctuator(char first);
+        std::optional<Token> match(char c, char const(&lexeme)[3], TokenType type);
         bool skipComment(char c);
-        static Token asKeyword(Token const& token);
     };
 
     struct LexError : std::logic_error
