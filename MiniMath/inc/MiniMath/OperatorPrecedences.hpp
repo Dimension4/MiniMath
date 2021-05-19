@@ -12,7 +12,7 @@ namespace mm
         Multiplication,
         Division = Multiplication,
 
-        Negate,
+        Prefix,
         Call,
     };
 }

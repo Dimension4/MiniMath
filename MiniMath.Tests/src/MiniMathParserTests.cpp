@@ -294,4 +294,40 @@ namespace mm::tests::parser
 
         REQUIRE(actual == expected);
     }
+
+    TEST_CASE("parse -1 >=> -1")
+    {
+        auto source = tokens({ minus, "1"_num });
+
+        MiniMathParser parser(source);
+
+        auto actual = parser.parseExpression();
+        auto expected = inverse(1_num);
+
+        REQUIRE(actual == expected);
+    }
+
+    TEST_CASE("parse 1 * -x >=> 1 * (-x)")
+    {
+        auto source = tokens({ "1"_num, asterisk, minus, "x"_id });
+
+        MiniMathParser parser(source);
+
+        auto actual = parser.parseExpression();
+        auto expected = 1_num * inverse("x"_name);
+
+        REQUIRE(actual == expected);
+    }
+
+    TEST_CASE("parse --1 >=> --1")
+    {
+        auto source = tokens({ minus, minus, "1"_num });
+
+        MiniMathParser parser(source);
+
+        auto actual = parser.parseExpression();
+        auto expected = inverse(inverse(1_num));
+
+        REQUIRE(actual == expected);
+    }
 }

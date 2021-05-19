@@ -13,6 +13,7 @@ namespace mm
         explicit MiniMathParser(std::function<Token()> tokenSource);
 
     private:
+        void prefix(TokenType token, OperatorPrecedence precedence);
         void infix(TokenType token, OperatorPrecedence precedence, parselets::Associativity associativity = parselets::Associativity::Left);
     };
 }

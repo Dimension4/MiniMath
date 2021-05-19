@@ -119,6 +119,16 @@ namespace mm::ast
         });
     }
 
+    Expr ExprEvaluator::operator()(expr::InverseExpr const& expr, Environment const& env) const
+    {
+        auto body = visit(*this, expr.body, env);
+
+        if (auto val = tryGetExpr<NumberExpr>(body))
+            return -*val;
+
+        throw TypeError(fmt::format("Expected number. {} is not invertible", body));
+    }
+
     Environment StmtEvaluator::operator()(stmt::LetStmt const& stmt, Environment const& env) const
     {
         auto val = evaluate(stmt.value, env);

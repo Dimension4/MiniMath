@@ -99,6 +99,7 @@
     <ClCompile Include="src\Parselets\ImportParselet.cpp" />
     <ClCompile Include="src\Parselets\LetParselet.cpp" />
     <ClCompile Include="src\Parselets\NameParselet.cpp" />
+    <ClCompile Include="src\Parselets\PrefixOpParselet.cpp" />
     <ClCompile Include="src\PrattParser.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +121,7 @@
     <ClInclude Include="inc\MiniMath\Parselets\ImportParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\LetParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\StmtParselet.hpp" />
+    <ClInclude Include="inc\MiniMath\Parselets\PrefixOpParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Statements\Stmt.hpp" />
     <ClInclude Include="inc\MiniMath\Utility.hpp" />
     <ClInclude Include="inc\MiniMath\Lexer.hpp" />

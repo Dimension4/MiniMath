@@ -67,4 +67,10 @@ namespace mm::ast
 
         visit(*this, expr.body, copy, inEnv, outEnv);
     }
+
+    void EnvironmentReducer::operator()(expr::InverseExpr const& expr, std::vector<std::string> const& params, Environment const& inEnv,
+        Environment& outEnv) const
+    {
+        visit(*this, expr.body, params, inEnv, outEnv);
+    }
 }

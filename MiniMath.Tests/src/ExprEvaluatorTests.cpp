@@ -196,4 +196,24 @@ namespace mm::tests::evaluator
 
         REQUIRE(actual == expected);
     }
+
+    TEST_CASE("-1 + -1 = -2")
+    {
+        Environment env;
+        auto actual = evaluate(-1_num + -1_num, env);
+        Expr expected = -2.0;
+
+        REQUIRE(actual == expected);
+    }
+
+    TEST_CASE("[x = 4] -(-x + 2) = 2")
+    {
+        Environment env;
+        env.add("x", 4_num);
+
+        auto actual = evaluate(-(-"x"_name + 2_num), env);
+        auto expected = 2_num;
+
+        REQUIRE(actual == expected);
+    }
 }

@@ -62,6 +62,11 @@ namespace mm::ast
             return fmt::format_to(outIt, "import ", stmt.target);
         }
 
+        auto operator()(expr::InverseExpr const& expr, auto outIt) const
+        {
+            return fmt::format_to(outIt, "-{}", expr.body);
+        }
+
         auto operator()(expr::ops::Add, auto outIt) const
         {
             return fmt::format_to(outIt, "+");

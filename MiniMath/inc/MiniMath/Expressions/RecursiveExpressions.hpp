@@ -44,4 +44,11 @@ namespace mm::expr
 
         friend bool operator==(LetExpr const&, LetExpr const&) = default;
     };
+
+    struct InverseExpr
+    {
+        Expr body;
+
+        friend bool operator==(InverseExpr const&, InverseExpr const&) = default;
+    };
 }

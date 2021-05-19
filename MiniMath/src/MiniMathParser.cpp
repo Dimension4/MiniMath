@@ -7,6 +7,7 @@
 #include "MiniMath/Parselets/LetParselet.hpp"
 #include "MiniMath/Parselets/NameParselet.hpp"
 #include "MiniMath/Parselets/ImportParselet.hpp"
+#include "MiniMath/Parselets/PrefixOpParselet.hpp"
 
 
 using namespace mm;
@@ -27,10 +28,17 @@ MiniMathParser::MiniMathParser(std::function<Token()> tokenSource) :
     registerParselet(TokenType::Let, std::make_unique<LetParselet>());
     registerParselet(TokenType::Fn, std::make_unique<FunctionParselet>());
 
+    prefix(TokenType::Minus, OperatorPrecedence::Prefix);
+
     infix(TokenType::Plus, OperatorPrecedence::Addition);
     infix(TokenType::Minus, OperatorPrecedence::Subtraction);
     infix(TokenType::Asterisk, OperatorPrecedence::Multiplication);
     infix(TokenType::Slash, OperatorPrecedence::Division);
+}
+
+void MiniMathParser::prefix(TokenType token, OperatorPrecedence precedence)
+{
+    registerParselet(token, std::make_unique<PrefixOpParselet>(int(precedence)));
 }
 
 void MiniMathParser::infix(TokenType token, OperatorPrecedence precedence, Associativity associativity)
