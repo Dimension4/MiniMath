@@ -147,4 +147,39 @@ let r3 = root(root(root(root(10)))) # third root @ 8.5341
         check("r2", r2);
         check("r3", r3);
     }
+
+    TEST_CASE("negative values")
+    {
+        constexpr std::string_view source = R"(
+let x = -1 + 2
+let y =
+    let a = x - 1 in
+    -a + 2
+    # we need the 'in' keyword here because of ambiguity
+    # since we don't care about whitespaces,
+    # let x = 1
+    # -x
+    # is interpreted as 'let x = (1 -x) (missing-body)', which is obviously
+    # not the intended behavior given the line break. YOLO
+
+let z = --y
+
+let gotcha =
+    let a = 1
+    let b = 2
+    let f = fn x -> -a + b
+    f(0)
+)";
+
+        Environment expected{
+            { "x", 1_num },
+            { "y", 2_num },
+            { "z", 2_num },
+            { "gotcha", 1_num },
+        };
+
+        auto actual = evalStatement(source);
+
+        REQUIRE(actual == expected);
+    }
 }
