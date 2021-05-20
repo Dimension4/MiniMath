@@ -104,7 +104,7 @@ let x = apply(add(2) 2)
 
         Environment expected{
             { "apply", closure({ "func", "x" }, callexpr("func"_name, { "x"_name })) },
-            { "add", closure({ "a" }, fnexpr({"b"}, "a"_name + "b"_name)) },
+            { "add", closure({ "a" }, fnexpr({ "b" }, "a"_name + "b"_name)) },
             { "x", 4_num }
         };
 
@@ -176,6 +176,71 @@ let gotcha =
             { "y", 2_num },
             { "z", 2_num },
             { "gotcha", 1_num },
+        };
+
+        auto actual = evalStatement(source);
+
+        REQUIRE(actual == expected);
+    }
+
+    TEST_CASE("logical operations")
+    {
+        constexpr std::string_view source = R"(
+let t = true
+let f = false
+
+let a = t and f
+let b = t or f
+let c = f and t or t and t
+let d = f or t and f or f
+)";
+
+        Environment expected{
+            { "t", true },
+            { "f", false },
+            { "a", false },
+            { "b", true },
+            { "c", true },
+            { "d", false },
+        };
+
+        auto actual = evalStatement(source);
+
+        REQUIRE(actual == expected);
+    }
+
+    TEST_CASE("relational operations")
+    {
+        constexpr std::string_view source = R"(
+let a = 1 < 2
+let b = 2 <= 2
+let c = 2 > 1
+let d = 2 >= 2
+let e = 2 = 2
+let f = 1 = 2
+
+let fun = fn x -> (x + 2) * 4 > 20
+let g = fun(2) = false
+let h = fun(3) = false
+let i = fun(4) = true
+
+let x = 1 < 2 and 2 > 1 or 4 <= 4 and 4 >= 4
+let y = x = (1 = 2)
+)";
+
+        Environment expected{
+            { "a", true },
+            { "b", true },
+            { "c", true },
+            { "d", true },
+            { "e", true },
+            { "f", false },
+            { "x", true },
+            { "y", false },
+            { "fun", closure({ "x" }, ("x"_name + 2_num) * 4_num > 20_num) },
+            { "g", true },
+            { "h", true },
+            { "i", true },
         };
 
         auto actual = evalStatement(source);
