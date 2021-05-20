@@ -14,9 +14,7 @@ namespace mm::repl
 {
     Repl::Repl() :
         lexer_(std::bind_front(&Repl::getNextChar, this)),
-        parser_(std::bind_front(&Lexer::nextToken, std::ref(lexer_)))
-    {
-    }
+        parser_(std::bind_front(&Lexer::nextToken, std::ref(lexer_))) { }
 
     void Repl::run()
     {
@@ -30,7 +28,14 @@ namespace mm::repl
             if (inputBuffer_ == "#quit")
                 break;
 
-            if (inputBuffer_.starts_with('#'))
+            bool printAst = false;
+
+            if (inputBuffer_.starts_with("#print"))
+            {
+                inputBuffer_.erase(0, 6);
+                printAst = true;
+            }
+            else if (inputBuffer_.starts_with('#'))
             {
                 handleReplCommands();
                 continue;
@@ -38,7 +43,10 @@ namespace mm::repl
 
             try
             {
-                evalStatement();
+                if (printAst)
+                    fmt::print("{}\n", parser_.parseStatement());
+                else
+                    evalStatement();
             }
             catch (ParseError const& ex)
             {
@@ -46,7 +54,10 @@ namespace mm::repl
 
                 try
                 {
-                    evalExpression();
+                    if (printAst)
+                        fmt::print("{}\n", parser_.parseExpression());
+                    else
+                        evalExpression();
                 }
                 catch (ParseError const&)
                 {
@@ -153,8 +164,9 @@ Special REPL commands are:
     #quit       exits the REPL.
     #env        shows the current environment
     #reset      resets the environment (clears all existing bindings).
-    #help       shows this help.
+    #print      prints the parse tree of the current submission.
     #example    shows some example code.
+    #help       shows this help.
 
 The language is very simple and only supports number types and everything is an expression.
 The only exception are top level let-bindings (variable declarations).

@@ -52,6 +52,16 @@ namespace mm::ast
             return fmt::format_to(outIt, "fn {} -> {}", fmt::join(expr.paramNames, " "), expr.body);
         }
 
+        auto operator()(stmt::LetStmt const& stmt, auto outIt) const
+        {
+            return fmt::format_to(outIt, "let {} = {}", stmt.name, stmt.value);
+        }
+
+        auto operator()(stmt::ImportStmt const& stmt, auto outIt) const
+        {
+            return fmt::format_to(outIt, "import ", stmt.target);
+        }
+
         auto operator()(expr::ops::Add, auto outIt) const
         {
             return fmt::format_to(outIt, "+");
@@ -74,7 +84,7 @@ namespace mm::ast
     };
 }
 
-template <typename T> requires(std::same_as<T, mm::Expr> || std::same_as<T, mm::expr::BinaryOperation>)
+template <typename T> requires(std::same_as<T, mm::Expr> || std::same_as<T, mm::expr::BinaryOperation> || std::same_as<T, mm::Stmt>)
 struct fmt::formatter<T>
 {
     constexpr auto parse(format_parse_context& ctx) const
