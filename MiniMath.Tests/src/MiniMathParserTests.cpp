@@ -357,4 +357,16 @@ namespace mm::tests::parser
 
         REQUIRE(actual == expected);
     }
+
+    TEST_CASE("parse if 1 + 2 > 3 then x + y else x * y")
+    {
+        auto source = tokens({ if_, "1"_num, plus, "2"_num, gt, "3"_num, then_, "x"_id, plus, "y"_id, else_, "x"_id, asterisk, "y"_id });
+
+        MiniMathParser parser(source);
+
+        auto actual = parser.parseExpression();
+        auto expected = ifexpr(1_num + 2_num > 3_num, "x"_name + "y"_name, "x"_name * "y"_name);
+
+        REQUIRE(actual == expected);
+    }
 }

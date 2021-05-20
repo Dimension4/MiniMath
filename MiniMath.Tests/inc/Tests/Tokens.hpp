@@ -25,6 +25,9 @@ namespace tokconsts
     inline const mm::Token le{ mm::TokenType::LessEqual, "<=" };
     inline const mm::Token gt{ mm::TokenType::Greater, ">" };
     inline const mm::Token ge{ mm::TokenType::GreaterEqual, ">=" };
+    inline const mm::Token if_{ mm::TokenType::If, "if" };
+    inline const mm::Token then_{ mm::TokenType::Then, "then" };
+    inline const mm::Token else_{ mm::TokenType::Else, "else" };
     inline const mm::Token eof{ mm::TokenType::Eof };
 
     inline mm::Token operator""_num(char const* val, std::size_t)

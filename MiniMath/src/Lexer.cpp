@@ -19,6 +19,9 @@ namespace mm
         if (identifier == "false") return TokenType::False;
         if (identifier == "and") return TokenType::And;
         if (identifier == "or") return TokenType::Or;
+        if (identifier == "if") return TokenType::If;
+        if (identifier == "then") return TokenType::Then;
+        if (identifier == "else") return TokenType::Else;
 
         return TokenType::Identifier;
     }

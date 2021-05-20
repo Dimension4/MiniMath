@@ -80,7 +80,7 @@ namespace mm::tests::lexer
 
     TEST_CASE("keywords lex to keywords")
     {
-        auto token = GENERATE(let, in, fn, import_, true_, false_, and_, or_);
+        auto token = GENERATE(let, in, fn, import_, true_, false_, and_, or_, if_, then_, else_);
 
         auto lexer = makeLexer(token.lexeme);
         REQUIRE(lexer.nextToken() == token);

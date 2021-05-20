@@ -19,6 +19,7 @@ namespace mm
         struct LetExpr;
         struct FunctionExpr;
         struct InverseExpr;
+        struct IfExpr;
 
         //
         // register new expression types here
@@ -33,7 +34,8 @@ namespace mm
             Recursive<CallExpr>,
             Recursive<Closure>,
             Recursive<LetExpr>,
-            Recursive<InverseExpr>
+            Recursive<InverseExpr>,
+            Recursive<IfExpr>
         >;
     }
 

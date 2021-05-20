@@ -30,6 +30,9 @@ namespace mm
         LessEqual,
         Greater,
         GreaterEqual,
+        If,
+        Then,
+        Else,
         Eof,
     };
 
@@ -72,6 +75,9 @@ namespace mm
         ENUM_CASE(LessEqual);
         ENUM_CASE(Greater);
         ENUM_CASE(GreaterEqual);
+        ENUM_CASE(If);
+        ENUM_CASE(Then);
+        ENUM_CASE(Else);
         ENUM_CASE(Eof);
 
 #undef ENUM_CASE
@@ -107,6 +113,9 @@ namespace mm
         case TokenType::LessEqual: return "<=";
         case TokenType::Greater: return ">";
         case TokenType::GreaterEqual: return ">=";
+        case TokenType::If: return "if";
+        case TokenType::Then: return "then";
+        case TokenType::Else: return "else";
         }
 
         return enumName(type);

@@ -16,5 +16,6 @@ namespace mm::ast
         void operator()(expr::LetExpr const& expr, std::vector<std::string> const& params, Environment const& inEnv, Environment& outEnv) const;
         void operator()(expr::FunctionExpr const& expr, std::vector<std::string> const& params, Environment const& inEnv, Environment& outEnv) const;
         void operator()(expr::InverseExpr const& expr, std::vector<std::string> const& params, Environment const& inEnv, Environment& outEnv) const;
+        void operator()(expr::IfExpr const& expr, std::vector<std::string> const& params, Environment const& inEnv, Environment& outEnv) const;
     };
 }

@@ -169,6 +169,18 @@ namespace mm::ast
         throw TypeError(fmt::format("Expected number. {} is not invertible", body));
     }
 
+    Expr ExprEvaluator::operator()(IfExpr const& expr, Environment const& env) const
+    {
+        auto result = visit(*this, expr.condition, env);
+
+        if (auto cond = tryGetExpr<BoolExpr>(result))
+            return *cond
+                ? visit(*this, expr.thenArm, env)
+                : visit(*this, expr.elseArm, env);
+
+        throw TypeError(fmt::format("if condition expected a boolean, but got {}", result));
+    }
+
     Environment StmtEvaluator::operator()(stmt::LetStmt const& stmt, Environment const& env) const
     {
         auto val = evaluate(stmt.value, env);

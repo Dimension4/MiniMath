@@ -61,6 +61,11 @@ namespace mm::ast
             return fmt::format_to(outIt, "-{}", expr.body);
         }
 
+        auto operator()(expr::IfExpr const& expr, auto outIt) const
+        {
+            return fmt::format_to(outIt, "if {} then {} else {}", expr.condition, expr.thenArm, expr.elseArm);
+        }
+
         //
         // Statements
         //

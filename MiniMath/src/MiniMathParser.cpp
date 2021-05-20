@@ -4,6 +4,7 @@
 #include "MiniMath/Parselets/ConstantParselet.hpp"
 #include "MiniMath/Parselets/FunctionParselet.hpp"
 #include "MiniMath/Parselets/GroupParselet.hpp"
+#include "MiniMath/Parselets/IfPraselet.hpp"
 #include "MiniMath/Parselets/LetParselet.hpp"
 #include "MiniMath/Parselets/NameParselet.hpp"
 #include "MiniMath/Parselets/ImportParselet.hpp"
@@ -27,6 +28,7 @@ MiniMathParser::MiniMathParser(std::function<Token()> tokenSource) :
     registerParselet(TokenType::LParen, std::make_unique<CallParselet>());
     registerParselet(TokenType::Let, std::make_unique<LetParselet>());
     registerParselet(TokenType::Fn, std::make_unique<FunctionParselet>());
+    registerParselet(TokenType::If, std::make_unique<IfParselet>());
 
     prefix(TokenType::Minus, OperatorPrecedence::Prefix);
 

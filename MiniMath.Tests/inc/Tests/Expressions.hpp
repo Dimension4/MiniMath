@@ -55,6 +55,11 @@ namespace expr
         return mm::makeExpr(mm::expr::InverseExpr{ std::move(body) });
     }
 
+    inline mm::Expr ifexpr(mm::Expr condition, mm::Expr thenArm, mm::Expr elseArm)
+    {
+        return mm::makeExpr(mm::expr::IfExpr{ std::move(condition), std::move(thenArm), std::move(elseArm) });
+    }
+
     inline mm::Expr operator+(mm::Expr const& lhs, mm::Expr const& rhs)
     {
         return binexpr(mm::expr::ops::Add{}, lhs, rhs);

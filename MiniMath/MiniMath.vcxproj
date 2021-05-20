@@ -96,6 +96,7 @@
     <ClCompile Include="src\Parselets\ConstantParselet.cpp" />
     <ClCompile Include="src\Parselets\FunctionParselet.cpp" />
     <ClCompile Include="src\Parselets\GroupParselet.cpp" />
+    <ClCompile Include="src\Parselets\IfParselet.cpp" />
     <ClCompile Include="src\Parselets\ImportParselet.cpp" />
     <ClCompile Include="src\Parselets\LetParselet.cpp" />
     <ClCompile Include="src\Parselets\NameParselet.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="inc\MiniMath\IoUtility.hpp" />
     <ClInclude Include="inc\MiniMath\MiniMath.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\FunctionParselet.hpp" />
+    <ClInclude Include="inc\MiniMath\Parselets\IfPraselet.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\ImportParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\LetParselet.hpp" />
     <ClInclude Include="inc\MiniMath\Parselets\StmtParselet.hpp" />

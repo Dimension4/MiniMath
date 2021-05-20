@@ -246,4 +246,14 @@ namespace mm::tests::evaluator
 
         REQUIRE(actual == expected);
     }
+
+    TEST_CASE("(if 1 + 2 > 3 then 1 else 0) = 0")
+    {
+        Environment env;
+
+        auto actual = evaluate(ifexpr(1_num + 2_num > 3_num, 1_num, 0_num));
+        auto expected = 0_num;
+
+        REQUIRE(actual == expected);
+    }
 }

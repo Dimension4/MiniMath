@@ -51,4 +51,13 @@ namespace mm::expr
 
         friend bool operator==(InverseExpr const&, InverseExpr const&) = default;
     };
+
+    struct IfExpr
+    {
+        Expr condition;
+        Expr thenArm;
+        Expr elseArm;
+
+        friend bool operator==(IfExpr const&, IfExpr const&) = default;
+    };
 }

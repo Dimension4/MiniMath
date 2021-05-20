@@ -18,6 +18,7 @@ namespace mm::ast
         Expr operator()(expr::LetExpr const& expr, Environment const& env) const;
         Expr operator()(expr::FunctionExpr const& expr, Environment const& env) const;
         Expr operator()(expr::InverseExpr const& expr, Environment const& env) const;
+        Expr operator()(expr::IfExpr const& expr, Environment const& env) const;
     };
 
 	struct StmtEvaluator : StrictVisitor
