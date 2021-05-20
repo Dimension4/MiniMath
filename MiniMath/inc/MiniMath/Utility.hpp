@@ -10,6 +10,17 @@
 
 namespace mm
 {
+    /**
+     * \brief This stupid class is only necessary to prevent implicit conversion in the parameters.
+     *        This is especially bad in C++ because every primitive is convertible to whatever the
+     *        heck you want it to be.
+     */
+    struct StrictVisitor
+    {
+        template <typename T>
+        auto operator()(T const&) const = delete;
+    };
+
     template <typename T>
     concept RecursiveExpr = VariantMember<expr::Recursive<std::remove_cvref_t<T>>, BaseVariant<Expr>>;
 
@@ -78,7 +89,7 @@ namespace mm
             return ret(std::get_if<T>(&expr));
     }
 
-    template <typename Visitor, Visitable Var, typename ...Args>
+    template <typename Visitor, Visitable Var, typename ...Args> requires(std::is_base_of_v<StrictVisitor, std::remove_cvref_t<Visitor>>)
     constexpr decltype(auto) visit(Visitor&& visitor, Var&& variant, Args&& ...args)
     {
         return std::visit([&]<typename T>(T&& var)
@@ -87,7 +98,7 @@ namespace mm
         }, forwardAs<BaseVariant<Var>>(variant));
     }
 
-    template <typename Visitor, Visitable ...Vars>
+    template <typename Visitor, Visitable ...Vars> requires(std::is_base_of_v<StrictVisitor, std::remove_cvref_t<Visitor>>)
     constexpr decltype(auto) visitMany(Visitor&& visitor, Vars&& ...variants)
     {
         return std::visit([&]<typename ...T>(T&& ...vars)

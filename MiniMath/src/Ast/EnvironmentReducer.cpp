@@ -40,6 +40,10 @@ namespace mm::ast
     {
     }
 
+    void EnvironmentReducer::operator()(BoolExpr expr, std::vector<std::string> const& params, Environment const& inEnv, Environment& outEnv) const
+    {
+    }
+
     void EnvironmentReducer::operator()(Closure const& expr, std::vector<std::string> const& params,
                                         Environment const& inEnv, Environment& outEnv) const
     {

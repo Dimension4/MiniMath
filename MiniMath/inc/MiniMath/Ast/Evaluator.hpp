@@ -7,7 +7,7 @@
 
 namespace mm::ast
 {
-    struct ExprEvaluator
+    struct ExprEvaluator : StrictVisitor
     {
         Expr operator()(expr::BinaryExpr const& expr, Environment const& env) const;
         Expr operator()(expr::CallExpr const& expr, Environment const& env) const;
@@ -19,7 +19,7 @@ namespace mm::ast
         Expr operator()(expr::FunctionExpr const& expr, Environment const& env) const;
     };
 
-	struct StmtEvaluator
+	struct StmtEvaluator : StrictVisitor
 	{
 		Environment operator()(stmt::LetStmt const& stmt, Environment const& env) const;
 		Environment operator()(stmt::ImportStmt const& stmt, Environment const& env) const;

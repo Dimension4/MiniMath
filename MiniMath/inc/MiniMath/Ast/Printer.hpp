@@ -8,7 +8,7 @@
 
 namespace mm::ast
 {
-    struct Printer
+    struct Printer : StrictVisitor
     {
         auto operator()(expr::BinaryExpr const& expr, auto outIt) const
         {

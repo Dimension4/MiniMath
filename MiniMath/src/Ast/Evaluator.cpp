@@ -16,7 +16,7 @@ namespace mm::ast
     using namespace expr;
     using namespace ops;
 
-    struct BinaryExprEvaluator
+    struct BinaryExprEvaluator : StrictVisitor
     {
         Expr operator()(Add, NumberExpr lhs, NumberExpr rhs) const
         {
