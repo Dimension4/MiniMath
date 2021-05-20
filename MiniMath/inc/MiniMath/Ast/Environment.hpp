@@ -34,7 +34,7 @@ namespace mm
             T const* tryGetAs(std::string_view name) const noexcept
             {
                 auto expr = tryGet(name);
-                return expr ? &tryGetExpr<T>(*expr) : nullptr;
+                return expr ? tryGetExpr<T>(*expr) : nullptr;
             }
 
             [[nodiscard]]
