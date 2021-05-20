@@ -17,6 +17,13 @@ static BinaryOperation tokenToOp(TokenType type)
     case TokenType::Minus: return ops::Subtract{};
     case TokenType::Asterisk: return ops::Multiply{};
     case TokenType::Slash: return ops::Divide{};
+    case TokenType::And: return ops::And{};
+    case TokenType::Or: return ops::Or{};
+    case TokenType::Equals: return ops::Equals{};
+    case TokenType::Less: return ops::Less{};
+    case TokenType::LessEqual: return ops::LessThan{};
+    case TokenType::Greater: return ops::Greater{};
+    case TokenType::GreaterEqual: return ops::GreaterThan{};
     }
 
     throw ParseError(fmt::format("Invalid token type '{}' for binary expression", enumName(type)));

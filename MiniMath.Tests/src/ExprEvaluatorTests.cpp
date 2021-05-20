@@ -216,4 +216,34 @@ namespace mm::tests::evaluator
 
         REQUIRE(actual == expected);
     }
+
+    TEST_CASE("1 < 2 and 2 > 1")
+    {
+        Environment env;
+
+        auto actual = evaluate(1_num < 2_num && 2_num > 1_num);
+        Expr expected = true;
+
+        REQUIRE(actual == expected);
+    }
+
+    TEST_CASE("true and false")
+    {
+        Environment env;
+
+        auto actual = evaluate(Expr(true) && Expr(false));
+        Expr expected = false;
+
+        REQUIRE(actual == expected);
+    }
+
+    TEST_CASE("true or false")
+    {
+        Environment env;
+
+        auto actual = evaluate(Expr(true) || Expr(false));
+        Expr expected = true;
+
+        REQUIRE(actual == expected);
+    }
 }

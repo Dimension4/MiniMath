@@ -24,6 +24,12 @@ namespace mm
         Dot,
         True,
         False,
+        And,
+        Or,
+        Less,
+        LessEqual,
+        Greater,
+        GreaterEqual,
         Eof,
     };
 
@@ -60,6 +66,12 @@ namespace mm
         ENUM_CASE(Dot);
         ENUM_CASE(True);
         ENUM_CASE(False);
+        ENUM_CASE(And);
+        ENUM_CASE(Or);
+        ENUM_CASE(Less);
+        ENUM_CASE(LessEqual);
+        ENUM_CASE(Greater);
+        ENUM_CASE(GreaterEqual);
         ENUM_CASE(Eof);
 
 #undef ENUM_CASE
@@ -89,6 +101,12 @@ namespace mm
         case TokenType::Dot: return ".";
         case TokenType::True: return "true";
         case TokenType::False: return "false";
+        case TokenType::And: return "and";
+        case TokenType::Or: return "or";
+        case TokenType::Less: return "<";
+        case TokenType::LessEqual: return "<=";
+        case TokenType::Greater: return ">";
+        case TokenType::GreaterEqual: return ">=";
         }
 
         return enumName(type);

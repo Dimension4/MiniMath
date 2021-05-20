@@ -10,6 +10,10 @@ namespace mm::ast
 {
     struct Printer : StrictVisitor
     {
+        //
+        // Expressions
+        //
+
         auto operator()(expr::BinaryExpr const& expr, auto outIt) const
         {
             return fmt::format_to(outIt, "({} {} {})", expr.left, expr.operation, expr.right);
@@ -52,6 +56,15 @@ namespace mm::ast
             return fmt::format_to(outIt, "fn {} -> {}", fmt::join(expr.paramNames, " "), expr.body);
         }
 
+        auto operator()(expr::InverseExpr const& expr, auto outIt) const
+        {
+            return fmt::format_to(outIt, "-{}", expr.body);
+        }
+
+        //
+        // Statements
+        //
+
         auto operator()(stmt::LetStmt const& stmt, auto outIt) const
         {
             return fmt::format_to(outIt, "let {} = {}", stmt.name, stmt.value);
@@ -62,10 +75,10 @@ namespace mm::ast
             return fmt::format_to(outIt, "import ", stmt.target);
         }
 
-        auto operator()(expr::InverseExpr const& expr, auto outIt) const
-        {
-            return fmt::format_to(outIt, "-{}", expr.body);
-        }
+
+        //
+        // Binary operations
+        //
 
         auto operator()(expr::ops::Add, auto outIt) const
         {
@@ -85,6 +98,41 @@ namespace mm::ast
         auto operator()(expr::ops::Divide, auto outIt) const
         {
             return fmt::format_to(outIt, "/");
+        }
+
+        auto operator()(expr::ops::And, auto outIt) const
+        {
+            return fmt::format_to(outIt, "and");
+        }
+
+        auto operator()(expr::ops::Or, auto outIt) const
+        {
+            return fmt::format_to(outIt, "or");
+        }
+
+        auto operator()(expr::ops::Less, auto outIt) const
+        {
+            return fmt::format_to(outIt, "<");
+        }
+
+        auto operator()(expr::ops::LessThan, auto outIt) const
+        {
+            return fmt::format_to(outIt, "<=");
+        }
+
+        auto operator()(expr::ops::Greater, auto outIt) const
+        {
+            return fmt::format_to(outIt, ">");
+        }
+
+        auto operator()(expr::ops::GreaterThan, auto outIt) const
+        {
+            return fmt::format_to(outIt, ">=");
+        }
+
+        auto operator()(expr::ops::Equals, auto outIt) const
+        {
+            return fmt::format_to(outIt, "=");
         }
     };
 }

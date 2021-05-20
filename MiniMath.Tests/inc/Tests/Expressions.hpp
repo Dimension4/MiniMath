@@ -80,6 +80,37 @@ namespace expr
         return binexpr(mm::expr::ops::Divide{}, lhs, rhs);
     }
 
+    inline mm::Expr operator&&(mm::Expr const& lhs, mm::Expr const& rhs)
+    {
+        return binexpr(mm::expr::ops::And{}, lhs, rhs);
+    }
+
+    inline mm::Expr operator||(mm::Expr const& lhs, mm::Expr const& rhs)
+    {
+        return binexpr(mm::expr::ops::Or{}, lhs, rhs);
+    }
+
+    inline mm::Expr operator<(mm::Expr const& lhs, mm::Expr const& rhs)
+    {
+        return binexpr(mm::expr::ops::Less{}, lhs, rhs);
+    }
+
+    inline mm::Expr operator<=(mm::Expr const& lhs, mm::Expr const& rhs)
+    {
+        return binexpr(mm::expr::ops::LessThan{}, lhs, rhs);
+    }
+
+    inline mm::Expr operator>(mm::Expr const& lhs, mm::Expr const& rhs)
+    {
+        return binexpr(mm::expr::ops::Greater{}, lhs, rhs);
+    }
+
+    inline mm::Expr operator>=(mm::Expr const& lhs, mm::Expr const& rhs)
+    {
+        return binexpr(mm::expr::ops::GreaterThan{}, lhs, rhs);
+    }
+
+
     struct LetValBuilder
     {
         std::string name;

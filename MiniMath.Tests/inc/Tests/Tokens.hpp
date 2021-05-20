@@ -19,6 +19,12 @@ namespace tokconsts
     inline const mm::Token dot{ mm::TokenType::Dot, "." };
     inline const mm::Token true_{ mm::TokenType::True, "true" };
     inline const mm::Token false_{ mm::TokenType::False, "false" };
+    inline const mm::Token and_{ mm::TokenType::And, "and" };
+    inline const mm::Token or_{ mm::TokenType::Or, "or" };
+    inline const mm::Token lt{ mm::TokenType::Less, "<" };
+    inline const mm::Token le{ mm::TokenType::LessEqual, "<=" };
+    inline const mm::Token gt{ mm::TokenType::Greater, ">" };
+    inline const mm::Token ge{ mm::TokenType::GreaterEqual, ">=" };
     inline const mm::Token eof{ mm::TokenType::Eof };
 
     inline mm::Token operator""_num(char const* val, std::size_t)

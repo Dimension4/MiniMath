@@ -15,10 +15,37 @@ namespace mm::expr
 
         struct Divide {};
 
-        using BinaryOperationBase = std::variant<Add, Subtract, Multiply, Divide>;
+        struct And {};
+
+        struct Or {};
+
+        struct Less {};
+
+        struct LessThan {};
+
+        struct Greater {};
+
+        struct GreaterThan {};
+
+        struct Equals {};
+
+        using BinaryOperationBase = std::variant<
+            Add,
+            Subtract,
+            Multiply,
+            Divide,
+            And,
+            Or,
+            Less,
+            LessThan,
+            Greater,
+            GreaterThan,
+            Equals
+        >;
 
         template <VariantMember<BinaryOperationBase> T>
-        constexpr bool operator==(T, T)
+        constexpr bool operator==(T,
+            T)
         {
             return true;
         }

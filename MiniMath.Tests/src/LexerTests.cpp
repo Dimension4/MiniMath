@@ -80,7 +80,7 @@ namespace mm::tests::lexer
 
     TEST_CASE("keywords lex to keywords")
     {
-        auto token = GENERATE(let, in, fn, import_, true_, false_);
+        auto token = GENERATE(let, in, fn, import_, true_, false_, and_, or_);
 
         auto lexer = makeLexer(token.lexeme);
         REQUIRE(lexer.nextToken() == token);
@@ -89,7 +89,7 @@ namespace mm::tests::lexer
 
     TEST_CASE("punctuators lex as punctuators")
     {
-        auto token = GENERATE(lparen, rparen, plus, minus, asterisk, slash, equals, rarrow, dot);
+        auto token = GENERATE(lparen, rparen, plus, minus, asterisk, slash, equals, rarrow, dot, le, lt, gt, ge);
 
         auto lexer = makeLexer(token.lexeme);
         REQUIRE(lexer.nextToken() == token);

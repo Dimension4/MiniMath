@@ -38,6 +38,46 @@ namespace mm::ast
             return lhs / rhs;
         }
 
+        Expr operator()(And, BoolExpr lhs, BoolExpr rhs) const
+        {
+            return lhs && rhs;
+        }
+
+        Expr operator()(Or, BoolExpr lhs, BoolExpr rhs) const
+        {
+            return lhs || rhs;
+        }
+
+        Expr operator()(Less, NumberExpr lhs, NumberExpr rhs) const
+        {
+            return lhs < rhs;
+        }
+
+        Expr operator()(LessThan, NumberExpr lhs, NumberExpr rhs) const
+        {
+            return lhs <= rhs;
+        }
+
+        Expr operator()(Greater, NumberExpr lhs, NumberExpr rhs) const
+        {
+            return lhs > rhs;
+        }
+
+        Expr operator()(GreaterThan, NumberExpr lhs, NumberExpr rhs) const
+        {
+            return lhs >= rhs;
+        }
+
+        Expr operator()(Equals, NumberExpr lhs, NumberExpr rhs) const
+        {
+            return lhs == rhs;
+        }
+
+        Expr operator()(Equals, BoolExpr lhs, BoolExpr rhs) const
+        {
+            return lhs == rhs;
+        }
+
         // using auto directly causes an ICE
         template <typename A, typename B, typename C>
         Expr operator()(A const& op, B const& lhs, C const& rhs) const

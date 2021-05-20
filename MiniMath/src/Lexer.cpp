@@ -17,6 +17,8 @@ namespace mm
         if (identifier == "import") return TokenType::Import;
         if (identifier == "true") return TokenType::True;
         if (identifier == "false") return TokenType::False;
+        if (identifier == "and") return TokenType::And;
+        if (identifier == "or") return TokenType::Or;
 
         return TokenType::Identifier;
     }
@@ -34,6 +36,8 @@ namespace mm
         case ',': return TokenType::Comma;
         case '=': return TokenType::Equals;
         case '.': return TokenType::Dot;
+        case '<': return TokenType::Less;
+        case '>': return TokenType::Greater;
         }
 
         return std::nullopt;
@@ -149,7 +153,9 @@ namespace mm
     std::optional<Token> Lexer::tryReadWidePunctuator(char first)
     {
         constexpr std::pair<char const(&)[3], TokenType> arr[] = {
-            { "->", TokenType::RArrow }
+            { "->", TokenType::RArrow },
+            { "<=", TokenType::LessEqual },
+            { ">=", TokenType::GreaterEqual },
         };
 
         for (auto&& [lexeme, type] : arr)

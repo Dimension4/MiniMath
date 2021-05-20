@@ -6,6 +6,10 @@ namespace mm
     {
         None,
 
+        Or,
+        And,
+        Relational,
+
         Addition,
         Subtraction = Addition,
 

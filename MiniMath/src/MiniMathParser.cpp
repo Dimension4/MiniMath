@@ -34,6 +34,13 @@ MiniMathParser::MiniMathParser(std::function<Token()> tokenSource) :
     infix(TokenType::Minus, OperatorPrecedence::Subtraction);
     infix(TokenType::Asterisk, OperatorPrecedence::Multiplication);
     infix(TokenType::Slash, OperatorPrecedence::Division);
+    infix(TokenType::And, OperatorPrecedence::And);
+    infix(TokenType::Or, OperatorPrecedence::Or);
+    infix(TokenType::Equals, OperatorPrecedence::Relational);
+    infix(TokenType::Less, OperatorPrecedence::Relational);
+    infix(TokenType::LessEqual, OperatorPrecedence::Relational);
+    infix(TokenType::Greater, OperatorPrecedence::Relational);
+    infix(TokenType::GreaterEqual, OperatorPrecedence::Relational);
 }
 
 void MiniMathParser::prefix(TokenType token, OperatorPrecedence precedence)

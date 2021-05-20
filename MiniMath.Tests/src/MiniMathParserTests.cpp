@@ -330,4 +330,31 @@ namespace mm::tests::parser
 
         REQUIRE(actual == expected);
     }
+
+    TEST_CASE("parse x and 1 or true")
+    {
+        auto source = tokens({ "x"_id, and_, "1"_num, or_, true_ });
+
+        MiniMathParser parser(source);
+
+        auto actual = parser.parseExpression();
+        auto expected = ("x"_name && 1_num) || true;
+
+        REQUIRE(actual == expected);
+    }
+
+    TEST_CASE("parse 1 < 3 or 1 = 2 or 3 > 1 and 1 <= 1 and 2 >= 1")
+    {
+        auto source = tokens({
+            "1"_num, lt, "3"_num, or_, "1"_num, equals, "2"_num, or_, "3"_num, gt, "1"_num,
+            and_, "1"_num, le, "1"_num, and_, "2"_num, ge, "1"_num
+        });
+
+        MiniMathParser parser(source);
+
+        auto actual = parser.parseExpression();
+        auto expected = 1_num < 3_num || binexpr(ops::Equals{}, 1_num, 2_num) || 3_num > 1_num && 1_num <= 1_num && 2_num >= 1_num;
+
+        REQUIRE(actual == expected);
+    }
 }
