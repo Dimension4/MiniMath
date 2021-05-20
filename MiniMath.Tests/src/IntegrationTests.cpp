@@ -247,4 +247,43 @@ let y = x = (1 = 2)
 
         REQUIRE(actual == expected);
     }
+
+    TEST_CASE("if expressions")
+    {
+        constexpr std::string_view source = R"(
+let a = if true then 1 else 2
+let b = if 2 * 2 < 3 then 1 + 1 else 2 * 2
+let c =
+    if
+        let x = 2
+        let y = 4
+        x * -y < -x * y
+    then
+        a
+    else
+        b
+
+let d =
+    let f = fn a b -> if a >= b then a - b else b - a
+    if f(2 4) = f(4 2) then 1 else 0
+
+let e =
+    let f = fn x -> if x >= 0 then false else -1
+    if f(0)
+    then if f(-1) < 0 then 1 else -1
+    else -2
+)";
+
+        Environment expected{
+            { "a", 1_num },
+            { "b", 4_num },
+            { "c", 4_num },
+            { "d", 1_num },
+            { "e", NumberExpr{-2} },
+        };
+
+        auto actual = evalStatement(source);
+
+        REQUIRE(actual == expected);
+    }
 }
